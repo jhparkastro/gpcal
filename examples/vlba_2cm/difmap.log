@@ -1,0 +1,1499 @@
+! Started logfile: difmap.log on Mon Jul 20 15:20:48 2020
+![@bl229ae2.u.edt.0256+075.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.0256+075
+! Reading UV FITS file: bl229ae2.u.edt.0256+075.uvf
+! AN table 1: 222 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.878378 visibilities/baseline/integration-bin.
+! Found source: 0256+075
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1232 lines of history.
+! 
+! Reading 280800 visibilities.
+! A total of 168 model components were read from file bl229ae2.u.edt.0256+075.mod
+! rwins: Read 20 windows from bl229ae2.u.edt.0256+075.win
+! Multi-model file "bl229ae2.u.edt.0256+075.mtab" not available
+mapsize 2048,0.05, 2048,0.05
+! Map grid = 2048x2048 pixels with 0.0500x0.0500 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 10, -10, -15, 5
+! The mapplot display area will be limited to:
+!  Relative  RA: 10 -> -10 (milli-arcsec)
+!  Relative DEC: -15 -> 5 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.05
+float cutoff
+cutoff=0.000374728
+float cmul
+cmul=0.000910075
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.0256+075.par]
+save bl229ae.u.edt.0256+075
+! Writing UV FITS file: bl229ae.u.edt.0256+075.uvf
+! Writing 168 model components to file: bl229ae.u.edt.0256+075.mod
+! wwins: Wrote 20 windows to bl229ae.u.edt.0256+075.win
+! Adding 168 model components to the UV plane model.
+! The established model now contains 168 components and 0.520691 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.5886 mas, bmaj=1.213 mas, bpa=-3.849 degrees
+! Estimated noise=0.0621383 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.5886 x 1.213 at -3.849 degrees (North through East)
+! Clean map  min=-0.0011571  max=0.37861 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.0256+075.fits
+! Writing difmap environment to: bl229ae.u.edt.0256+075.par
+![@bl229ae2.u.edt.0300+470.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.0300+470
+! Reading UV FITS file: bl229ae2.u.edt.0300+470.uvf
+! AN table 1: 226 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.867748 visibilities/baseline/integration-bin.
+! Found source: 0300+470
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 590 lines of history.
+! 
+! Reading 282400 visibilities.
+! A total of 448 model components were read from file bl229ae2.u.edt.0300+470.mod
+! rwins: Read 27 windows from bl229ae2.u.edt.0300+470.win
+! Multi-model file "bl229ae2.u.edt.0300+470.mtab" not available
+mapsize 2048,0.04, 2048,0.04
+! Map grid = 2048x2048 pixels with 0.0400x0.0400 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 15, -5, -15, 5
+! The mapplot display area will be limited to:
+!  Relative  RA: 15 -> -5 (milli-arcsec)
+!  Relative DEC: -15 -> 5 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.02
+float cutoff
+cutoff=0.000750865
+float cmul
+cmul=0.0018771
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.0300+470.par]
+save bl229ae.u.edt.0300+470
+! Writing UV FITS file: bl229ae.u.edt.0300+470.uvf
+! Writing 448 model components to file: bl229ae.u.edt.0300+470.mod
+! wwins: Wrote 27 windows to bl229ae.u.edt.0300+470.win
+! Adding 448 model components to the UV plane model.
+! The established model now contains 448 components and 1.83425 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.6754 mas, bmaj=0.8207 mas, bpa=-11.75 degrees
+! Estimated noise=0.0838233 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.6754 x 0.8207 at -11.75 degrees (North through East)
+! Clean map  min=-0.0015737  max=1.4689 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.0300+470.fits
+! Writing difmap environment to: bl229ae.u.edt.0300+470.par
+![@bl229ae2.u.edt.0415+379.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.0415+379
+! Reading UV FITS file: bl229ae2.u.edt.0415+379.uvf
+! AN table 1: 224 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.822321 visibilities/baseline/integration-bin.
+! Found source: 0415+379
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1232 lines of history.
+! 
+! Reading 265248 visibilities.
+! A total of 520 model components were read from file bl229ae2.u.edt.0415+379.mod
+! rwins: Read 54 windows from bl229ae2.u.edt.0415+379.win
+! Multi-model file "bl229ae2.u.edt.0415+379.mtab" not available
+mapsize 2048,0.05, 2048,0.05
+! Map grid = 2048x2048 pixels with 0.0500x0.0500 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 20, -5, -5, 15
+! The mapplot display area will be limited to:
+!  Relative  RA: 20 -> -5 (milli-arcsec)
+!  Relative DEC: -5 -> 15 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.05
+float cutoff
+cutoff=0.00055293
+float cmul
+cmul=0.0013938
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.0415+379.par]
+save bl229ae.u.edt.0415+379
+! Writing UV FITS file: bl229ae.u.edt.0415+379.uvf
+! Writing 520 model components to file: bl229ae.u.edt.0415+379.mod
+! wwins: Wrote 54 windows to bl229ae.u.edt.0415+379.win
+! Adding 520 model components to the UV plane model.
+! The established model now contains 520 components and 1.70479 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.6344 mas, bmaj=0.9154 mas, bpa=-5.584 degrees
+! Estimated noise=0.0622049 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.6344 x 0.9154 at -5.584 degrees (North through East)
+! Clean map  min=-0.0011787  max=1.1409 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.0415+379.fits
+! Writing difmap environment to: bl229ae.u.edt.0415+379.par
+![@bl229ae2.u.edt.0430+052.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.0430+052
+! Reading UV FITS file: bl229ae2.u.edt.0430+052.uvf
+! AN table 1: 222 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.85966 visibilities/baseline/integration-bin.
+! Found source: 0430+052
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1232 lines of history.
+! 
+! Reading 274816 visibilities.
+! A total of 430 model components were read from file bl229ae2.u.edt.0430+052.mod
+! rwins: Read 52 windows from bl229ae2.u.edt.0430+052.win
+! Multi-model file "bl229ae2.u.edt.0430+052.mtab" not available
+mapsize 2048,0.05, 2048,0.05
+! Map grid = 2048x2048 pixels with 0.0500x0.0500 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 5, -20, -15, 5
+! The mapplot display area will be limited to:
+!  Relative  RA: 5 -> -20 (milli-arcsec)
+!  Relative DEC: -15 -> 5 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.05
+float cutoff
+cutoff=0.000981012
+float cmul
+cmul=0.00312277
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.0430+052.par]
+save bl229ae.u.edt.0430+052
+! Writing UV FITS file: bl229ae.u.edt.0430+052.uvf
+! Writing 430 model components to file: bl229ae.u.edt.0430+052.mod
+! wwins: Wrote 52 windows to bl229ae.u.edt.0430+052.win
+! Adding 430 model components to the UV plane model.
+! The established model now contains 430 components and 2.69096 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.6033 mas, bmaj=1.272 mas, bpa=-5.493 degrees
+! Estimated noise=0.0625003 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.6033 x 1.272 at -5.493 degrees (North through East)
+! Clean map  min=-0.002507  max=1.3987 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.0430+052.fits
+! Writing difmap environment to: bl229ae.u.edt.0430+052.par
+![@bl229ae2.u.edt.0502+049.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.0502+049
+! Reading UV FITS file: bl229ae2.u.edt.0502+049.uvf
+! AN table 1: 213 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.772457 visibilities/baseline/integration-bin.
+! Found source: 0502+049
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1230 lines of history.
+! 
+! Reading 236928 visibilities.
+! A total of 233 model components were read from file bl229ae2.u.edt.0502+049.mod
+! rwins: Read 19 windows from bl229ae2.u.edt.0502+049.win
+! Multi-model file "bl229ae2.u.edt.0502+049.mtab" not available
+mapsize 2048,0.04, 2048,0.04
+! Map grid = 2048x2048 pixels with 0.0400x0.0400 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 5, -10, -10, 5
+! The mapplot display area will be limited to:
+!  Relative  RA: 5 -> -10 (milli-arcsec)
+!  Relative DEC: -10 -> 5 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.02
+float cutoff
+cutoff=0.000347407
+float cmul
+cmul=0.0017289
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.0502+049.par]
+save bl229ae.u.edt.0502+049
+! Writing UV FITS file: bl229ae.u.edt.0502+049.uvf
+! Writing 233 model components to file: bl229ae.u.edt.0502+049.mod
+! wwins: Wrote 19 windows to bl229ae.u.edt.0502+049.win
+! Adding 233 model components to the UV plane model.
+! The established model now contains 233 components and 0.835388 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.5739 mas, bmaj=1.38 mas, bpa=-6.822 degrees
+! Estimated noise=0.0829744 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.5739 x 1.38 at -6.822 degrees (North through East)
+! Clean map  min=-0.0017126  max=0.7012 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.0502+049.fits
+! Writing difmap environment to: bl229ae.u.edt.0502+049.par
+![@bl229ae2.u.edt.0851+202.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.0851+202
+! Reading UV FITS file: bl229ae2.u.edt.0851+202.uvf
+! AN table 1: 214 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.860228 visibilities/baseline/integration-bin.
+! Found source: 0851+202
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1151 lines of history.
+! 
+! Reading 265088 visibilities.
+! A total of 165 model components were read from file bl229ae2.u.edt.0851+202.mod
+! rwins: Read 23 windows from bl229ae2.u.edt.0851+202.win
+! Multi-model file "bl229ae2.u.edt.0851+202.mtab" not available
+mapsize 2048,0.05, 2048,0.05
+! Map grid = 2048x2048 pixels with 0.0500x0.0500 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 10, -10, -10, 10
+! The mapplot display area will be limited to:
+!  Relative  RA: 10 -> -10 (milli-arcsec)
+!  Relative DEC: -10 -> 10 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.05
+float cutoff
+cutoff=0.00329617
+float cmul
+cmul=0.00822708
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.0851+202.par]
+save bl229ae.u.edt.0851+202
+! Writing UV FITS file: bl229ae.u.edt.0851+202.uvf
+! Writing 165 model components to file: bl229ae.u.edt.0851+202.mod
+! wwins: Wrote 23 windows to bl229ae.u.edt.0851+202.win
+! Adding 165 model components to the UV plane model.
+! The established model now contains 165 components and 7.30097 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.5945 mas, bmaj=1.113 mas, bpa=-7.343 degrees
+! Estimated noise=0.070958 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.5945 x 1.113 at -7.343 degrees (North through East)
+! Clean map  min=-0.0078843  max=6.8081 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.0851+202.fits
+! Writing difmap environment to: bl229ae.u.edt.0851+202.par
+![@bl229ae2.u.edt.1151+408.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.1151+408
+! Reading UV FITS file: bl229ae2.u.edt.1151+408.uvf
+! AN table 1: 226 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.900492 visibilities/baseline/integration-bin.
+! Found source: 1151+408
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1230 lines of history.
+! 
+! Reading 293056 visibilities.
+! A total of 944 model components were read from file bl229ae2.u.edt.1151+408.mod
+! rwins: Read 39 windows from bl229ae2.u.edt.1151+408.win
+! Multi-model file "bl229ae2.u.edt.1151+408.mtab" not available
+mapsize 2048,0.04, 2048,0.04
+! Map grid = 2048x2048 pixels with 0.0400x0.0400 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 10, -10, -10, 10
+! The mapplot display area will be limited to:
+!  Relative  RA: 10 -> -10 (milli-arcsec)
+!  Relative DEC: -10 -> 10 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.02
+float cutoff
+cutoff=0.000224289
+float cmul
+cmul=0.000745911
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.1151+408.par]
+save bl229ae.u.edt.1151+408
+! Writing UV FITS file: bl229ae.u.edt.1151+408.uvf
+! Writing 944 model components to file: bl229ae.u.edt.1151+408.mod
+! wwins: Wrote 39 windows to bl229ae.u.edt.1151+408.win
+! Adding 944 model components to the UV plane model.
+! The established model now contains 944 components and 0.433212 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.6036 mas, bmaj=0.8884 mas, bpa=-8.187 degrees
+! Estimated noise=0.0691225 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.6036 x 0.8884 at -8.187 degrees (North through East)
+! Clean map  min=-0.0005885  max=0.10247 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.1151+408.fits
+! Writing difmap environment to: bl229ae.u.edt.1151+408.par
+![@bl229ae2.u.edt.1226+023.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.1226+023
+! Reading UV FITS file: bl229ae2.u.edt.1226+023.uvf
+! AN table 1: 222 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.888388 visibilities/baseline/integration-bin.
+! Found source: 1226+023
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1232 lines of history.
+! 
+! Reading 284000 visibilities.
+! A total of 3122 model components were read from file bl229ae2.u.edt.1226+023.mod
+! rwins: Read 88 windows from bl229ae2.u.edt.1226+023.win
+! Multi-model file "bl229ae2.u.edt.1226+023.mtab" not available
+mapsize 4096,0.05, 4096,0.05
+! Map grid = 4096x4096 pixels with 0.0500x0.0500 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 5, -50, -50, 5
+! The mapplot display area will be limited to:
+!  Relative  RA: 5 -> -50 (milli-arcsec)
+!  Relative DEC: -50 -> 5 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.05
+float cutoff
+cutoff=0.00128338
+float cmul
+cmul=0.00849217
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.1226+023.par]
+save bl229ae.u.edt.1226+023
+! Writing UV FITS file: bl229ae.u.edt.1226+023.uvf
+! Writing 3122 model components to file: bl229ae.u.edt.1226+023.mod
+! wwins: Wrote 88 windows to bl229ae.u.edt.1226+023.win
+! Adding 3122 model components to the UV plane model.
+! The established model now contains 3122 components and 14.8579 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.5634 mas, bmaj=1.265 mas, bpa=-1.988 degrees
+! Estimated noise=0.0634325 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.5634 x 1.265 at -1.988 degrees (North through East)
+! Clean map  min=-0.0082999  max=4.3394 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.1226+023.fits
+! Writing difmap environment to: bl229ae.u.edt.1226+023.par
+![@bl229ae2.u.edt.1637+574.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.1637+574
+! Reading UV FITS file: bl229ae2.u.edt.1637+574.uvf
+! AN table 1: 215 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.932713 visibilities/baseline/integration-bin.
+! Found source: 1637+574
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1230 lines of history.
+! 
+! Reading 288768 visibilities.
+! A total of 238 model components were read from file bl229ae2.u.edt.1637+574.mod
+! rwins: Read 33 windows from bl229ae2.u.edt.1637+574.win
+! Multi-model file "bl229ae2.u.edt.1637+574.mtab" not available
+mapsize 2048,0.04, 2048,0.04
+! Map grid = 2048x2048 pixels with 0.0400x0.0400 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 10, -10, -15, 5
+! The mapplot display area will be limited to:
+!  Relative  RA: 10 -> -10 (milli-arcsec)
+!  Relative DEC: -15 -> 5 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.02
+float cutoff
+cutoff=0.000527542
+float cmul
+cmul=0.00131409
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.1637+574.par]
+save bl229ae.u.edt.1637+574
+! Writing UV FITS file: bl229ae.u.edt.1637+574.uvf
+! Writing 238 model components to file: bl229ae.u.edt.1637+574.mod
+! wwins: Wrote 33 windows to bl229ae.u.edt.1637+574.win
+! Adding 238 model components to the UV plane model.
+! The established model now contains 238 components and 1.21291 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.6286 mas, bmaj=0.8004 mas, bpa=-2.998 degrees
+! Estimated noise=0.0760194 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.6286 x 0.8004 at -2.998 degrees (North through East)
+! Clean map  min=-0.0013159  max=0.98205 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.1637+574.fits
+! Writing difmap environment to: bl229ae.u.edt.1637+574.par
+![@bl229ae2.u.edt.1928+738.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.1928+738
+! Reading UV FITS file: bl229ae2.u.edt.1928+738.uvf
+! AN table 1: 224 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.890575 visibilities/baseline/integration-bin.
+! Found source: 1928+738
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1230 lines of history.
+! 
+! Reading 287264 visibilities.
+! A total of 541 model components were read from file bl229ae2.u.edt.1928+738.mod
+! rwins: Read 62 windows from bl229ae2.u.edt.1928+738.win
+! Multi-model file "bl229ae2.u.edt.1928+738.mtab" not available
+mapsize 2048,0.04, 2048,0.04
+! Map grid = 2048x2048 pixels with 0.0400x0.0400 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 15, -15, -25, 10
+! The mapplot display area will be limited to:
+!  Relative  RA: 15 -> -15 (milli-arcsec)
+!  Relative DEC: -25 -> 10 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.02
+float cutoff
+cutoff=0.00111299
+float cmul
+cmul=0.00365809
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.1928+738.par]
+save bl229ae.u.edt.1928+738
+! Writing UV FITS file: bl229ae.u.edt.1928+738.uvf
+! Writing 541 model components to file: bl229ae.u.edt.1928+738.mod
+! wwins: Wrote 62 windows to bl229ae.u.edt.1928+738.win
+! Adding 541 model components to the UV plane model.
+! The established model now contains 541 components and 4.64223 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.6077 mas, bmaj=0.7498 mas, bpa=81.6 degrees
+! Estimated noise=0.094835 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.6077 x 0.7498 at 81.6 degrees (North through East)
+! Clean map  min=-0.0032744  max=2.8605 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.1928+738.fits
+! Writing difmap environment to: bl229ae.u.edt.1928+738.par
+![@bl229ae2.u.edt.2200+420.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.2200+420
+! Reading UV FITS file: bl229ae2.u.edt.2200+420.uvf
+! AN table 1: 224 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.890179 visibilities/baseline/integration-bin.
+! Found source: 2200+420
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1232 lines of history.
+! 
+! Reading 287136 visibilities.
+! A total of 397 model components were read from file bl229ae2.u.edt.2200+420.mod
+! rwins: Read 39 windows from bl229ae2.u.edt.2200+420.win
+! Multi-model file "bl229ae2.u.edt.2200+420.mtab" not available
+mapsize 2048,0.05, 2048,0.05
+! Map grid = 2048x2048 pixels with 0.0500x0.0500 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 20, -10, -30, 10
+! The mapplot display area will be limited to:
+!  Relative  RA: 20 -> -10 (milli-arcsec)
+!  Relative DEC: -30 -> 10 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 0, 0, 0, 1, 1
+! Give polarization vectors lengths of 0 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0 Jy and polarized flux > 0 Jy.
+! Draw polarization vectors in every X pixel and in every Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.05
+float cutoff
+cutoff=0.00114026
+float cmul
+cmul=0.00238811
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.2200+420.par]
+save bl229ae.u.edt.2200+420
+! Writing UV FITS file: bl229ae.u.edt.2200+420.uvf
+! Writing 397 model components to file: bl229ae.u.edt.2200+420.mod
+! wwins: Wrote 39 windows to bl229ae.u.edt.2200+420.win
+! Adding 397 model components to the UV plane model.
+! The established model now contains 397 components and 2.53492 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.6243 mas, bmaj=0.8908 mas, bpa=-0.03762 degrees
+! Estimated noise=0.0614416 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.6243 x 0.8908 at -0.03762 degrees (North through East)
+! Clean map  min=-0.0021042  max=1.9921 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.2200+420.fits
+! Writing difmap environment to: bl229ae.u.edt.2200+420.par
+![@bl229ae2.u.edt.2201+315.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.2201+315
+! Reading UV FITS file: bl229ae2.u.edt.2201+315.uvf
+! AN table 1: 224 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.909226 visibilities/baseline/integration-bin.
+! Found source: 2201+315
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1232 lines of history.
+! 
+! Reading 293280 visibilities.
+! A total of 260 model components were read from file bl229ae2.u.edt.2201+315.mod
+! rwins: Read 20 windows from bl229ae2.u.edt.2201+315.win
+! Multi-model file "bl229ae2.u.edt.2201+315.mtab" not available
+mapsize 2048,0.05, 2048,0.05
+! Map grid = 2048x2048 pixels with 0.0500x0.0500 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 10, -10, -10, 10
+! The mapplot display area will be limited to:
+!  Relative  RA: 10 -> -10 (milli-arcsec)
+!  Relative DEC: -10 -> 10 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 200, 0.00558796, 0.178535, 3, 3
+! Give polarization vectors lengths of 200 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0.00558796 Jy and polarized flux > 0.178535 Jy.
+! Draw polarization vectors in every 3rd X pixel and in every 3rd Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.05
+float cutoff
+cutoff=0.00381057
+float cmul
+cmul=0.00931326
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.2201+315.par]
+save bl229ae.u.edt.2201+315
+! Writing UV FITS file: bl229ae.u.edt.2201+315.uvf
+! Writing 260 model components to file: bl229ae.u.edt.2201+315.mod
+! wwins: Wrote 20 windows to bl229ae.u.edt.2201+315.win
+! Adding 260 model components to the UV plane model.
+! The established model now contains 260 components and 2.17322 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.5778 mas, bmaj=0.9399 mas, bpa=-6.296 degrees
+! Estimated noise=0.0575743 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.5778 x 0.9399 at -6.296 degrees (North through East)
+! Clean map  min=-0.025866  max=1.2359 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.2201+315.fits
+! Writing difmap environment to: bl229ae.u.edt.2201+315.par
+![@bl229ae2.u.edt.2258-022.par]
+mapunits mas
+! Distances in the map plane now have units: milli-arcsec.
+! Distances in the UV plane now have units: mega-wavelengths.
+multi_model false
+! Use one model for all channel/polarization selections.
+get bl229ae2.u.edt.2258-022
+! Reading UV FITS file: bl229ae2.u.edt.2258-022.uvf
+! AN table 1: 214 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.85379 visibilities/baseline/integration-bin.
+! Found source: 2258-022
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1232 lines of history.
+! 
+! Reading 263104 visibilities.
+! A total of 83 model components were read from file bl229ae2.u.edt.2258-022.mod
+! rwins: Read 10 windows from bl229ae2.u.edt.2258-022.win
+! Multi-model file "bl229ae2.u.edt.2258-022.mtab" not available
+mapsize 2048,0.05, 2048,0.05
+! Map grid = 2048x2048 pixels with 0.0500x0.0500 milli-arcsec cellsize.
+select I, 1, 8
+! Selecting polarization: I,  channels: 1..8
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: 2..2
+! Reading IF 3 channels: 3..3
+! Reading IF 4 channels: 4..4
+! Reading IF 5 channels: 5..5
+! Reading IF 6 channels: 6..6
+! Reading IF 7 channels: 7..7
+! Reading IF 8 channels: 8..8
+uvtaper 0, 0
+! No UV-taper is currently set.
+uvrange 0, 0
+! The full UV range of the data is currently selected for gridding.
+uvweight 0, -1, false
+! Uniform weighting is not currently selected.
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+selftaper 0, 0
+! No selfcal UV-taper is currently set.
+selflims 0, 0
+! Selfcal amplitude corrections will not be limited.
+! Selfcal phase corrections will not be limited.
+xyrange 10, -10, -10, 10
+! The mapplot display area will be limited to:
+!  Relative  RA: 10 -> -10 (milli-arcsec)
+!  Relative DEC: -10 -> 10 (milli-arcsec)
+beamloc 0, 0, 0.01, 0.3
+! Mapplot clean beam ellipse center: 0,0. Size range: 0.01 -> 0.3.
+polvec 200, 0.00558796, 0.178535, 3, 3
+! Give polarization vectors lengths of 200 milli-arcsec/Jy.
+! Draw vectors where unpolarized flux > 0.00558796 Jy and polarized flux > 0.178535 Jy.
+! Draw polarization vectors in every 3rd X pixel and in every 3rd Y pixel.
+integer niter
+niter=10000
+float gain
+gain=0.05
+float cutoff
+cutoff=0.00160862
+float cmul
+cmul=0.00213577
+logical docont
+docont=true
+mapcolor color, 1.000000, 0.500000
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+mapfunc linear, 0.000000, 0.000000
+! Mapplot transfer-function = linear, Data range = data min -> data max.
+string vflags
+vflags=""
+string rflags
+rflags=""
+string pflags
+pflags=""
+string tflags
+tflags=""
+selfflag true, 3, 4
+! - In phase-only self-cal, good data on baselines that are not in closed
+!   arrays of at least 3 telescopes will be flagged.
+! - In amplitude self-cal, good data on baselines that are not in closed
+!   arrays of at least 4 telescopes will be flagged.
+scangap 3600
+! Delimiting interscan gap changed to 3600 seconds in all sub-arrays.
+float levs(8)
+levs(1:8) = -1, 1, 2, 4, 8, 16, 32, 64
+![Exited script file: bl229ae2.u.edt.2258-022.par]
+save bl229ae.u.edt.2258-022
+! Writing UV FITS file: bl229ae.u.edt.2258-022.uvf
+! Writing 83 model components to file: bl229ae.u.edt.2258-022.mod
+! wwins: Wrote 10 windows to bl229ae.u.edt.2258-022.win
+! Adding 83 model components to the UV plane model.
+! The established model now contains 83 components and 1.11096 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.551 mas, bmaj=1.28 mas, bpa=-2.294 degrees
+! Estimated noise=0.0648441 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.551 x 1.28 at -2.294 degrees (North through East)
+! Clean map  min=-0.0019887  max=0.99363 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.2258-022.fits
+! Writing difmap environment to: bl229ae.u.edt.2258-022.par
+exit
+! Exiting program
+! Log file difmap.log closed on Mon Jul 20 15:23:41 2020
