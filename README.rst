@@ -1,26 +1,31 @@
 GPCAL
 ===================
 
-GPCAL is a Python module for instrumental polarization calibration in VLBI data. It allows to use multiple calibrators data simultaneously and take into account the calibrators linear polarization structures for fitting. 
+GPCAL is a Python-interfaced pipeline for instrumental polarization calibration in VLBI data. It allows to use multiple calibrators data simultaneously and take into account the calibrators linear polarization structures for fitting. 
+
+!Python modules for simulating and manipulating VLBI data and producing images with regularized maximum likelihood methods. This version is an early release so please submit a pull request or email achael@cfa.harvard.edu if you have trouble or need help for your application.
+
+!The package contains several primary classes for loading, simulating, and manipulating VLBI data. The main classes are the ``Image``, ``Array``, ``Obsdata``, ``Imager``, and ``Caltable`` classes, which provide tools for loading images and data, producing simulated data from realistic u-v tracks,  calibrating, inspecting, and  plotting data, and producing images from data sets in various polarizations using various data terms and regularizers.
 
 
 Installation
 ------------
-GPCAL requires ParselTongue, a Python interface to AIPS (`Kettenis et al. 2006 <https://ui.adsabs.harvard.edu/abs/2006ASPC..351..497K>`_). Please install ParselTongue by following the instructions `here <http://old.jive.nl/jivewiki/doku.php?id=parseltongue:parseltongue/>`_.
-
-GPCAL is available on `PyPi <https://pypi.org/project/gpcal/>`_ and can be installed via pip.
+Download the latest version from the `GitHub repository <https://github.com/achael/eht-imaging>`_, change to the main directory and run:
 
 .. code-block:: bash
 
-    pip install gpcal
+    pip install .
 
-It should install most of the required libraries automatically (`astropy <http://www.astropy.org/>`_, `numpy <http://www.numpy.org/>`_, `pandas <http://www.pandas.pydata.org/>`_ , `matplotlib <http://www.matplotlib.org/>`_,  `scipy <http://www.scipy.org/>`_).
+It should install most of the required libraries automatically (`astropy <http://www.astropy.org/>`_, `ephem <http://pypi.python.org/pypi/pyephem/>`_, `future <http://pypi.python.org/pypi/future>`_, `h5py <http://www.h5py.org/>`_ , `html <http://www.decalage.info/python/html>`_ , `networkx <https://networkx.github.io/>`_, `numpy <http://www.numpy.org/>`_, `pandas <http://www.pandas.pydata.org/>`_ , `matplotlib <http://www.matplotlib.org/>`_,  `requests <http://docs.python-requests.org/en/master/>`_, `scipy <http://www.scipy.org/>`_, `skimage <https://scikit-image.org/>`_).
 
-Another way to install GPCAL is by using `Anaconda <https://www.anaconda.com/>`_. To install GPCAL in your default Anaconda environment, simply run
+**If you want to use fast fourier transforms, you will also need to separately install** `NFFT <https://github.com/NFFT/nfft>`_ **and its** `pynfft wrapper <https://github.com/ghisvail/pyNFFT/>`_. The simplest way is to use `conda <https://anaconda.org/conda-forge/pynfft/>`__ to install both:
+
 
 .. code-block:: bash
 
-    conda install -c conda-forge gpcal
+    conda install -c conda-forge pynfft
+
+Alternatively, first install NFFT manually following the instructions on the `readme <https://github.com/NFFT/nfft>`_, making sure to use the ``--enable-openmp`` flag in compilation. Then install `pynfft <https://github.com/ghisvail/pyNFFT/>`_, with pip, following the readme instructions to link the installation to where you installed NFFT. Finally, reinstall ehtim.
 
 Documentation
 -------------
