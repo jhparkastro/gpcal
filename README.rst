@@ -1,16 +1,12 @@
 GPCAL
 ===================
 
-GPCAL is a Python-interfaced pipeline for instrumental polarization calibration in VLBI data. It allows to use multiple calibrators data simultaneously and take into account the calibrators linear polarization structures for fitting. 
-
-!Python modules for simulating and manipulating VLBI data and producing images with regularized maximum likelihood methods. This version is an early release so please submit a pull request or email achael@cfa.harvard.edu if you have trouble or need help for your application.
-
-!The package contains several primary classes for loading, simulating, and manipulating VLBI data. The main classes are the ``Image``, ``Array``, ``Obsdata``, ``Imager``, and ``Caltable`` classes, which provide tools for loading images and data, producing simulated data from realistic u-v tracks,  calibrating, inspecting, and  plotting data, and producing images from data sets in various polarizations using various data terms and regularizers.
+GPCAL is a Python module for instrumental polarization calibration in VLBI data. It allows to use multiple calibrators data simultaneously and take into account the calibrators linear polarization structures for fitting. 
 
 
 Installation
 ------------
-Download the latest version from the `GitHub repository <https://github.com/achael/eht-imaging>`_, change to the main directory and run:
+GPCAL requires ParselTongue, a Python interface to AIPS `Kettenis et al. 2006 <https://ui.adsabs.harvard.edu/abs/2006ASPC..351..497K>`_. Please install ParselTongue by following the instructions here <http://old.jive.nl/jivewiki/doku.php?id=parseltongue:parseltongue>`_.
 
 .. code-block:: bash
 
