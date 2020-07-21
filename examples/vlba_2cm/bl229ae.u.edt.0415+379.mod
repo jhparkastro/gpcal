@@ -1,5 +1,5 @@
 ! Center RA: 04 18 21.27724,  Dec: +38 01 35.80018 (2000.0)
-! Tentative model.
+! Established model.
 ! Flux (Jy) Radius (mas)  Theta (deg)  Major FWHM (mas)  Axial ratio   Phi (deg) T \
 ! Freq (Hz)     SpecIndex
   0.653425      0.00000      0.00000 

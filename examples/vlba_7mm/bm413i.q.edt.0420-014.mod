@@ -1,5 +1,5 @@
 ! Center RA: 04 23 15.80073,  Dec: -01 20 33.06555 (2000.0)
-! Tentative model.
+! Established model.
 ! Flux (Jy) Radius (mas)  Theta (deg)  Major FWHM (mas)  Axial ratio   Phi (deg) T \
 ! Freq (Hz)     SpecIndex
   0.996656      0.00000      0.00000 
