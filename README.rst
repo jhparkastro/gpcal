@@ -6,7 +6,7 @@ GPCAL is a Python module for instrumental polarization calibration in VLBI data.
 
 Installation
 ------------
-GPCAL requires ParselTongue, a Python interface to AIPS `Kettenis et al. 2006 <https://ui.adsabs.harvard.edu/abs/2006ASPC..351..497K>`_. Please install ParselTongue by following the instructions `here <http://old.jive.nl/jivewiki/doku.php?id=parseltongue:parseltongue/>`_.
+GPCAL requires ParselTongue, a Python interface to AIPS (`Kettenis et al. 2006 <https://ui.adsabs.harvard.edu/abs/2006ASPC..351..497K>`_). Please install ParselTongue by following the instructions `here <http://old.jive.nl/jivewiki/doku.php?id=parseltongue:parseltongue/>`_.
 
 GPCAL is available on `PyPi <https://pypi.org/project/gpcal/>`_ and can be installed via pip.
 
