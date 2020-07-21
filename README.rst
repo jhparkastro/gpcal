@@ -18,6 +18,7 @@ It should install most of the required libraries automatically (`astropy <http:/
 Another way to install GPCAL is by using `Anaconda <https://www.anaconda.com/>`_. Since ParselTongue is based on Python 2 and can be installed via Anaconda, one of the easiest ways to avoid any conflicts in Python versions among different softwares is to create a new Anaconda environment for Python 2 and install ParselTongue and GPCAL there.
 
 .. code-block:: bash
+
     conda create -n myenv python=2.7
     conda activate myenv
     conda install -c kettenis parseltongue
@@ -26,6 +27,7 @@ Another way to install GPCAL is by using `Anaconda <https://www.anaconda.com/>`_
 Try to run ParselTongue in the environment and import gpcal. If users encounter an error message of "...no module named _bsddb." in astroplan, then install bsddb via Anaconda in the environment.
 
 .. code-block:: bash
+
     conda install -c free bsddb
 
 
