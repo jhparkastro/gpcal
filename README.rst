@@ -15,14 +15,13 @@ GPCAL is available on `PyPi <https://pypi.org/project/gpcal/0.1.1.26/>`_ and can
 
 It should install most of the required libraries automatically (`astropy <http://www.astropy.org/>`_, `numpy <http://www.numpy.org/>`_, `pandas <http://www.pandas.pydata.org/>`_ , `matplotlib <http://www.matplotlib.org/>`_,  `scipy <http://www.scipy.org/>`_).
 
-Another way to install GPCAL is by using `Anaconda <https://www.anaconda.com/>`_. Since ParselTongue is based on Python 2 and can be installed via Anaconda, one of the easiest ways to avoid any conflicts in Python versions among different softwares is to create a new Anaconda environment for Python 2 and install ParselTongue and GPCAL there.
+Note that ParselTongue is based on Python 2. One of the easiest ways to avoid any conflicts in Python versions among different softwares is to create a new Anaconda environment for Python 2 and install ParselTongue there.
 
 .. code-block:: bash
 
     conda create -n myenv python=2.7
     conda activate myenv
     conda install -c kettenis parseltongue
-    conda install gpcal
 
 Try to run ParselTongue in the environment and import gpcal. If users encounter an error message of "...no module named _bsddb." in astroplan, then install bsddb via Anaconda in the environment.
 
@@ -37,16 +36,15 @@ There are example data and scripts in the "examples" folder. Tutorial slides usi
 
 Some publications that use GPCAL
 ------------
-If you use GPCAL in your publication, please cite `Park et al. 2020 <http://adsabs.harvard.edu/abs/2016ApJ...829...11C>`_.
+If you use GPCAL in your publication, please cite `Park et al. 2020 <https://www.overleaf.com/read/hwgrtycgyzrt>`_.
 
 Let us know if you use GPCAL in your publication and we'll list it here!
 
-- GPCAL: a generalized calibration pipeline for instrumental polarization in VLBI data, `Chael et al. 2016 <https://arxiv.org/abs/1605.06156>`_ 
+- GPCAL: a generalized calibration pipeline for instrumental polarization in VLBI data, `Park et al. 2020 <http://adsabs.harvard.edu/abs/2016ApJ...829...11C>`_ 
 
 
 License
 -------
-ehtim is licensed under GPLv2+. See LICENSE.txt for more details.
-
+GPCAL is licensed under GPLv2+. See LICENSE.txt for more details.
 
 
