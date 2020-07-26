@@ -36,11 +36,11 @@ There are example data and scripts in the "examples" folder. Tutorial slides usi
 
 Some publications that use GPCAL
 ------------
-If you use GPCAL in your publication, please cite `Park et al. 2020 <http://adsabs.harvard.edu/abs/2016ApJ...829...11C>`_.
+If you use GPCAL in your publication, please cite `Park et al. 2020 <https://www.overleaf.com/read/hwgrtycgyzrt>`_.
 
 Let us know if you use GPCAL in your publication and we'll list it here!
 
-- GPCAL: a generalized calibration pipeline for instrumental polarization in VLBI data, `Chael et al. 2016 <https://arxiv.org/abs/1605.06156>`_ 
+- GPCAL: a generalized calibration pipeline for instrumental polarization in VLBI data, `Park et al. 2020 <http://adsabs.harvard.edu/abs/2016ApJ...829...11C>`_ 
 
 
 License
