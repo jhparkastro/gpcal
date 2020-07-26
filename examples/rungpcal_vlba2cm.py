@@ -67,9 +67,6 @@ weightit = 1
 vplot = True
 resplot = True
 parplot = True
-vplot = False
-resplot = False
-parplot = False
 
 # Draw D-term plots for each IF separately.
 dplot_IFsep = True

@@ -124,7 +124,7 @@ class polcal(object):
                  fixdterm = False, pol_fixdterm = False, fixdr = None, fixdl = None, transferdterm = False, transferdtermant = None, \
                  selfpol = False, polcalsour = None, selfpoliter = None, ms = None, ps = None, uvbin = None, uvpower = None, dynam = None, \
                  manualweight = False, weightfactors = None, lpcal = True, \
-                 vplot = True, resplot = True, parplot = True, allplot = True, dplot_IFsep = False, tsep = 2./60., filetype = 'pdf', \
+                 vplot = True, resplot = True, parplot = True, allplot = False, dplot_IFsep = False, tsep = 2./60., filetype = 'pdf', \
                  aipslog = True, difmaplog = True):
         
         self.aips_userno = aips_userno
@@ -1434,7 +1434,7 @@ class polcal(object):
         
         
         # Define a pandas dataframe for the data array.
-        pdkey = ["IF", "time", "time_dhms", "source", "ant1", "ant2", "u", "v", "pang1", "pang2", \
+        pdkey = ["IF", "time", "source", "ant1", "ant2", "u", "v", "pang1", "pang2", \
                  "rrreal", "rrimag", "rrsigma", "llreal", "llimag", "llsigma", "rlreal", "rlimag", "rlsigma", "lrreal", "lrimag", "lrsigma", \
                  "rramp", "rrphas", "rramp_sigma", "rrphas_sigma", "llamp", "llphas", "llamp_sigma", "llphas_sigma", "rlamp", "rlphas", "rlamp_sigma", "rlphas_sigma", "lramp", "lrphas", "lramp_sigma", "lrphas_sigma", \
                  "qamp", "qphas", "qamp_sigma", "qphas_sigma", "qsigma", "uamp", "uphas", "uamp_sigma", "uphas_sigma", "usigma"]
@@ -3785,7 +3785,7 @@ class polcal(object):
             # Draw field-rotation angle plots if requested.
             if self.parplot: 
                 self.logger.info('Creating field-rotation-angle plots...\n')
-                self.parangplot(k, self.nant, self.antname, self.calsour, time, ant1, ant2, sourcearr, pang1, pang2, self.direc+'gpcal/'+self.outputname+'pol.FRA.IF'+str(k+1))
+                self.parangplot(k, self.nant, self.antname, self.polcalsour, time, ant1, ant2, sourcearr, pang1, pang2, self.direc+'gpcal/'+self.outputname+'pol.FRA.IF'+str(k+1))
             
             
             inputx = np.concatenate([pang1, pang2, pang1, pang2])
