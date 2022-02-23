@@ -23,7 +23,9 @@ from scipy.optimize import curve_fit
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-        
+
+from IPython import embed
+
 
 # Default matplotlib parameters
 plt.rc('font', size=21)
@@ -647,7 +649,8 @@ class polcal(object):
         
         for ifn in range(self.ifnum):
             for visibility in data:
-                if((visibility.visibility[ifn,0,0,2] == 0) | (visibility.visibility[ifn,0,1,2] == 0) | (visibility.visibility[ifn,0,2,2] == 0) | (visibility.visibility[ifn,0,3,2] == 0)): continue
+                if((visibility.visibility[ifn,0,0,2] <= 0) | (visibility.visibility[ifn,0,1,2] <= 0) | (visibility.visibility[ifn,0,2,2] <= 0) | (visibility.visibility[ifn,0,3,2] <= 0)): continue
+		#if((visibility.visibility[ifn,0,0,2] == 0) | (visibility.visibility[ifn,0,1,2] == 0) | (visibility.visibility[ifn,0,2,2] == 0) | (visibility.visibility[ifn,0,3,2] == 0)): continue
                 dumu.append(visibility.uvw[0])
                 dumv.append(visibility.uvw[1])
                 ifarr.append(ifn+1)
@@ -696,7 +699,7 @@ class polcal(object):
         real, imag = [], []
 
         for visibility in data:
-            if((visibility.visibility[ifn,0,0,2] == 0) | (visibility.visibility[ifn,0,1,2] == 0) | (visibility.visibility[ifn,0,2,2] == 0) | (visibility.visibility[ifn,0,3,2] == 0)): continue
+            if((visibility.visibility[ifn,0,0,2] <= 0) | (visibility.visibility[ifn,0,1,2] <= 0) | (visibility.visibility[ifn,0,2,2] <= 0) | (visibility.visibility[ifn,0,3,2] <= 0)): continue
             real.append(visibility.visibility[ifn,0,0,0])
             imag.append(visibility.visibility[ifn,0,0,1])
             
@@ -1481,6 +1484,10 @@ class polcal(object):
                     
                     data.zap()
                     cmap.zap()
+		    calib.zap()
+                    
+		    self.runfitld(inname, 'CALIB', self.direc+self.dataname+self.polcalsour[l]+'.calib')
+
                 
                 else:
                     calib = AIPSUVData(inname, 'CALIB', 1, 1)
@@ -1497,9 +1504,6 @@ class polcal(object):
                     calib.zap()
                 self.runfitld(inname, 'CALIB', self.direc+self.dataname+self.polcalsour[l]+'.uvf')
                 
-                for k in range(self.ifnum):                        
-                    self.uvprt(data, k, self.direc+'gpcal/'+self.dataname+self.polcalsour[l]+'.IF' + str(k+1) + '.uvprt')
-
                     
             calib = WAIPSUVData(inname, 'CALIB', 1, 1)
             
@@ -1638,58 +1642,65 @@ class polcal(object):
                     qmap.zap()
                 
                 if not path.exists(self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.q.fits'):
-                    continue
-                
+                    mod_qrealarr = mod_qrealarr + [0j] * len(calib)
+                    mod_qimagarr = mod_qimagarr + [0j] * len(calib)
+               
+	        else:
                 # Load the Stokes Q CLEAN models of the calibrators. Note that the Difmap files are saved after selecting Stokes I because AIPS UVSUB cannot handle models other than Stokes I.
-                self.runfitld(inname, 'QMAP', self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.q.fits')
-                qmap = AIPSImage(inname, 'QMAP', 1, 1)     
+                    self.runfitld(inname, 'QMAP', self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.q.fits')
+                    qmap = AIPSImage(inname, 'QMAP', 1, 1)     
+                
+                    uvsub = AIPSUVData(inname, 'UVSUB', 1, 1)
+                    if(uvsub.exists() == True):
+                        uvsub.clrstat()
+                        uvsub.zap()
+                
+                    self.runuvsub(inname, 'CALIB', 'QMAP', 1, 1)
+                
+                
+                    moddata = WAIPSUVData(inname, 'UVSUB', 1, 1)
+                    mod_qreal, mod_qimag = self.pol_model_uvprt(moddata, k, "all")
+                
+                    mod_qrealarr = mod_qrealarr + mod_qreal
+                    mod_qimagarr = mod_qimagarr + mod_qimag
+              
+                    moddata.zap()
+                    qmap.zap()
         
-                umap = AIPSUVData(inname, 'UMAP', 1, 1)
+                
+		umap = AIPSUVData(inname, 'UMAP', 1, 1)
                 if(umap.exists() == True):
                     umap.clrstat()
                     umap.zap()
                 
+                
+		if not path.exists(self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.u.fits'):
+                    mod_urealarr = mod_urealarr + [0j] * len(calib)
+                    mod_uimagarr = mod_uimagarr + [0j] * len(calib)
+                
+               
                 # Load the Stokes U CLEAN models of the calibrators. Note that the Difmap files are saved after selecting Stokes I because AIPS UVSUB cannot handle models other than Stokes I.
-                self.runfitld(inname, 'UMAP', self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.u.fits')    
-                umap = AIPSImage(inname, 'UMAP', 1, 1)
+	        else:
+		    self.runfitld(inname, 'UMAP', self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.u.fits')    
+                    umap = AIPSImage(inname, 'UMAP', 1, 1)
                 
-                
-                uvsub = AIPSUVData(inname, 'UVSUB', 1, 1)
-                if(uvsub.exists() == True):
-                    uvsub.clrstat()
-                    uvsub.zap()
-                
-                self.runuvsub(inname, 'CALIB', 'QMAP', 1, 1)
-                
-                
-                moddata = WAIPSUVData(inname, 'UVSUB', 1, 1)
-                mod_qreal, mod_qimag = self.pol_model_uvprt(moddata, k, "all")
-                
-                mod_qrealarr = mod_qrealarr + mod_qreal
-                mod_qimagarr = mod_qimagarr + mod_qimag
-                
-                
-                moddata.zap()
-                qmap.zap()
-        
-                
-                uvsub = AIPSUVData(inname, 'UVSUB', 1, 1)
-                if(uvsub.exists() == True):
-                    uvsub.clrstat()
-                    uvsub.zap()
+                    uvsub = AIPSUVData(inname, 'UVSUB', 1, 1)
+                    if(uvsub.exists() == True):
+                        uvsub.clrstat()
+                        uvsub.zap()
                     
-                self.runuvsub(inname, 'CALIB', 'UMAP', 1, 1)
+                    self.runuvsub(inname, 'CALIB', 'UMAP', 1, 1)
                 
                 
-                moddata = WAIPSUVData(inname, 'UVSUB', 1, 1)
-                mod_ureal, mod_uimag = self.pol_model_uvprt(moddata, k, "all")
+                    moddata = WAIPSUVData(inname, 'UVSUB', 1, 1)
+                    mod_ureal, mod_uimag = self.pol_model_uvprt(moddata, k, "all")
                 
-                mod_urealarr = mod_urealarr + mod_ureal
-                mod_uimagarr = mod_uimagarr + mod_uimag
+                    mod_urealarr = mod_urealarr + mod_ureal
+                    mod_uimagarr = mod_uimagarr + mod_uimag
                 
             
-                moddata.zap()
-                umap.zap()
+                    moddata.zap()
+                    umap.zap()
                 
             calib.zap()
 
@@ -1703,6 +1714,7 @@ class polcal(object):
         mod_qamp, mod_qphas, mod_uamp, mod_uphas = np.absolute(mod_q), np.angle(mod_q), np.absolute(mod_u), np.angle(mod_u)
         
         
+
         # Append the model visibilities to the existing pandas dataframe as new columns.
         self.pol_data.loc[:,"model_rlreal"], self.pol_data.loc[:,"model_rlimag"], self.pol_data.loc[:,"model_lrreal"], self.pol_data.loc[:,"model_lrimag"], \
         self.pol_data.loc[:,"model_rlamp"], self.pol_data.loc[:,"model_rlphas"], self.pol_data.loc[:,"model_lramp"], self.pol_data.loc[:,"model_lrphas"], \
@@ -2209,16 +2221,16 @@ class polcal(object):
             select = (self.sourcearr == self.polcalsour[l])
             
             RiLj_Real[select] += self.model_rlreal[select] + \
-              Tot_D_iR_amp[select] * Tot_D_jL_amp[select] * self.model_rlamp[select] * np.cos(self.model_rlphas[select] + Tot_D_iR_phas[select] - Tot_D_jL_phas[select] + 2. * (self.pang1[select] + self.pang2[select]))
+              Tot_D_iR_amp[select] * Tot_D_jL_amp[select] * self.model_lramp[select] * np.cos(self.model_lrphas[select] + Tot_D_iR_phas[select] - Tot_D_jL_phas[select] + 2. * (self.pang1[select] + self.pang2[select]))
     
             RiLj_Imag[select] += self.model_rlimag[select] + \
-              Tot_D_iR_amp[select] * Tot_D_jL_amp[select] * self.model_rlamp[select] * np.sin(self.model_rlphas[select] + Tot_D_iR_phas[select] - Tot_D_jL_phas[select] + 2. * (self.pang1[select] + self.pang2[select]))
+              Tot_D_iR_amp[select] * Tot_D_jL_amp[select] * self.model_lramp[select] * np.sin(self.model_lrphas[select] + Tot_D_iR_phas[select] - Tot_D_jL_phas[select] + 2. * (self.pang1[select] + self.pang2[select]))
     
             LiRj_Real[select] += self.model_lrreal[select] + \
-              Tot_D_iL_amp[select] * Tot_D_jR_amp[select] * self.model_lramp[select] * np.cos(self.model_lrphas[select] + Tot_D_iL_phas[select] - Tot_D_jR_phas[select] - 2. * (self.pang1[select] + self.pang2[select]))
+              Tot_D_iL_amp[select] * Tot_D_jR_amp[select] * self.model_rlamp[select] * np.cos(self.model_rlphas[select] + Tot_D_iL_phas[select] - Tot_D_jR_phas[select] - 2. * (self.pang1[select] + self.pang2[select]))
     
             LiRj_Imag[select] += self.model_lrimag[select] + \
-              Tot_D_iL_amp[select] * Tot_D_jR_amp[select] * self.model_lramp[select] * np.sin(self.model_lrphas[select] + Tot_D_iL_phas[select] - Tot_D_jR_phas[select] - 2. * (self.pang1[select] + self.pang2[select]))
+              Tot_D_iL_amp[select] * Tot_D_jR_amp[select] * self.model_rlamp[select] * np.sin(self.model_rlphas[select] + Tot_D_iL_phas[select] - Tot_D_jR_phas[select] - 2. * (self.pang1[select] + self.pang2[select]))
             
             
         RiLj_Real += \
@@ -3595,7 +3607,9 @@ class polcal(object):
                         self.modamp.append(ifdata["model"+str(t+1)+"_amp"])
                         self.modphas.append(ifdata["model"+str(t+1)+"_phas"])
             
-            
+           
+	    #embed()
+
             # Perform the least-square fitting using Scipy curve_fit.
             time1 = timeit.default_timer()
             Iteration, pco = curve_fit(self.deq, inputx, inputy, p0=init, sigma = outputsigma, absolute_sigma = False, bounds = bounds)
