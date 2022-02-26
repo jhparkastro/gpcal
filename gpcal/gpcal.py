@@ -24,7 +24,6 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-from IPython import embed
 
 
 # Default matplotlib parameters
@@ -125,7 +124,7 @@ class polcal(object):
                  selfcal=False, solint = None, solmode = None, soltype = None, weightit = None, zblcal = False, zblcalsour = None, zblant = None, \
                  fixdterm = False, pol_fixdterm = False, fixdr = None, fixdl = None, transferdterm = False, transferdtermant = None, \
                  selfpol = False, polcalsour = None, selfpoliter = None, ms = None, ps = None, uvbin = None, uvpower = None, dynam = None, \
-                 manualweight = False, weightfactors = None, lpcal = True, \
+                 manualweight = False, weightfactors = None, lpcal = True, remove_weight_outlier_threshold = 10000., \
                  vplot = True, resplot = True, parplot = True, allplot = False, dplot_IFsep = False, tsep = 2./60., filetype = 'pdf', \
                  aipslog = True, difmaplog = True):
         
@@ -194,7 +193,8 @@ class polcal(object):
         self.tsep = tsep
         self.dplot_IFsep = dplot_IFsep
         self.filetype = filetype
-        
+        self.remove_weight_outlier_threshold = remove_weight_outlier_threshold
+
         self.aipslog = aipslog
         self.difmaplog = difmaplog
         
@@ -284,7 +284,6 @@ class polcal(object):
         enablePrint()
         time2 = timeit.default_timer()        
         self.aipstime += time2 - time1
-        
     
     def runlpcal(self, inname, inclass, in2class, cnum):
         """
@@ -1343,6 +1342,9 @@ class polcal(object):
             np.array(ifarr), np.array(timearr), np.array(sourcearr), np.array(ant1arr), np.array(ant2arr), np.array(uarr), np.array(varr), np.array(rrrealarr), np.array(rrimagarr), np.array(rrweightarr), np.array(llrealarr), np.array(llimagarr), np.array(llweightarr), \
             np.array(rlrealarr), np.array(rlimagarr), np.array(rlweightarr), np.array(lrrealarr), np.array(lrimagarr), np.array(lrweightarr)
         
+        rlweightarr[rlweightarr > self.remove_weight_outlier_threshold * np.median(rlweightarr)] = np.median(rlweightarr)
+        lrweightarr[lrweightarr > self.remove_weight_outlier_threshold * np.median(lrweightarr)] = np.median(lrweightarr)
+        
         
         # Combine the numpy arrays into a single pandas dataframe.
         self.data.loc[:,"IF"], self.data.loc[:,"time"], self.data.loc[:,"source"], self.data.loc[:,"ant1"], self.data.loc[:,"ant2"], self.data.loc[:,"u"], self.data.loc[:,"v"], \
@@ -1542,7 +1544,9 @@ class polcal(object):
         ifarr, timearr, sourcearr, ant1arr, ant2arr, uarr, varr, rrrealarr, rrimagarr, rrweightarr, llrealarr, llimagarr, llweightarr, rlrealarr, rlimagarr, rlweightarr, lrrealarr, lrimagarr, lrweightarr = \
             np.array(ifarr), np.array(timearr), np.array(sourcearr), np.array(ant1arr), np.array(ant2arr), np.array(uarr), np.array(varr), np.array(rrrealarr), np.array(rrimagarr), np.array(rrweightarr), np.array(llrealarr), np.array(llimagarr), np.array(llweightarr), \
             np.array(rlrealarr), np.array(rlimagarr), np.array(rlweightarr), np.array(lrrealarr), np.array(lrimagarr), np.array(lrweightarr)
-        
+       
+        rlweightarr[rlweightarr > self.remove_weight_outlier_threshold * np.median(rlweightarr)] = np.median(rlweightarr)
+        lrweightarr[lrweightarr > self.remove_weight_outlier_threshold * np.median(lrweightarr)] = np.median(lrweightarr)
         
         # Combine the numpy arrays into a single pandas dataframe.
         self.pol_data.loc[:,"IF"], self.pol_data.loc[:,"time"], self.pol_data.loc[:,"source"], self.pol_data.loc[:,"ant1"], self.pol_data.loc[:,"ant2"], self.pol_data.loc[:,"u"], self.pol_data.loc[:,"v"], \
@@ -1642,9 +1646,16 @@ class polcal(object):
                     qmap.zap()
                 
                 if not path.exists(self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.q.fits'):
-                    mod_qrealarr = mod_qrealarr + [0j] * len(calib)
-                    mod_qimagarr = mod_qimagarr + [0j] * len(calib)
-               
+		    dum = 0
+            	    calib = WAIPSUVData(inname, 'CALIB', 1, 1)
+        	    for visibility in calib:
+            		if((visibility.visibility[k,0,0,2] <= 0) | (visibility.visibility[k,0,1,2] <= 0) | (visibility.visibility[k,0,2,2] <= 0) | (visibility.visibility[k,0,3,2] <= 0)): continue
+                	dum += 1
+
+                    mod_qrealarr = mod_qrealarr + [0.] * dum
+                    mod_qimagarr = mod_qimagarr + [0.] * dum
+
+            	    calib = AIPSUVData(inname, 'CALIB', 1, 1)
 	        else:
                 # Load the Stokes Q CLEAN models of the calibrators. Note that the Difmap files are saved after selecting Stokes I because AIPS UVSUB cannot handle models other than Stokes I.
                     self.runfitld(inname, 'QMAP', self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.q.fits')
@@ -1675,9 +1686,15 @@ class polcal(object):
                 
                 
 		if not path.exists(self.direc+self.dataname+self.polcalsour[l]+'.IF'+str(k+1)+'.u.fits'):
-                    mod_urealarr = mod_urealarr + [0j] * len(calib)
-                    mod_uimagarr = mod_uimagarr + [0j] * len(calib)
-                
+            	    calib = WAIPSUVData(inname, 'CALIB', 1, 1)
+		    dum = 0
+        	    for visibility in calib:
+            		if((visibility.visibility[k,0,0,2] <= 0) | (visibility.visibility[k,0,1,2] <= 0) | (visibility.visibility[k,0,2,2] <= 0) | (visibility.visibility[k,0,3,2] <= 0)): continue
+                	dum += 1
+
+                    mod_urealarr = mod_urealarr + [0.] * dum
+                    mod_uimagarr = mod_uimagarr + [0.] * dum
+            	    calib = AIPSUVData(inname, 'CALIB', 1, 1)
                
                 # Load the Stokes U CLEAN models of the calibrators. Note that the Difmap files are saved after selecting Stokes I because AIPS UVSUB cannot handle models other than Stokes I.
 	        else:
@@ -1713,7 +1730,6 @@ class polcal(object):
         mod_rlamp, mod_rlphas, mod_lramp, mod_lrphas = np.absolute(mod_rlreal + 1j*mod_rlimag), np.angle(mod_rlreal + 1j*mod_rlimag), np.absolute(mod_lrreal + 1j*mod_lrimag), np.angle(mod_lrreal + 1j*mod_lrimag)
         mod_qamp, mod_qphas, mod_uamp, mod_uphas = np.absolute(mod_q), np.angle(mod_q), np.absolute(mod_u), np.angle(mod_u)
         
-        
 
         # Append the model visibilities to the existing pandas dataframe as new columns.
         self.pol_data.loc[:,"model_rlreal"], self.pol_data.loc[:,"model_rlimag"], self.pol_data.loc[:,"model_lrreal"], self.pol_data.loc[:,"model_lrimag"], \
@@ -1721,7 +1737,6 @@ class polcal(object):
         self.pol_data.loc[:,"model_qamp"], self.pol_data.loc[:,"model_qphas"], self.pol_data.loc[:,"model_uamp"], self.pol_data.loc[:,"model_uphas"] = \
         mod_rlreal, mod_rlimag, mod_lrreal, mod_lrimag, mod_rlamp, mod_rlphas, mod_lramp, mod_lrphas, mod_qamp, mod_qphas, mod_uamp, mod_uphas
 
-        
 
     def parangplot(self, k, nant, antname, source, time, ant1, ant2, sourcearr, pang1, pang2, filename):
         """
@@ -3608,8 +3623,6 @@ class polcal(object):
                         self.modphas.append(ifdata["model"+str(t+1)+"_phas"])
             
            
-	    #embed()
-
             # Perform the least-square fitting using Scipy curve_fit.
             time1 = timeit.default_timer()
             Iteration, pco = curve_fit(self.deq, inputx, inputy, p0=init, sigma = outputsigma, absolute_sigma = False, bounds = bounds)
@@ -3680,7 +3693,7 @@ class polcal(object):
             self.DLphas = pd.concat([self.DLArr.applymap(np.angle).applymap(np.degrees)])            
         
             for m in range(self.nant):
-                self.logger.info('{:s}: RCP - amplitude = {:6.3f} %, phase = {:7.2f} deg, RCP - amplitude = {:6.3f} %, phase = {:7.2f} deg'.format(self.antname[m], \
+                self.logger.info('{:s}: RCP - amplitude = {:6.3f} %, phase = {:7.2f} deg, LCP - amplitude = {:6.3f} %, phase = {:7.2f} deg'.format(self.antname[m], \
                       self.DRamp.loc["IF"+str(k+1), self.antname[m]] * 1e2, self.DRphas.loc["IF"+str(k+1), self.antname[m]], 
                       self.DLamp.loc["IF"+str(k+1), self.antname[m]] * 1e2, self.DLphas.loc["IF"+str(k+1), self.antname[m]]))
             
