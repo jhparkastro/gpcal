@@ -17,6 +17,7 @@ from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 
 from astropy.coordinates import EarthLocation
 import astropy.time as at
+import datetime as dt
 
 from scipy.optimize import curve_fit
 
@@ -762,9 +763,22 @@ class polcal(object):
         
         hour[hour>=24.] -= 24.
         
-        # Convert UTC to GST using astropy Time.
-        dumt = at.Time(["{:04d}-{:02d}-{:02d}T{:02d}:{:02d}:{:f}".format(self.year, self.month, self.day+int(dt), int(hr), int(mn), sec) for dt, hr, mn, sec in zip(date, hour, minute, second)])
+        dumdatetime = dt.datetime(self.year, self.month, self.day)
+        dumdatetime2 = np.array([dumdatetime + dt.timedelta(hours=float(it)) for it in time])
+        
+
+        dumt = [] 
+
+        for dum in dumdatetime2:
+            dumt.append("{:04d}-{:02d}-{:02d}T{:02d}:{:02d}:{:f}".format(dum.year, dum.month, dum.day, dum.hour, dum.minute, dum.second + dum.microsecond * 1e-6))
+
+        dumt = at.Time(dumt)
         gst = dumt.sidereal_time('mean','greenwich').hour
+
+
+        # # Convert UTC to GST using astropy Time.
+        # dumt = at.Time(["{:04d}-{:02d}-{:02d}T{:02d}:{:02d}:{:f}".format(self.year, self.month, self.day+int(dt), int(hr), int(mn), sec) for dt, hr, mn, sec in zip(date, hour, minute, second)])
+        # gst = dumt.sidereal_time('mean','greenwich').hour
         
         # Obtain field-rotation angles using the known equations.
         hangle = np.radians(gst * 15. + lonarr - raarr)        
