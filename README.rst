@@ -32,16 +32,18 @@ Try to run ParselTongue in the environment and import gpcal. If users encounter 
 
 Tutorial
 -------------
-There are example data and scripts in the "examples" folder. Tutorial slides using one of those data can be found `here <https://docs.google.com/presentation/d/1RRiT4r6H7yeu8ErvdhLN_f8XoMGg0QU3kO_WVWr85W8/edit?usp=sharing>`_.
+There are example data and scripts in the "examples" folder. Tutorial slides using one of those data can be found `here <https://docs.google.com/presentation/d/1TXLHfwVqXNnr7cwLodQQHx2dnVA0WC9iz8e7s1CKgmk/edit?usp=sharing>`_.
 
 Some publications that use GPCAL
 ------------
-If you use GPCAL in your publication, please cite `Park et al. 2020 <>`_.
+If you use GPCAL in your publication, please cite `Park et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...906...85P/abstract>`_.
 
 Let us know if you use GPCAL in your publication and we'll list it here!
 
-- GPCAL: a generalized calibration pipeline for instrumental polarization in VLBI data, `Park et al. 2020 <>`_ 
-
+- GPCAL: a generalized calibration pipeline for instrumental polarization in VLBI data, `Park et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...906...85P/abstract>`_ 
+- Jet Collimation and Acceleration in the Giant Radio Galaxy NGC 315 `Park et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...909...76P/abstract>`_ 
+- First M87 Event Horizon Telescope Results. VII. Polarization of the Ring `EHT Collaboration et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...910L..12E/abstract>`_ 
+- A Revised View of the Linear Polarization in the Subparsec Core of M87 at 7 mm `Park et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...922..180P/abstract>`_ 
 
 License
 -------
