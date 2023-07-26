@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-import gpcal.obshelpers as oh
+import obshelpers as oh
 
 from multiprocessing import Pool
 

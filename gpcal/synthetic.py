@@ -5,8 +5,8 @@ import pandas as pd
 from AIPSData import AIPSUVData, AIPSImage
 from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 
-import gpcal.aipsutil as au
-import gpcal.obshelpers as oh
+import aipsutil as au
+import obshelpers as oh
 
 import os
 
