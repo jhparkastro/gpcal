@@ -19,7 +19,7 @@ from AIPSTask import AIPSTask
 from AIPSData import AIPSUVData, AIPSImage
 from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 
-import gpcaltest.aipsutil as au
+import gpcal.aipsutil as au
 
 from os import path
 

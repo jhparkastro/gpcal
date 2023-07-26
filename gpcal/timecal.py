@@ -26,11 +26,11 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-import gpcaltest.aipsutil as au
-import gpcaltest.obshelpers as oh
-import gpcaltest.cleanhelpers as ch
-import gpcaltest.plothelpers as ph
-import gpcaltest.polsolver as ps
+import gpcal.aipsutil as au
+import gpcal.obshelpers as oh
+import gpcal.cleanhelpers as ch
+import gpcal.plothelpers as ph
+import gpcal.polsolver as ps
 
 import gc
 import psutil

@@ -20,10 +20,10 @@ from AIPSTask import AIPSTask
 from AIPSData import AIPSUVData, AIPSImage
 from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 
-# import gpcaltest.gpcal as gp
-import gpcaltest.aipsutil as au
-import gpcaltest.obshelpers as oh
-import gpcaltest.plothelpers as ph
+# import gpcal.gpcal as gp
+import gpcal.aipsutil as au
+import gpcal.obshelpers as oh
+import gpcal.plothelpers as ph
 
 import os
 from os import path
