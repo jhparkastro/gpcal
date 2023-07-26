@@ -2,28 +2,30 @@
 
 import gpcal as gp
 
+from multiprocessing import cpu_count
 import timeit
 
 
 # AIPS user ID number for ParselTongue.
-aips_userno = 122
+aips_userno = 99
 
 
 # The working directory where the input UVFITS and image fits files are located.
-direc = '/home/jpark/gpcalclone/examples/vlba_7mm/'
+direc = '/home/jpark/gpcaltest/vlba_7mm/'
 
 
 # The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).
 dataname = 'bm413i.q.edt.'
 
 # The list of calibrators which will be used for an initial D-term estimation using the similarity assumption.
-calsour = ['0235+164', '0420-014', '0716+714', 'OJ287', '1156+295', '1510-089', '1749+096']
+calsour = ['OJ287', '3C84']
 
 # The list of the number of CLEAN sub-models for calsour.
-cnum = [1, 3, 1, 3, 2, 2, 2]
+cnum = [3, 0]
 
 # The list of booleans specifying whether the sub-model division will be done automatically or manually.
-autoccedt = [True, False, True, False, False, False, False]
+autoccedt = [False, True]
+
 
 
 # Perform instrumental polarization self-calibraiton.
@@ -48,10 +50,13 @@ uvpower = -1
 dynam = 1
 
 # The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour.
-polcalsour = ['0235+164', '3C111', '0420-014', '3C120', '0716+714', 'OJ287', '1156+295', '1510-089', '3C345', '1749+096', 'BLLAC']
+polcalsour = ['OJ287', '3C273', '3C279', '3C345', '3C454.3', '3C84']
+
+# The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour.
+polcal_unpol = [False, False, False, False, False, True]
 
 # The list of sources to which the best-fit D-terms will be applied.
-source = ['0235+164', '3C84', '3C111', '0420-014', '3C120', '0716+714', 'OJ287', '1156+295', '3C273', '1510-089', '3C345', 'MKN501', '1749+096', 'BLLAC']
+source = ['0235+164', '3C84', '3C111', '0420-014', '3C120', '0716+714', 'OJ287', '1156+295', '3C273', '1510-089', '3C345', 'MKN501', '1749+096', 'BLLAC', '3C279', '3C454.3']
 
 # Perform additional self-calibration with CALIB in Difmap.
 selfcal = True
@@ -68,32 +73,27 @@ vplot = True
 resplot = True
 parplot = True
 
+# vplot = False
+# resplot = False
+# parplot = False
+
 # Draw D-term plots for each IF separately.
 dplot_IFsep = True
 
 # Output the figures in the format of png.
 filetype = 'png'
 
+# Use multiple cores to speed up the code.
+multiproc = True
 
-# The real and imaginary parts of all D-terms are assumed to be within 50%.
-Dbound = 0.5
-
-# The source-polarization terms for the D-term estimation using the similarity assumption are assumed to be less than 500%. 
-Pbound = 5.
-
-
-# The D-term plots will be shown for ranges of (-15%, 15%) for both the real and imaginary parts.
-drange = 15.
-
-
+# Use n-1 core for multiprocessing, where n is the total number of core.
+nproc = cpu_count() - 1
 
 time1 = timeit.default_timer()
 
 # Load the GPCAL class POLCAL using the above parameters.
-obs = gp.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, Dbound = Dbound, Pbound = Pbound, \
-               solint = solint, solmode = solmode, soltype = soltype, weightit = weightit, dplot_IFsep = dplot_IFsep, \
-               drange = drange, polcalsour = polcalsour, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
-               selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype)
+obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, polcalsour = polcalsour, polcal_unpol = polcal_unpol, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
+                      dplot_IFsep = dplot_IFsep, selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc, vplot_scanavg = True)
 
 # Run GPCAL.
 obs.dtermsolve()
