@@ -1,11 +1,11 @@
 
-import gpcaltest.gpcal
-import gpcaltest.channelcal
-import gpcaltest.timecal
-import gpcaltest.obshelpers
-import gpcaltest.plothelpers
-import gpcaltest.synthetic
-import gpcaltest.aipsutil
-import gpcaltest.cleanhelpers
-import gpcaltest.polsolver
+import gpcal.gpcal
+import gpcal.channelcal
+import gpcal.timecal
+import gpcal.obshelpers
+import gpcal.plothelpers
+import gpcal.synthetic
+import gpcal.aipsutil
+import gpcal.cleanhelpers
+import gpcal.polsolver
 
