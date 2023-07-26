@@ -10,7 +10,7 @@ aips_userno = 122
 
 
 # The working directory where the input UVFITS and image fits files are located.
-direc = '/home2/jhpark/gpcaltest/examples/vlba_7mm/'
+direc = '/home/jpark/gpcalclone/examples/vlba_7mm/'
 
 
 # The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).
@@ -20,10 +20,10 @@ dataname = 'bm413i.q.edt.'
 calsour = ['0235+164', '0420-014', '0716+714', 'OJ287', '1156+295', '1510-089', '1749+096']
 
 # The list of the number of CLEAN sub-models for calsour.
-cnum = [1, 3, 3, 2, 2, 2]
+cnum = [1, 3, 1, 3, 2, 2, 2]
 
 # The list of booleans specifying whether the sub-model division will be done automatically or manually.
-autoccedt = [True] + [False] * (len(calsour) - 1)
+autoccedt = [True, False, True, False, False, False, False]
 
 
 # Perform instrumental polarization self-calibraiton.
