@@ -10,8 +10,6 @@ import obshelpers as oh
 
 import os
 
-from IPython import embed
-
 
 def synthetic_deq(nant, pang1, pang2, ant1, ant2, llamp, llphas, rramp, rrphas, model_ireal, model_iimag, model_rlreal, model_rlimag, model_lrreal, model_lrimag, stokes, *p):
     

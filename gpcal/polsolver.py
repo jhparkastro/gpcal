@@ -6,106 +6,11 @@ Created on Mon Nov 29 13:59:06 2021
 @author: jpark
 """
 
-
 import numpy as np
-import pandas as pd
 
 from scipy.optimize import curve_fit
 
-from astropy.coordinates import EarthLocation
-import astropy.time as at
-
-from AIPS import AIPS
-from AIPSTask import AIPSTask
-from AIPSData import AIPSUVData, AIPSImage
-from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
-
-import aipsutil as au
-import obshelpers as oh
 import plothelpers as ph
-
-import os
-from os import path
-
-from IPython import embed
-
-
-from multiprocessing import cpu_count, Pool
-
-
-max_count = cpu_count()
-nproc = max_count - 1
-
-
-def cleanqu(direc, data, mask, save, bif, eif, ms, ps, uvbin, uvpower, dynam, shift_x, shift_y, stokes, log = None): # Version 1.1
-    """
-    Perform imaging of Stokes Q and U in Difmap.
-    
-    Args:
-        data (str): the name of the UVFITS file to be CLEANed.
-        mask (str): the name of the CLEAN windows to be used.
-        save (str): the name of the output Difmap save file.
-        log (str): the name of the Difmap log file.
-    """
-    
-    # logname = ''
-    
-    
-    # Write a simple Difmap script for CLEAN in the working directory.
-#        if not path.exists(self.direc+'GPCAL_Difmap_v1'):
-    f = open(direc+'GPCAL_Difmap_v1','w')
-    
-    f.write('observe %1\nmapcolor rainbow, 1, 0.5\nselect %13, %2, %3\nmapsize %4, %5\nuvweight %6, %7\nrwin %8\nshift %9,%10\ndo i=1,100\nclean 100, 0.02, imstat(rms)*%11\nend do\nselect i\nsave %12.%13\nexit')
-        
-    f.close()
-        
-    
-    curdirec = os.getcwd()
-    
-    logname = 'gpcal_difmap.log'
-
-    os.chdir(direc)
-    if log != None:
-        command = "echo @GPCAL_Difmap_v1 %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s | difmap > %s" %(data,bif,eif,ms,ps,uvbin,uvpower,mask,shift_x,shift_y,dynam,save,stokes,logname) # Version 1.1!
-    else:
-        command = "echo @GPCAL_Difmap_v1 %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s | difmap > /dev/null 2>&1" %(data,bif,eif,ms,ps,uvbin,uvpower,mask,shift_x,shift_y,dynam,save,stokes) # Version 1.1!
-    
-    # log.info('\nMaking CLEAN models for Stokes Q & U maps for {:s}...'.format(data))
-    
-    os.system(command)
-                
-    if log != None:
-        os.system('cat ' + logname + ' > ' + log)
-    
-    os.chdir(curdirec)
-    
-
-
-def cleanqu2(args): # Version 1.1
-    cleanqu3(*args)
-
-def cleanqu3(direc, data, mask, save, bif, eif, ms, ps, uvbin, uvpower, dynam, shift_x, shift_y, stokes, log): # Version 1.1
-    cleanqu(direc, data, mask, save, bif, eif, ms, ps, uvbin, uvpower, dynam, shift_x, shift_y, stokes, log = None)
-    
-
-def cleanqu_run(args): # Version 1.1
-    """
-    Perform imaging of Stokes Q and U in Difmap.
-    
-    Args:
-        data (str): the name of the UVFITS file to be CLEANed.
-        mask (str): the name of the CLEAN windows to be used.
-        save (str): the name of the output Difmap save file.
-        log (str): the name of the Difmap log file.
-    """
-
-    pool = Pool(processes = nproc)
-    pool.map(cleanqu2, args)
-    pool.close()
-    pool.join()
-    
-    # cleanqu(direc, data, mask, save, bif, eif, ms, ps, uvbin, uvpower, dynam, shift_x, shift_y, stokes, log = log)
-    
 
 
 def deq(x, *p):

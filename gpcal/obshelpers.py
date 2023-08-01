@@ -13,17 +13,12 @@ from astropy.coordinates import EarthLocation
 import astropy.time as at
 import datetime as dt
 
-
-from AIPS import AIPS
-from AIPSTask import AIPSTask
 from AIPSData import AIPSUVData, AIPSImage
 from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 
 import aipsutil as au
 
 from os import path
-
-from IPython import embed
 
 
 def uvprt(data, select):
@@ -158,74 +153,6 @@ def get_parang(yeararr, montharr, dayarr, time, raarr, decarr, lonarr, latarr, f
     
     return pang
     
-
-# #    def get_parang(self, time, ant, sourcearr, source, obsra, obsdec):
-# def get_parang(time, ant, sourcearr, year, month, day, source, obsra, obsdec, longarr, latiarr, f_el, f_par, phi_off): # Version 1.1!
-#     """
-#     Calculate antenna field-rotation angles.
-    
-#     Args:
-#         time (numpy.array): a numpy array of time in UTC of the visibilities.
-#         ant (numpy.array): a numpy array of antenna number of the visibilities.
-#         sourcearr (numpy.array): a numpy array of source of the visibilities.
-#         source (list): a list of calibrators.
-#         obsra (list): a list of calibrators' right ascension in units of degrees.
-#         obsdec (list): a list of calibrators' declination in units of degrees.
-    
-#     Returns:
-#         a numpy of the field-rotation angles.
-#     """        
-    
-#     nant = np.max(ant) + 1
-#     num = len(time)
-    
-#     lonarr, latarr, raarr, decarr, elarr, pararr, phiarr, yeararr, montharr, dayarr = \
-#         np.zeros(num), np.zeros(num), np.zeros(num), np.zeros(num), np.zeros(num), np.zeros(num), np.zeros(num), np.zeros(num), np.zeros(num), np.zeros(num) # Version 1.1!
-        
-#     # Produce numpy arrays for antenna longitudes, latitudes, and the coefficients of the field-rotation angle equations.
-#     for m in range(nant):
-#         lonarr[(ant == m)] = longarr[m]
-#         latarr[(ant == m)] = latiarr[m]
-#         elarr[(ant == m)] = f_el[m]
-#         pararr[(ant == m)] = f_par[m]
-#         phiarr[(ant == m)] = phi_off[m]
-    
-#     # Produce numpy arrays for sources RA and Dec.
-#     for l in range(len(source)):
-#         raarr[sourcearr == source[l]] = obsra[l]
-#         decarr[sourcearr == source[l]] = obsdec[l]
-#         yeararr[sourcearr == source[l]] = year[l]
-#         montharr[sourcearr == source[l]] = month[l]
-#         dayarr[sourcearr == source[l]] = day[l]
-        
-#     latarr, decarr = np.radians(latarr), np.radians(decarr)
-
-    
-#     hour = np.floor(time)
-#     minute = np.floor((time - hour) * 60.)
-#     second = (time - hour - minute / 60.) * 3600.
-    
-#     for i in range(100):
-#         dayarr[hour>=24.] += 1. # Version 1.1!
-#         hour[hour>=24.] -= 24. # Version 1.1!
-        
-#     # Convert UTC to GST using astropy Time.
-# #        dumt = at.Time(["{:04d}-{:02d}-{:02d}T{:02d}:{:02d}:{:f}".format(self.year, self.month, self.day+int(dt), int(hr), int(mn), sec) for dt, hr, mn, sec in zip(date, hour, minute, second)])
-    
-#     dumt = at.Time(["{:04d}-{:02d}-{:02d}T{:02d}:{:02d}:{:f}".format(int(yr), int(mo), int(dt), int(hr), int(mn), sec) for yr, mo, dt, hr, mn, sec in zip(yeararr, montharr, dayarr, hour, minute, second)]) # Version 1.1!
-#     gst = dumt.sidereal_time('mean','greenwich').hour
-    
-    
-#     # Obtain field-rotation angles using the known equations.
-#     hangle = np.radians(gst * 15. + lonarr - raarr)        
-#     parang = np.arctan2((np.sin(hangle) * np.cos(latarr)), (np.sin(latarr) * np.cos(decarr) - np.cos(latarr) * np.sin(decarr) * np.cos(hangle)))        
-#     altitude = np.arcsin(np.sin(decarr) * np.sin(latarr) + np.cos(decarr) * np.cos(latarr) * np.cos(hangle))
-#     pang = elarr * altitude + pararr * parang + phiarr
-        
-    
-#     return pang
-    
-
 
 def coord(antname, antx, anty, antz):
     """
@@ -408,12 +335,7 @@ def pd_modifier(data):
         data.loc[:,"llsigma"] / np.abs(data.loc[:,"llreal"] + 1j*data.loc[:,"llimag"]), \
         data.loc[:,"rlsigma"] / np.abs(data.loc[:,"rlreal"] + 1j*data.loc[:,"rlimag"]), \
         data.loc[:,"lrsigma"] / np.abs(data.loc[:,"lrreal"] + 1j*data.loc[:,"lrimag"])
-        
-        # phaserror(data.loc[:,"rrreal"] + 1j*data.loc[:,"rrimag"], data.loc[:,"rrsigma"] + 1j*data.loc[:,"rrsigma"]), \
-        # phaserror(data.loc[:,"llreal"] + 1j*data.loc[:,"llimag"], data.loc[:,"llsigma"] + 1j*data.loc[:,"llsigma"]), \
-        # phaserror(data.loc[:,"rlreal"] + 1j*data.loc[:,"rlimag"], data.loc[:,"rlsigma"] + 1j*data.loc[:,"rlsigma"]), \
-        # phaserror(data.loc[:,"lrreal"] + 1j*data.loc[:,"lrimag"], data.loc[:,"lrsigma"] + 1j*data.loc[:,"lrsigma"])
-        
+
     
     dumrl, dumlr = data.loc[:,"rlreal"] + 1j*data.loc[:,"rlimag"], data.loc[:,"lrreal"] + 1j*data.loc[:,"lrimag"]
     dumrlsigma, dumlrsigma = data.loc[:,"rlsigma"] + 1j*data.loc[:,"rlsigma"], data.loc[:,"lrsigma"] + 1j*data.loc[:,"lrsigma"]
@@ -439,15 +361,6 @@ def get_model(data, direc, dataname, calsour, polcal_unpol, ifnum, pol_IF_combin
     Extract Stokes Q and U visibility models and append them to the pandas dataframe.
     
     """
-    
-    # self.logger.info('\nGetting source polarization models for {:d} sources for {:d} IFs...'.format(len(self.polcalsour), self.ifnum))
-        
-    # AIPS.userno = self.aips_userno
-    
-    # if self.aipslog:
-    #     AIPS.log = open(self.logfile, 'a')
-    # AIPSTask.msgkill = -1
-            
     
     mod_qrealarr, mod_qimagarr, mod_urealarr, mod_uimagarr = [], [], [], []
     
@@ -492,18 +405,7 @@ def get_model(data, direc, dataname, calsour, polcal_unpol, ifnum, pol_IF_combin
                 else:
                     fitsname = direc+dataname+calsour[l]+'.IF'+str(k+1)+'.q.fits'
                 
-                
-                # if not path.exists(fitsname):
-                #     dum = 0
-                #     calib = WAIPSUVData(inname, 'EDIT', 1, 1)
-                #     for visibility in calib:
-                #         if((visibility.visibility[k,0,0,2] > 0) & (visibility.visibility[k,0,1,2] > 0) & (visibility.visibility[k,0,2,2] > 0) & (visibility.visibility[k,0,3,2] > 0)):
-                #             dum += 1 
-    
-                #     mod_qrealarr = mod_qrealarr + [0.] * dum
-                #     mod_qimagarr = mod_qimagarr + [0.] * dum
-                    
-                #     calib = AIPSUVData(inname, 'EDIT', 1, 1)
+
                 if not path.exists(fitsname):
                     raise Exception("The requested {:} file does not exist!".format(fitsname))
                     

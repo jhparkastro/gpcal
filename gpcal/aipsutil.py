@@ -12,14 +12,8 @@ import pandas as pd
 import os, sys
 from os import path
 
-import timeit
-import logging
-import copy
-
-from AIPS import AIPS
 from AIPSTask import AIPSTask
 from AIPSData import AIPSUVData, AIPSImage
-from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 
 
 # Suppress AIPS printing on terminal

@@ -1,46 +1,29 @@
 
 
-import sys, os
+import os
 from os import path
 
 import pandas as pd
 import numpy as np
 from numpy.linalg import inv
 
-import timeit
 import logging
 import copy
-import glob
 
 from AIPS import AIPS
 from AIPSTask import AIPSTask
-from AIPSData import AIPSUVData, AIPSImage
+from AIPSData import AIPSUVData
 from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 
-from astropy.coordinates import EarthLocation
-import astropy.time as at
-
-from scipy.optimize import curve_fit
-
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import aipsutil as au
 import obshelpers as oh
 import cleanhelpers as ch
-import plothelpers as ph
 import polsolver as ps
 
-import gc
-import psutil
+from multiprocessing import Pool
 
-from astropy.io import fits
-
-from multiprocessing import cpu_count, Pool
-
-from IPython import embed
-        
 
 class timecal(object):
     """
