@@ -11,7 +11,7 @@ aips_userno = 99
 
 
 # The working directory where the input UVFITS and image fits files are located.
-direc = '/home/jpark/gpcaltest/vlba_7mm/'
+direc = '/home/jpark/gpcaltest/examples/vlba_7mm/'
 
 
 # The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).

@@ -18,6 +18,7 @@ from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 from scipy.optimize import curve_fit
 
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import aipsutil as au

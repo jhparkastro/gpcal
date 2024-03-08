@@ -14,7 +14,7 @@ aips_userno = 99
 
 
 # The working directory where the input UVFITS and image fits files are located.
-direc = '/home/jpark/gpcaltest/vlba_2cm/'
+direc = '/home/jpark/gpcaltest/examples/vlba_2cm/'
 
 
 # The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).
@@ -52,7 +52,7 @@ uvpower = -1
 dynam = 1
 
 # The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour.
-polcalsour = ['0256+075', '0300+470', '0415+379', '0430+052', '0502+049', '0851+202', '1151+408', '1637+574', '2200+420', '2201+315', '2258-022']
+polcalsour = ['0415+379', '0430+052', '0502+049', '0851+202', '1151+408', '1637+574', '2200+420', '2201+315', '2258-022']
 # polcalsour = ['0430+052']
 
 # The list of sources to which the best-fit D-terms will be applied.

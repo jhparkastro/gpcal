@@ -10,6 +10,7 @@ Created on Mon Nov 29 13:59:06 2021
 import numpy as np
 
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import obshelpers as oh

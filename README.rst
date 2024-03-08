@@ -1,13 +1,13 @@
 GPCAL
 ===================
 
-GPCAL is a Python module for instrumental polarization calibration in VLBI data. It was designed to enhance the calibration accuracy by enabling users to fit the model to multiple calibrators data simultaneously and to take into account the calibrators linear polarization structures instead of using the conventional similarity assumption. 
+GPCAL is a Python module for instrumental polarization calibration in VLBI data. Its design aims to improve calibration accuracy by enabling users to simultaneously fit the model to data from multiple calibrators and incorporate the linear polarization structures of these calibrators, rather than relying on the conventional similarity assumption.
 
 Installation
 ------------
-GPCAL is based on AIPS and uses ParselTongue, a Python interface to AIPS (`Kettenis et al. 2006 <https://ui.adsabs.harvard.edu/abs/2006ASPC..351..497K>`_), to run AIPS tasks. ParselTongue can be easily installed by following the instructions `here <http://old.jive.nl/jivewiki/doku.php?id=parseltongue:parseltongue>`_.
+GPCAL is based on AIPS and uses ParselTongue, a Python interface to AIPS (`Kettenis et al. 2006 <https://ui.adsabs.harvard.edu/abs/2006ASPC..351..497K>`_), to run AIPS tasks. ParselTongue can be easily installed by following the instructions `here <https://www.jive.eu/jivewiki/doku.php?id=parseltongue:parseltongue>`_.
 
-GPCAL is available on `PyPi <https://pypi.org/project/gpcal/0.1.1.26/>`_ and can be installed via pip.
+GPCAL is available on `PyPi <https://pypi.org/project/gpcal/>`_ and can be installed via pip.
 
 .. code-block:: bash
 
@@ -34,7 +34,7 @@ Tutorial
 -------------
 There are example data and scripts in the "examples" folder. Tutorial slides using one of those data can be found `here <https://docs.google.com/presentation/d/1TXLHfwVqXNnr7cwLodQQHx2dnVA0WC9iz8e7s1CKgmk/edit?usp=sharing>`_.
 
-Some publications that use GPCAL
+Publications that have utilized GPCAL
 ------------
 If you use GPCAL in your publication, please cite `Park et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...906...85P/abstract>`_.
 
@@ -44,6 +44,7 @@ Let us know if you use GPCAL in your publication and we'll list it here!
 - Jet Collimation and Acceleration in the Giant Radio Galaxy NGC 315 `Park et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...909...76P/abstract>`_ 
 - First M87 Event Horizon Telescope Results. VII. Polarization of the Ring `EHT Collaboration et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...910L..12E/abstract>`_ 
 - A Revised View of the Linear Polarization in the Subparsec Core of M87 at 7 mm `Park et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...922..180P/abstract>`_ 
+- Probing the Heart of Active Narrow-line Seyfert 1 Galaxies with VERA Wideband Polarimetry `Takamura et al. 2023 <https://ui.adsabs.harvard.edu/abs/2023ApJ...952...47T/abstract>`_ 
 
 License
 -------
