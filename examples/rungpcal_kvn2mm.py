@@ -4,13 +4,15 @@ import gpcal as gp
 
 import timeit
 
+from multiprocessing import cpu_count
+
 
 # AIPS user ID number for ParselTongue.
 aips_userno = 122
 
 
 # The working directory where the input UVFITS and image fits files are located.
-direc = '/home2/jhpark/gpcaltest/examples/kvn_2mm/'
+direc = '/home/jpark/gpcaltest/examples/kvn_2mm/'
 
 
 # The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).
@@ -48,7 +50,7 @@ uvpower = -1
 dynam = 1
 
 # The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour.
-polcalsour = ['3C120', '3C273', '3C279', '3C345', '3C84', 'CTA102', 'M87', 'NRAO150', 'NRAO530', 'OJ287']
+polcalsour = ['3C273', '3C279', '3C345', '3C84', 'CTA102', 'NRAO150', 'OJ287']
 
 # The list of sources to which the best-fit D-terms will be applied.
 source = ['3C120', '3C273', '3C279', '3C345', '3C454.3', '3C84', 'CTA102', 'M87', 'NRAO150', 'NRAO530', 'OJ287']
@@ -86,14 +88,16 @@ Pbound = 5.
 drange = 15.
 
 
+multiproc = True
+nproc = cpu_count() - 8
 
 time1 = timeit.default_timer()
 
 # Load the GPCAL class POLCAL using the above parameters.
-obs = gp.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, Dbound = Dbound, Pbound = Pbound, \
+obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, Dbound = Dbound, Pbound = Pbound, \
                solint = solint, solmode = solmode, soltype = soltype, weightit = weightit, dplot_IFsep = dplot_IFsep, \
                drange = drange, polcalsour = polcalsour, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
-               selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype)
+               selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
 
 # Run GPCAL.
 obs.dtermsolve()

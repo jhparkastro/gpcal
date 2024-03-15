@@ -86,7 +86,7 @@ drange = 15.
 time1 = timeit.default_timer()
 
 obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, polcalsour = polcalsour, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
-                      dplot_IFsep = dplot_IFsep, selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc, vplot_scanavg = True)
+                      dplot_IFsep = dplot_IFsep, selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
     
 # Run GPCAL.
 obs.dtermsolve()
