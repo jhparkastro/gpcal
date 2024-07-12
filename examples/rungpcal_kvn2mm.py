@@ -50,7 +50,7 @@ uvpower = -1
 dynam = 1
 
 # The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour.
-polcalsour = ['3C120', '3C273', '3C279', '3C345', '3C84', 'CTA102', 'M87', 'NRAO150', 'NRAO530', 'OJ287']
+polcalsour = ['3C273', '3C279', '3C345', '3C84', 'CTA102', 'NRAO150', 'OJ287']
 
 # The list of sources to which the best-fit D-terms will be applied.
 source = ['3C120', '3C273', '3C279', '3C345', '3C454.3', '3C84', 'CTA102', 'M87', 'NRAO150', 'NRAO530', 'OJ287']
