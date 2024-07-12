@@ -1,0 +1,714 @@
+! Started logfile: difmap.log_1015 on Fri Mar 15 14:27:15 2024
+![@GPCAL_Difmap_v1 bl229ae.u.edt.pol.iter7.0430+052.dtcal.uvf,1,1,2048,0.06,2,-1,bl229ae.u.edt.0430+052.win,0,0,1,bl229ae.u.edt.0430+052.IF1,q]
+observe bl229ae.u.edt.pol.iter7.0430+052.dtcal.uvf
+! Reading UV FITS file: bl229ae.u.edt.pol.iter7.0430+052.dtcal.uvf
+! AN table 1: 219 integrations on 45 of 45 possible baselines.
+! Apparent sampling: 0.87103 visibilities/baseline/integration-bin.
+! Found source: 0430+052
+! 
+! There are 8 IFs, and a total of 8 channels:
+! 
+!  IF  Channel    Frequency  Freq offset  Number of   Overall IF
+!       origin    at origin  per channel   channels    bandwidth
+!  ------------------------------------------------------------- (Hz)
+!  01        1  1.52399e+10      3.2e+07          1      3.2e+07
+!  02        2  1.52719e+10      3.2e+07          1      3.2e+07
+!  03        3  1.53039e+10      3.2e+07          1      3.2e+07
+!  04        4  1.53359e+10      3.2e+07          1      3.2e+07
+!  05        5  1.53679e+10      3.2e+07          1      3.2e+07
+!  06        6  1.53999e+10      3.2e+07          1      3.2e+07
+!  07        7  1.54319e+10      3.2e+07          1      3.2e+07
+!  08        8  1.54639e+10      3.2e+07          1      3.2e+07
+! 
+! Polarization(s): RR LL RL LR
+! 
+! Read 1317 lines of history.
+! 
+! Reading 274688 visibilities.
+mapcolor rainbow, 1, 0.5
+! Mapplot colormap: rainbow, contrast: 1 brightness: 0.5.
+select q, 1, 1
+! Selecting polarization: Q,  channels: 1..1
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: (none)
+! Reading IF 3 channels: (none)
+! Reading IF 4 channels: (none)
+! Reading IF 5 channels: (none)
+! Reading IF 6 channels: (none)
+! Reading IF 7 channels: (none)
+! Reading IF 8 channels: (none)
+mapsize 2048, 0.06
+! Map grid = 2048x2048 pixels with 0.0600x0.0600 milli-arcsec cellsize.
+uvweight 2, -1
+! Uniform weighting binwidth: 2 (pixels).
+! Gridding weights will be scaled by errors raised to the power -1.
+! Radial weighting is not currently selected.
+rwin bl229ae.u.edt.0430+052.win
+! rwins: Read 52 windows from bl229ae.u.edt.0430+052.win
+shift 0,0
+! Shifting UV data, models and windows by: 0 (mas) East
+! Shifting UV data, models and windows by: 0 (mas) North
+! Total accumulated eastward shift  = 0 (mas).
+! Total accumulated northward shift = 0 (mas).
+do i=1,100
+  clean 100, 0.02, imstat(rms)*1
+  end do
+! Inverting map and beam 
+! Estimated beam: bmin=0.5405 mas, bmaj=1.158 mas, bpa=-3.851 degrees
+! Estimated noise=0.280317 mJy/beam.
+! clean: niter=100  gain=0.02  cutoff=0.000779319
+! Component: 050  -  total flux cleaned = -0.00761214 Jy
+! Component: 100  -  total flux cleaned = -0.0115574 Jy
+! Total flux subtracted in 100 components = -0.0115574 Jy
+! Clean residual min=-0.003056 max=0.002404 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000558 Jy/beam
+! Combined flux in latest and established models = -0.0115574 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000558186
+! Component: 050  -  total flux cleaned = -0.00251049 Jy
+! Component: 100  -  total flux cleaned = -0.00405159 Jy
+! Total flux subtracted in 100 components = -0.00405159 Jy
+! Clean residual min=-0.002502 max=0.002176 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000525 Jy/beam
+! Combined flux in latest and established models = -0.015609 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000525447
+! Component: 050  -  total flux cleaned = -0.000856115 Jy
+! Component: 100  -  total flux cleaned = -0.00174236 Jy
+! Total flux subtracted in 100 components = -0.00174236 Jy
+! Clean residual min=-0.002353 max=0.002176 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000510 Jy/beam
+! Combined flux in latest and established models = -0.0173514 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000509703
+! Component: 050  -  total flux cleaned = -0.000663277 Jy
+! Component: 100  -  total flux cleaned = -0.0011886 Jy
+! Total flux subtracted in 100 components = -0.0011886 Jy
+! Clean residual min=-0.002249 max=0.002137 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000498 Jy/beam
+! Combined flux in latest and established models = -0.01854 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000497633
+! Component: 050  -  total flux cleaned = -0.000497247 Jy
+! Component: 100  -  total flux cleaned = -0.000968791 Jy
+! Total flux subtracted in 100 components = -0.000968791 Jy
+! Clean residual min=-0.002202 max=0.002109 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000488 Jy/beam
+! Combined flux in latest and established models = -0.0195088 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000487881
+! Component: 050  -  total flux cleaned = -0.000410684 Jy
+! Component: 100  -  total flux cleaned = -0.000726475 Jy
+! Total flux subtracted in 100 components = -0.000726475 Jy
+! Clean residual min=-0.002170 max=0.002070 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000480 Jy/beam
+! Combined flux in latest and established models = -0.0202352 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000479532
+! Component: 050  -  total flux cleaned = -0.000415873 Jy
+! Component: 100  -  total flux cleaned = -0.000671314 Jy
+! Total flux subtracted in 100 components = -0.000671314 Jy
+! Clean residual min=-0.002139 max=0.002037 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000472 Jy/beam
+! Combined flux in latest and established models = -0.0209066 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000472298
+! Component: 050  -  total flux cleaned = -0.000385403 Jy
+! Component: 100  -  total flux cleaned = -0.000587928 Jy
+! Total flux subtracted in 100 components = -0.000587928 Jy
+! Clean residual min=-0.002108 max=0.002009 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000466 Jy/beam
+! Combined flux in latest and established models = -0.0214945 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000465911
+! Component: 050  -  total flux cleaned = -0.000229874 Jy
+! Component: 100  -  total flux cleaned = -0.000482867 Jy
+! Total flux subtracted in 100 components = -0.000482867 Jy
+! Clean residual min=-0.002077 max=0.001982 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000460 Jy/beam
+! Combined flux in latest and established models = -0.0219773 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000460357
+! Component: 050  -  total flux cleaned = -0.000185072 Jy
+! Component: 100  -  total flux cleaned = -0.000394616 Jy
+! Total flux subtracted in 100 components = -0.000394616 Jy
+! Clean residual min=-0.002040 max=0.001954 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000455 Jy/beam
+! Combined flux in latest and established models = -0.022372 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000455401
+! Component: 050  -  total flux cleaned = -0.000145849 Jy
+! Component: 100  -  total flux cleaned = -0.000260109 Jy
+! Total flux subtracted in 100 components = -0.000260109 Jy
+! Clean residual min=-0.002012 max=0.001929 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000451 Jy/beam
+! Combined flux in latest and established models = -0.0226321 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000450864
+! Component: 050  -  total flux cleaned = -0.000139393 Jy
+! Component: 100  -  total flux cleaned = -0.000248125 Jy
+! Total flux subtracted in 100 components = -0.000248125 Jy
+! Clean residual min=-0.001991 max=0.001912 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000447 Jy/beam
+! Combined flux in latest and established models = -0.0228802 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000446742
+! Component: 050  -  total flux cleaned = -0.000107094 Jy
+! Component: 100  -  total flux cleaned = -0.000264094 Jy
+! Total flux subtracted in 100 components = -0.000264094 Jy
+! Clean residual min=-0.001972 max=0.001894 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000443 Jy/beam
+! Combined flux in latest and established models = -0.0231443 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000442913
+! Component: 050  -  total flux cleaned = -0.000153207 Jy
+! Component: 100  -  total flux cleaned = -0.000228117 Jy
+! Total flux subtracted in 100 components = -0.000228117 Jy
+! Clean residual min=-0.001955 max=0.001875 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000439 Jy/beam
+! Combined flux in latest and established models = -0.0233724 Jy
+! clean: niter=100  gain=0.02  cutoff=0.00043948
+! Component: 050  -  total flux cleaned = -0.000146273 Jy
+! Component: 100  -  total flux cleaned = -0.000241518 Jy
+! Total flux subtracted in 100 components = -0.000241518 Jy
+! Clean residual min=-0.001939 max=0.001858 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000436 Jy/beam
+! Combined flux in latest and established models = -0.0236139 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000436287
+! Component: 050  -  total flux cleaned = -7.07132e-05 Jy
+! Component: 100  -  total flux cleaned = -0.000162831 Jy
+! Total flux subtracted in 100 components = -0.000162831 Jy
+! Clean residual min=-0.001918 max=0.001839 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000433 Jy/beam
+! Combined flux in latest and established models = -0.0237768 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000433254
+! Component: 050  -  total flux cleaned = -0.000113604 Jy
+! Component: 100  -  total flux cleaned = -0.000158105 Jy
+! Total flux subtracted in 100 components = -0.000158105 Jy
+! Clean residual min=-0.001900 max=0.001822 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000431 Jy/beam
+! Combined flux in latest and established models = -0.0239349 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000430514
+! Component: 050  -  total flux cleaned = -0.000109877 Jy
+! Component: 100  -  total flux cleaned = -0.000153081 Jy
+! Total flux subtracted in 100 components = -0.000153081 Jy
+! Clean residual min=-0.001883 max=0.001803 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000428 Jy/beam
+! Combined flux in latest and established models = -0.0240879 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000427929
+! Component: 050  -  total flux cleaned = -2.12678e-05 Jy
+! Component: 100  -  total flux cleaned = -8.46724e-05 Jy
+! Total flux subtracted in 100 components = -8.46724e-05 Jy
+! Clean residual min=-0.001863 max=0.001785 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000425 Jy/beam
+! Combined flux in latest and established models = -0.0241726 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000425439
+! Component: 050  -  total flux cleaned = -2.05911e-05 Jy
+! Component: 100  -  total flux cleaned = -0.000102511 Jy
+! Total flux subtracted in 100 components = -0.000102511 Jy
+! Clean residual min=-0.001847 max=0.001771 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000423 Jy/beam
+! Combined flux in latest and established models = -0.0242751 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000423049
+! Component: 050  -  total flux cleaned = -1.98681e-05 Jy
+! Component: 100  -  total flux cleaned = -5.95939e-05 Jy
+! Total flux subtracted in 100 components = -5.95939e-05 Jy
+! Clean residual min=-0.001833 max=0.001755 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000421 Jy/beam
+! Combined flux in latest and established models = -0.0243347 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000420862
+! Component: 050  -  total flux cleaned = 1.98355e-05 Jy
+! Component: 100  -  total flux cleaned = -1.91151e-05 Jy
+! Total flux subtracted in 100 components = -1.91151e-05 Jy
+! Clean residual min=-0.001827 max=0.001738 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000419 Jy/beam
+! Combined flux in latest and established models = -0.0243538 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000418742
+! Component: 050  -  total flux cleaned = -3.8294e-05 Jy
+! Component: 100  -  total flux cleaned = -7.61204e-05 Jy
+! Total flux subtracted in 100 components = -7.61204e-05 Jy
+! Clean residual min=-0.001825 max=0.001726 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000417 Jy/beam
+! Combined flux in latest and established models = -0.02443 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000416664
+! Component: 050  -  total flux cleaned = 1.88609e-05 Jy
+! Component: 100  -  total flux cleaned = -1.83473e-05 Jy
+! Total flux subtracted in 100 components = -1.83473e-05 Jy
+! Clean residual min=-0.001822 max=0.001711 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000415 Jy/beam
+! Combined flux in latest and established models = -0.0244483 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000414693
+! Component: 050  -  total flux cleaned = -3.64848e-05 Jy
+! Component: 100  -  total flux cleaned = -0.000108388 Jy
+! Total flux subtracted in 100 components = -0.000108388 Jy
+! Clean residual min=-0.001820 max=0.001696 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000413 Jy/beam
+! Combined flux in latest and established models = -0.0245567 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000412886
+! Component: 050  -  total flux cleaned = 1.81333e-05 Jy
+! Component: 100  -  total flux cleaned = -1.70655e-05 Jy
+! Total flux subtracted in 100 components = -1.70655e-05 Jy
+! Clean residual min=-0.001817 max=0.001686 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000411 Jy/beam
+! Combined flux in latest and established models = -0.0245738 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000411198
+! Component: 050  -  total flux cleaned = -1.73602e-05 Jy
+! Component: 100  -  total flux cleaned = -6.88714e-05 Jy
+! Total flux subtracted in 100 components = -6.88714e-05 Jy
+! Clean residual min=-0.001814 max=0.001672 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000410 Jy/beam
+! Combined flux in latest and established models = -0.0246426 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000409527
+! Component: 050  -  total flux cleaned = 3.377e-05 Jy
+! Component: 100  -  total flux cleaned = -3.35037e-05 Jy
+! Total flux subtracted in 100 components = -3.35037e-05 Jy
+! Clean residual min=-0.001813 max=0.001661 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000408 Jy/beam
+! Combined flux in latest and established models = -0.0246761 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000407961
+! Component: 050  -  total flux cleaned = 2.95695e-08 Jy
+! Component: 100  -  total flux cleaned = -1.63779e-05 Jy
+! Total flux subtracted in 100 components = -1.63779e-05 Jy
+! Clean residual min=-0.001809 max=0.001648 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246925 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406464
+! Clean target residual flux of 0.000406464 Jy/beam attained
+! Total flux subtracted in 19 components = 2.43896e-05 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406159
+! Clean target residual flux of 0.000406159 Jy/beam attained
+! Total flux subtracted in 5 components = -8.13185e-06 Jy
+! Clean residual min=-0.001808 max=0.001645 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246763 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406095
+! Clean target residual flux of 0.000406095 Jy/beam attained
+! Total flux subtracted in 1 components = 8.1221e-06 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+! clean: niter=100  gain=0.02  cutoff=0.000406083
+! Clean target residual flux of 0.000406083 Jy/beam attained
+! Total flux subtracted in 0 components = 0 Jy
+! Clean residual min=-0.001808 max=0.001646 Jy/beam
+! Clean residual mean=-0.000002 rms=0.000406 Jy/beam
+! Combined flux in latest and established models = -0.0246681 Jy
+select i
+! Selecting polarization: I,  channels: 1..1
+! Reading IF 1 channels: 1..1
+! Reading IF 2 channels: (none)
+! Reading IF 3 channels: (none)
+! Reading IF 4 channels: (none)
+! Reading IF 5 channels: (none)
+! Reading IF 6 channels: (none)
+! Reading IF 7 channels: (none)
+! Reading IF 8 channels: (none)
+save bl229ae.u.edt.0430+052.IF1.q
+! Writing UV FITS file: bl229ae.u.edt.0430+052.IF1.q.uvf
+! Writing 232 model components to file: bl229ae.u.edt.0430+052.IF1.q.mod
+! wwins: Wrote 52 windows to bl229ae.u.edt.0430+052.IF1.q.win
+! Adding 232 model components to the UV plane model.
+! The established model now contains 232 components and -0.0246681 Jy
+! Inverting map and beam 
+! Estimated beam: bmin=0.5407 mas, bmaj=1.159 mas, bpa=-3.875 degrees
+! Estimated noise=0.280291 mJy/beam.
+! restore: Substituting estimate of restoring beam from last 'invert'.
+! Restoring with beam: 0.5407 x 1.159 at -3.875 degrees (North through East)
+! Clean map  min=-0.22088  max=1.369 Jy/beam
+! Writing clean map to FITS file: bl229ae.u.edt.0430+052.IF1.q.fits
+! Writing difmap environment to: bl229ae.u.edt.0430+052.IF1.q.par
+exit
+! Exiting program
+! Log file difmap.log_1015 closed on Fri Mar 15 14:27:34 2024

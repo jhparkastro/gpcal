@@ -87,13 +87,13 @@ filetype = 'png'
 multiproc = True
 
 # Use n-1 core for multiprocessing, where n is the total number of core.
-nproc = cpu_count() - 1
+nproc = cpu_count() - 8
 
 time1 = timeit.default_timer()
 
 # Load the GPCAL class POLCAL using the above parameters.
 obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, polcalsour = polcalsour, polcal_unpol = polcal_unpol, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
-                      dplot_IFsep = dplot_IFsep, selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc, vplot_scanavg = True)
+                      dplot_IFsep = dplot_IFsep, selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
 
 # Run GPCAL.
 obs.dtermsolve()

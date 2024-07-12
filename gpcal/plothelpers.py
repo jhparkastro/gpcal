@@ -10,12 +10,14 @@ Created on Mon Nov 29 13:59:06 2021
 import numpy as np
 
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
 
 import obshelpers as oh
 
 from multiprocessing import Pool
+
+from IPython import embed
 
 
 # Default matplotlib parameters
@@ -70,10 +72,6 @@ def visualplot(source, ifn, antname1, antname2, day, time, qamp, qphas, qsigma, 
         
     if(len(time) == 0):
         return
-    
-    if(color == None):
-        color = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#7f7f7f', '#9467bd', '#8c564b', '#e377c2', '#bcbd22', '#17becf'] + \
-                ['blue', 'red', 'orange', 'steelblue', 'green', 'slategrey', 'cyan', 'royalblue', 'purple', 'blueviolet', 'darkcyan', 'darkkhaki', 'magenta', 'navajowhite', 'darkred']
     
     
     orig_time = np.copy(time)
@@ -178,13 +176,13 @@ def visualplot(source, ifn, antname1, antname2, day, time, qamp, qphas, qsigma, 
     axes[1].annotate('{:}-{:}'.format(antname1, antname2), xy=(0, 0), xycoords = 'axes fraction', xytext = (25, 25), size = 24, textcoords='offset pixels', horizontalalignment='left', verticalalignment='bottom')
     axes[1].annotate('IF {:d}'.format(ifn), xy = (0, 1), xycoords = 'axes fraction', xytext = (25, -25), size = 24, textcoords='offset pixels', horizontalalignment='left', verticalalignment='top')
                 
-    axes[0].errorbar(time, qamp, qsigma, fmt = 'o', markerfacecolor = 'None', markeredgecolor = color, ecolor = color, label = source.upper(), zorder = 1)
-    axes[1].errorbar(time, qphas, np.degrees(qsigma / qamp), fmt = 'o', markerfacecolor = 'None', markeredgecolor = color, ecolor = color, label = source.upper(), zorder = 1)
+    axes[0].errorbar(time2, qamp, qsigma, fmt = 'o', markerfacecolor = 'None', markeredgecolor = color, ecolor = color, label = source.upper(), zorder = 1)
+    axes[1].errorbar(time2, qphas, np.degrees(qsigma / qamp), fmt = 'o', markerfacecolor = 'None', markeredgecolor = color, ecolor = color, label = source.upper(), zorder = 1)
 
 
     leg1 = axes[0].legend(loc='upper left', fontsize = 18 - int(len(source)/2.), frameon=False, markerfirst=True, handlelength=1.0)
     
-    dumx = np.array(time)
+    dumx = np.array(time2)
     
     argsort = np.argsort(dumx)
     
@@ -193,11 +191,11 @@ def visualplot(source, ifn, antname1, antname2, day, time, qamp, qphas, qsigma, 
 
     if (allplots != None):
         
-        axes[0].plot(time[argsort], mod_pol_qamp[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = '--', dashes = (4, 1))
-        axes[1].plot(time[argsort], mod_pol_qphas[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = '--', dashes = (4, 1))
+        axes[0].plot(time2[argsort], mod_pol_qamp[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = '--', dashes = (4, 1))
+        axes[1].plot(time2[argsort], mod_pol_qphas[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = '--', dashes = (4, 1))
         
-        axes[0].plot(time[argsort], mod_dterm_qamp[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = ':', dashes = (1.5, 1))
-        axes[1].plot(time[argsort], mod_dterm_qphas[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = ':', dashes = (1.5, 1))
+        axes[0].plot(time2[argsort], mod_dterm_qamp[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = ':', dashes = (1.5, 1))
+        axes[1].plot(time2[argsort], mod_dterm_qphas[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = ':', dashes = (1.5, 1))
         
         spol, = axes[0].plot(np.nan, np.nan, color = 'black', lw = 1.0, zorder = 0, linestyle = '--', dashes = (4, 1))
         dterm, = axes[0].plot(np.nan, np.nan, color = 'black', lw = 1.0, zorder = 0, linestyle = ':', dashes = (1.5, 1))
@@ -225,9 +223,8 @@ def visualplot(source, ifn, antname1, antname2, day, time, qamp, qphas, qsigma, 
     figure.savefig("{:}.{:}.baseline_{:}_{:}.Q.{:}".format(filename, source, antname1, antname2, filetype), bbox_inches = 'tight')
     
     plt.close('all')
-
-
-
+    
+    
     figure, axes = plt.subplots(2, sharex=True, gridspec_kw={'hspace': 0}, figsize=(8, 8))
 
     for ax in axes.flat:
@@ -251,13 +248,13 @@ def visualplot(source, ifn, antname1, antname2, day, time, qamp, qphas, qsigma, 
     axes[1].annotate('{:}-{:}'.format(antname1, antname2), xy=(0, 0), xycoords = 'axes fraction', xytext = (25, 25), size = 24, textcoords='offset pixels', horizontalalignment='left', verticalalignment='bottom')
     axes[1].annotate('IF {:d}'.format(ifn), xy = (0, 1), xycoords = 'axes fraction', xytext = (25, -25), size = 24, textcoords='offset pixels', horizontalalignment='left', verticalalignment='top')
                 
-    axes[0].errorbar(time, uamp, usigma, fmt = 'o', markerfacecolor = 'None', markeredgecolor = color, ecolor = color, label = source.upper(), zorder = 1)
-    axes[1].errorbar(time, uphas, np.degrees(usigma / uamp), fmt = 'o', markerfacecolor = 'None', markeredgecolor = color, ecolor = color, label = source.upper(), zorder = 1)
+    axes[0].errorbar(time2, uamp, usigma, fmt = 'o', markerfacecolor = 'None', markeredgecolor = color, ecolor = color, label = source.upper(), zorder = 1)
+    axes[1].errorbar(time2, uphas, np.degrees(usigma / uamp), fmt = 'o', markerfacecolor = 'None', markeredgecolor = color, ecolor = color, label = source.upper(), zorder = 1)
 
 
     leg1 = axes[0].legend(loc='upper left', fontsize = 18 - int(len(source)/2.), frameon=False, markerfirst=True, handlelength=1.0)
     
-    dumx = np.array(time)
+    dumx = np.array(time2)
     
     argsort = np.argsort(dumx)
     
@@ -266,11 +263,11 @@ def visualplot(source, ifn, antname1, antname2, day, time, qamp, qphas, qsigma, 
 
     if (allplots != None):
         
-        axes[0].plot(time[argsort], mod_pol_uamp[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = '--', dashes = (4, 1))
-        axes[1].plot(time[argsort], mod_pol_uphas[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = '--', dashes = (4, 1))
+        axes[0].plot(time2[argsort], mod_pol_uamp[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = '--', dashes = (4, 1))
+        axes[1].plot(time2[argsort], mod_pol_uphas[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = '--', dashes = (4, 1))
         
-        axes[0].plot(time[argsort], mod_dterm_uamp[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = ':', dashes = (1.5, 1))
-        axes[1].plot(time[argsort], mod_dterm_uphas[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = ':', dashes = (1.5, 1))
+        axes[0].plot(time2[argsort], mod_dterm_uamp[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = ':', dashes = (1.5, 1))
+        axes[1].plot(time2[argsort], mod_dterm_uphas[argsort], lw = 1.0, zorder = 0, color = 'grey', linestyle = ':', dashes = (1.5, 1))
         
         spol, = axes[0].plot(np.nan, np.nan, color = 'black', lw = 1.0, zorder = 0, linestyle = '--', dashes = (4, 1))
         dterm, = axes[0].plot(np.nan, np.nan, color = 'black', lw = 1.0, zorder = 0, linestyle = ':', dashes = (1.5, 1))

@@ -4,13 +4,15 @@ import gpcal as gp
 
 import timeit
 
+from multiprocessing import cpu_count
+
 
 # AIPS user ID number for ParselTongue.
 aips_userno = 122
 
 
 # The working directory where the input UVFITS and image fits files are located.
-direc = '/home2/jhpark/gpcaltest/examples/kvn_2mm/'
+direc = '/home/jpark/gpcaltest/examples/kvn_2mm/'
 
 
 # The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).
@@ -86,14 +88,16 @@ Pbound = 5.
 drange = 15.
 
 
+multiproc = True
+nproc = cpu_count() - 8
 
 time1 = timeit.default_timer()
 
 # Load the GPCAL class POLCAL using the above parameters.
-obs = gp.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, Dbound = Dbound, Pbound = Pbound, \
+obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, Dbound = Dbound, Pbound = Pbound, \
                solint = solint, solmode = solmode, soltype = soltype, weightit = weightit, dplot_IFsep = dplot_IFsep, \
                drange = drange, polcalsour = polcalsour, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
-               selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype)
+               selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
 
 # Run GPCAL.
 obs.dtermsolve()
