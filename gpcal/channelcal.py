@@ -269,7 +269,7 @@ class channelcal(object):
         self.obsdec = dumobsdec
         
         
-        self.antname, self.antx, self.anty, self.antz, self.antmount, self.f_par, self.f_el, self.phi_off = oh.get_antcoord(data)
+        self.antname, self.antx, self.anty, self.antz, self.antmount, self.f_par, self.f_el, self.phi_off, self.f_eq, self.f_copar = oh.get_antcoord(data)
         
         self.ifnum, self.freq = oh.get_freqinfo(data)
         
@@ -547,8 +547,8 @@ class channelcal(object):
         dumant2 = self.data.loc[:,"ant2"]
         dumsource = self.data.loc[:,"source"]
         
-        longarr1, latarr1, f_el1, f_par1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, dumant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, dumant2)
+        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant1)
+        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant2)
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.channel_calsour, [self.year] * len(self.channel_calsour), [self.month] * len(self.channel_calsour), [self.day] * len(self.channel_calsour), self.obsra, self.obsdec)
         
@@ -565,8 +565,8 @@ class channelcal(object):
         self.data.loc[:,"month"] = montharr
         self.data.loc[:,"day"] = dayarr
                 
-        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1)
-        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2)
+        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
+        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)
         
         self.data = oh.pd_modifier(self.data)
         
@@ -1061,7 +1061,7 @@ class channelcal(object):
         wholesource = np.array(wholesource)
         sourceid = np.array(sourceid)
         
-        self.antname, self.antx, self.anty, self.antz, self.antmount, self.f_par, self.f_el, self.phi_off = oh.get_antcoord(data)
+        self.antname, self.antx, self.anty, self.antz, self.antmount, self.f_par, self.f_el, self.phi_off, self.f_eq, self.f_copar = oh.get_antcoord(data)
         
         self.ifnum, self.freq = oh.get_freqinfo(data)
         
@@ -1128,8 +1128,8 @@ class channelcal(object):
         ant2 = ant2 - 1
         
         
-        longarr1, latarr1, f_el1, f_par1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, ant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, ant2)
+        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, ant1)
+        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, ant2)
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(sourcearr, wholesource, [year]*len(wholesource), [month]*len(wholesource), [day]*len(wholesource), obsra, obsdec)
         
@@ -1140,8 +1140,8 @@ class channelcal(object):
             
         self.logger.info('\nComputing the field rotation angles...')
         
-        pang1 = oh.get_parang(yeararr, montharr, dayarr, time, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1)
-        pang2 = oh.get_parang(yeararr, montharr, dayarr, time, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2)
+        pang1 = oh.get_parang(yeararr, montharr, dayarr, time, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
+        pang2 = oh.get_parang(yeararr, montharr, dayarr, time, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)
         
         del time, sourcearr
         gc.collect()

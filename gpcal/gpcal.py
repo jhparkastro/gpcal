@@ -1,6 +1,7 @@
 
 import sys, os
 from os import path
+import glob
 
 import pandas as pd
 import numpy as np
@@ -18,7 +19,7 @@ from Wizardry.AIPSData import AIPSUVData as WAIPSUVData
 from scipy.optimize import curve_fit
 
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
 
 import aipsutil as au
@@ -28,6 +29,8 @@ import plothelpers as ph
 import polsolver as ps
 
 from multiprocessing import Pool
+
+from IPython import embed
 
 
 # Default matplotlib parameters
@@ -119,12 +122,12 @@ class polcal(object):
     def __init__(self, aips_userno, direc, dataname, calsour, source, cnum, autoccedt, \
                  Dbound = 1.0, Pbound = np.inf, outputname = None, drange = None, multiproc = True, nproc = 2, \
                  selfcal = False, solint = 10./60., solmode = 'A&P', soltype = 'L1R', weightit = 1, \
-                 zblcal = False, zblcalsour = None, zblant = None, \
+                 zblcal = False, zblcalsour = None, zblant = None, flagzbl = True, phi_off = None, \
                  fixdterm = False, pol_fixdterm = False, fixdr = None, fixdl = None, \
                  selfpol = False, polcalsour = None, polcal_unpol = None, selfpoliter = None, ms = None, ps = None, uvbin = None, uvpower = None, shift_x = 0, shift_y = 0, dynam = None, pol_IF_combine = False, \
                  manualweight = False, weightfactors = None, lpcal = True, remove_weight_outlier_threshold = 10000, \
                  vplot = False, vplot_title = None, vplot_scanavg = False, vplot_avg_nat = False, resplot = False, parplot = True, allplot = False, dplot_IFsep = False, tsep = 2./60., filetype = 'pdf', \
-                 aipslog = True, difmaplog = True):
+                 aipslog = True, difmaplog = True, readme = True):
 
 
         self.aips_userno = aips_userno
@@ -148,6 +151,7 @@ class polcal(object):
         self.Pbound = Pbound
         
         self.drange = drange
+        self.phi_off = phi_off
         
         self.remove_weight_outlier_threshold = remove_weight_outlier_threshold
                 
@@ -169,6 +173,7 @@ class polcal(object):
         self.zblcal = zblcal
         self.zblcalsour = copy.deepcopy(zblcalsour)
         self.zblant = copy.deepcopy(zblant)
+        self.flagzbl = flagzbl
         
         self.fixdterm = fixdterm
         self.pol_fixdterm = pol_fixdterm
@@ -209,6 +214,7 @@ class polcal(object):
         
         self.aipslog = aipslog
         self.difmaplog = difmaplog
+        self.readme = readme
         
         self.aipstime = 0.
         self.difmaptime = 0.
@@ -222,6 +228,10 @@ class polcal(object):
                                           ['blue', 'red', 'orange', 'steelblue', 'green', 'slategrey', 'cyan', 'royalblue', 'purple', 'blueviolet', 'darkcyan', 'darkkhaki', 'magenta', 'navajowhite', 'darkred']
         # Define a list of markers
         self.markerarr = ['o', '^', 's', '<', 'p', '*', 'X', 'P', 'D', 'v', 'd', 'x'] * 5
+        
+        
+        self.colors = self.colors + self.colors + self.colors + self.colors + self.colors + self.colors
+        self.markerarr = self.markerarr + self.markerarr + self.markerarr + self.markerarr + self.markerarr + self.markerarr
         
         
         # If direc does not finish with a slash, then append it.
@@ -284,6 +294,104 @@ class polcal(object):
 #            if not path.exists(self.direc + self.dataname + self.polcalsour[i] + '.fits'):
 #                raise Exception("{:s} does not exist in {:s}.".format(self.dataname + self.polcalsour[i] + '.fits', self.direc))
 
+    def write_readme(self):
+                
+        f = open(self.direc + 'readme.txt','w')
+        f.write('Summary of the GPCAL run.\n\n')
+        
+        f.write('####################################################################\n')
+        
+        f.write('\nStage 1 - D-Term estimation using the similarity assumption\n\n')
+        f.write('The dataset fitted:\n')
+        for i in range(len(self.calsour)):
+            f.write('{:}.uvf\n'.format(self.direc + self.dataname + self.calsour[i]))
+        
+        f.write('\nSource information:\n')
+        for i in range(len(self.calsour)):
+            if self.cnum[i] >= 1:
+                f.write('{:s}: RA = {:5.2f} deg, Dec = {:5.2f} deg, The total intensity CLEAN model is divided into {:} regions.\n'.format(self.calsour[i], self.obsra[i], self.obsdec[i], self.cnum[i]))
+            elif self.cnum[i] == 0:
+                f.write('{:s}: RA = {:5.2f} deg, Dec = {:5.2f} deg, This source was assumed to be unpolarized.\n'.format(self.calsour[i], self.obsra[i], self.obsdec[i]))
+        
+        f.write('\n')
+        
+        for i in range(self.nant):
+            if(self.antmount[i] == 0): mount = 'Cassegrain'
+            if(self.antmount[i] == 1): mount = 'Equatorial'
+            if(self.antmount[i] == 3): mount = 'EW'
+            if(self.antmount[i] == 4): mount = 'Nasmyth-Right'
+            if(self.antmount[i] == 5): mount = 'Nasmyth-Left'
+            f.write('{:s}: antenna mount = {:13s}, X = {:11.2f}m, Y = {:11.2f}m, Z = {:11.2f}m\n'.format(self.antname[i], mount, self.antx[i], self.anty[i], self.antz[i]))
+            
+        f.write('\nObservation date = {:s}\n'.format(str(np.min(self.year))+'-'+str(np.min(self.month))+'-'+str(np.min(self.day))))
+        
+        f.write('\nThe D-term corrected dataset:\n')
+        for i in range(len(self.source)):
+            f.write('{:}.uvf\n'.format(self.direc + self.dataname + self.source[i]))
+        
+        f.write('\nFigures Produced:\n')
+        
+        if self.vplot:
+            f.write('{:}gpcal/{:}vplot*.{:} : vplots showing the fitting results for each source and baseline.\n\n'.format(self.direc, self.dataname, self.filetype))
+        if self.resplot:
+            f.write('{:}gpcal/{:}resplot*.{:} : plots showing the residuals of the fitting for each station.\n\n'.format(self.direc, self.dataname, self.filetype))
+        if self.parplot:
+            f.write('{:}gpcal/{:}FRA*.{:} : plots showing the evolution of the field rotation angles for each station.\n\n'.format(self.direc, self.dataname, self.filetype))
+        
+        f.write('\nAscii files Produced:\n')
+        f.write('{:}gpcal/{:}dterm.csv : ascii files including the best-fit polarimetric leakage solutions.\n\n'.format(self.direc, self.dataname))
+        
+        
+        if self.selfpol:
+            
+            f.write('\n####################################################################\n')
+            
+            f.write('\nStage 2 - D-Term estimation using instrumental polarization self-calibration\n\n')
+            f.write('The dataset fitted:\n')
+            for i in range(len(self.polcalsour)):
+                f.write('{:}.uvf\n'.format(self.direc + self.dataname + self.polcalsour[i]))
+            
+            f.write('\nSource information:\n')
+            for i in range(len(self.polcalsour)):
+                if self.polcal_unpol[i]:
+                    f.write('{:s}: RA = {:5.2f} deg, Dec = {:5.2f} deg, this source was assumed to be unpolarized.\n'.format(self.polcalsour[i], self.pol_obsra[i], self.pol_obsdec[i]))
+                else:
+                    f.write('{:s}: RA = {:5.2f} deg, Dec = {:5.2f} deg, the Stokes Q and U CLEAN images of this source were obtained with Difmap and they were used for the fitting.\n'.format(self.polcalsour[i], self.pol_obsra[i], self.pol_obsdec[i]))
+                
+            f.write('\n')
+            for i in range(self.nant):
+                if(self.antmount[i] == 0): mount = 'Cassegrain'
+                if(self.antmount[i] == 1): mount = 'Equatorial'
+                if(self.antmount[i] == 3): mount = 'EW'
+                if(self.antmount[i] == 4): mount = 'Nasmyth-Right'
+                if(self.antmount[i] == 5): mount = 'Nasmyth-Left'
+                f.write('{:s}: antenna mount = {:13s}, X = {:11.2f}m, Y = {:11.2f}m, Z = {:11.2f}m\n'.format(self.antname[i], mount, self.antx[i], self.anty[i], self.antz[i]))
+                
+            # f.write('\nObservation date = {:s}\n'.format(str(np.min(self.pol_year))+'-'+str(np.min(self.pol_month))+'-'+str(np.min(self.pol_day))))
+            
+            f.write('\nThe D-term corrected dataset:\n')
+            for i in range(len(self.source)):
+                f.write('{:}.uvf\n'.format(self.direc + self.dataname + self.source[i]))
+                
+            f.write('\nFigures Produced:\n')
+            
+            if self.vplot:
+                f.write('{:}gpcal/{:}.pol.vplot*.{:} : vplots showing the fitting results for each source and baseline.\n\n'.format(self.direc, self.dataname, self.filetype))
+            if self.resplot:
+                f.write('{:}gpcal/{:}.pol.resplot*.{:} : plots showing the residuals of the fitting for each station.\n\n'.format(self.direc, self.dataname, self.filetype))
+            if self.parplot:
+                f.write('{:}gpcal/{:}.pol.FRA*.{:} : plots showing the evolution of the field rotation angles for each station.\n\n'.format(self.direc, self.dataname, self.filetype))
+            
+            f.write('{:}gpcal/{:}pol.*.D_Terms*.{:} : plots showing the distributions of the estimated polarimetric leakages on the complex plane.\n\n'.format(self.direc, self.dataname, self.filetype))
+            f.write('{:}gpcal/{:}chisq.{:} : a plot showing the evolution of the reduced chi-square in each iteration of instrumental polarization self-calibration.\n\n'.format(self.direc, self.dataname, self.filetype))
+            
+            f.write('Ascii files Produced:\n')
+            f.write('{:}gpcal/{:}pol.*.dterm.csv : ascii files including the best-fit polarimetric leakage solutions.\n\n'.format(self.direc, self.dataname))
+            
+        f.close()
+        
+
+        
 
     def get_zbl_data(self):
         """
@@ -323,6 +431,8 @@ class polcal(object):
         f_par = info['f_par']
         f_el = info['f_el']
         phi_off = info['phi_off']
+        f_eq = info['f_eq']
+        f_copar = info['f_copar']
         
         self.logger.info('\nGetting data for {:d} sources for {:d} IFs...\n'.format(len(self.zblcalsour), ifnum))
 
@@ -341,7 +451,9 @@ class polcal(object):
         self.antz = antz
         self.zbl_obsra = obsra
         self.zbl_obsdec = obsdec
-
+        
+        self.nant = len(antname)
+        
 
         zbl_antname = []
         for i in range(len(self.zblant)):
@@ -444,11 +556,14 @@ class polcal(object):
         
         
         zblant = self.zblant[0]
-        select = (ant1arr-1 == zbl_antname.index(zblant[0])) & (ant2arr-1 == zbl_antname.index(zblant[1]))
+        # select = (ant1arr-1 == antname.index(zblant[0])) & (ant2arr-1 == antname.index(zblant[1]))
+        select = np.full(len(ant1arr), False)
         for j in range(len(self.zblant)):
             zblant = self.zblant[j]
-            dumselect = (ant1arr-1 == zbl_antname.index(zblant[0])) & (ant2arr-1 == zbl_antname.index(zblant[1]))
-            select = np.logical_or(select, dumselect)
+            dumselect1 = (ant1arr-1 == antname.index(zblant[0])) & (ant2arr-1 == antname.index(zblant[1]))
+            dumselect2 = (ant1arr-1 == antname.index(zblant[1])) & (ant2arr-1 == antname.index(zblant[0]))
+            select = np.logical_or(select, dumselect1)
+            select = np.logical_or(select, dumselect2)
             
         # Filter bad data points.
         select = select & (rrweightarr > 0.) & (llweightarr > 0.) & (rlweightarr > 0.) & (lrweightarr > 0.) & (~np.isnan(rrweightarr)) & (~np.isnan(llweightarr)) & (~np.isnan(rlweightarr)) & (~np.isnan(lrweightarr))
@@ -459,10 +574,43 @@ class polcal(object):
         dumant1 = self.zbl_data.loc[:,"ant1"]
         dumant2 = self.zbl_data.loc[:,"ant2"]
         dumsource = self.zbl_data.loc[:,"source"]
-
-        longarr1, latarr1, f_el1, f_par1, phi_off1 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, dumant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, dumant2)
         
+        # zbl_lonarr, zbl_latarr, zbl_f_el, zbl_f_par, zbl_phi_off = [], [], [], [], []
+        # for i in range(len(antname)):
+        #     for j in range(len(zbl_antname)):
+        #         if(zbl_antname[j] == antname[i]):
+        #             zbl_lonarr.append(lonarr[i])
+        #             zbl_latarr.append(latarr[i])
+        #             zbl_f_el.append(f_el[i])
+        #             zbl_f_par.append(f_par[i])
+        #             zbl_phi_off.append(phi_off[i])
+                
+        # for j in range(len(zbl_antname)):
+        #     if(self.phi_off.get(zbl_antname[j]) != None):
+        #         zbl_phi_off[j] = np.radians(self.phi_off.get(zbl_antname[j]))
+        
+        
+        # longarr1, latarr1, f_el1, f_par1, phi_off1 = oh.coordarr(zbl_lonarr, zbl_latarr, zbl_f_el, zbl_f_par, zbl_phi_off, dumant1)
+        # longarr2, latarr2, f_el2, f_par2, phi_off2 = oh.coordarr(zbl_lonarr, zbl_latarr, zbl_f_el, zbl_f_par, zbl_phi_off, dumant2)
+        
+        # zbl_lonarr, zbl_latarr, zbl_f_el, zbl_f_par, zbl_phi_off = [], [], [], [], []
+        # for i in range(len(antname)):
+        #     for j in range(len(zbl_antname)):
+        #         if(zbl_antname[j] == antname[i]):
+        #             zbl_lonarr.append(lonarr[i])
+        #             zbl_latarr.append(latarr[i])
+        #             zbl_f_el.append(f_el[i])
+        #             zbl_f_par.append(f_par[i])
+        #             zbl_phi_off.append(phi_off[i])
+                
+        for j in range(len(antname)):
+            if(self.phi_off.get(antname[j]) != None):
+                phi_off[j] = np.radians(self.phi_off.get(antname[j]))
+        
+        
+        longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, phi_off1 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, dumant1)
+        longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, phi_off2 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, dumant2)
+                
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.zblcalsour, year, month, day, obsra, obsdec)
         
         timearr = np.array(self.zbl_data.loc[:,"time"])
@@ -471,15 +619,17 @@ class polcal(object):
             dayarr[timearr>=24.] += 1 
             timearr[timearr>=24.] -= 24. 
                 
+        
+        self.zbl_data.loc[:,"time"] = timearr
         self.zbl_data.loc[:,"year"] = yeararr
         self.zbl_data.loc[:,"month"] = montharr
         self.zbl_data.loc[:,"day"] = dayarr
         
-        self.zbl_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1)
-        self.zbl_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2)          
-        
+        self.zbl_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
+        self.zbl_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)          
+                
         self.zbl_data = oh.pd_modifier(self.zbl_data)
-
+        
     
 
     def get_data(self):
@@ -530,10 +680,13 @@ class polcal(object):
         self.f_par = info['f_par']
         self.f_el = info['f_el']
         self.phi_off = info['phi_off']
+        self.f_eq = info['f_eq']
+        self.f_copar = info['f_copar']
         
         self.lonarr, self.latarr, self.heightarr = oh.coord(self.antname, self.antx, self.anty, self.antz)
         
         self.nant = len(self.antname)
+        
         
 
             
@@ -806,8 +959,8 @@ class polcal(object):
         dumant2 = self.data.loc[:,"ant2"]
         dumsource = self.data.loc[:,"source"]
         
-        longarr1, latarr1, f_el1, f_par1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, dumant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, dumant2)
+        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant1)
+        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant2)
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.calsour, self.year, self.month, self.day, self.obsra, self.obsdec)
         
@@ -822,15 +975,16 @@ class polcal(object):
         self.data.loc[:,"month"] = montharr
         self.data.loc[:,"day"] = dayarr
         
-        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1)
-        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2)          
+        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
+        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)          
         
         self.data = oh.pd_modifier(self.data)
 
         for i in range(max(self.cnum)):
             self.data["model"+str(i+1)+"_amp"] = self.data["model"+str(i+1)+"_amp"].astype('float64')
             self.data["model"+str(i+1)+"_phas"] = self.data["model"+str(i+1)+"_phas"].astype('float64')
-            
+        
+        
         
     def get_pol_data(self):
         """
@@ -871,6 +1025,8 @@ class polcal(object):
         self.f_par = info['f_par']
         self.f_el = info['f_el']
         self.phi_off = info['phi_off']
+        self.f_eq = info['f_eq']
+        self.f_copar = info['f_copar']
         
         self.lonarr, self.latarr, self.heightarr = oh.coord(self.antname, self.antx, self.anty, self.antz)
         
@@ -1000,8 +1156,8 @@ class polcal(object):
         dumant2 = self.pol_data.loc[:,"ant2"]
         dumsource = self.pol_data.loc[:,"source"]
                 
-        longarr1, latarr1, f_el1, f_par1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, dumant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, dumant2)
+        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant1)
+        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant2)
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.polcalsour, self.pol_year, self.pol_month, self.pol_day, self.pol_obsra, self.pol_obsdec)
         
@@ -1016,8 +1172,8 @@ class polcal(object):
         self.pol_data.loc[:,"month"] = montharr
         self.pol_data.loc[:,"day"] = dayarr
         
-        self.pol_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1)
-        self.pol_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2)
+        self.pol_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
+        self.pol_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)
 
         self.pol_data = oh.pd_modifier(self.pol_data)
         
@@ -1056,7 +1212,7 @@ class polcal(object):
             ax.set(xlabel = 'Time (UT)')
             ax.set(ylabel = 'Field rotation angle (deg)')
             
-            ax.annotate(self.antname[m], xy=(1, 1), xycoords = 'axes fraction', xytext = (-25, -25), size = 24, textcoords='offset pixels', horizontalalignment='right', verticalalignment='top')
+            ax.annotate(antname[m], xy=(1, 1), xycoords = 'axes fraction', xytext = (-25, -25), size = 24, textcoords='offset pixels', horizontalalignment='right', verticalalignment='top')
             ax.annotate('IF {:d}'.format(k+1), xy = (0, 0), xycoords = 'axes fraction', xytext = (25, 25), size = 24, textcoords='offset pixels', horizontalalignment='left', verticalalignment='bottom')
             
             for l in range(len(source)):
@@ -2042,7 +2198,7 @@ class polcal(object):
             ax.tick_params(length=4, width=1.5,which = 'minor')
             
             plt.grid()
-    
+                
             for m in range(len(uniqant)):
                 
                 select = (antname == uniqant[m])
@@ -2053,7 +2209,7 @@ class polcal(object):
                 dlreal = np.real(DLArr[select]) * 1e2
                 dlimag = np.imag(DLArr[select]) * 1e2
                 
-                ax.scatter(drreal, drimag, s = 180, facecolor = self.colors[m], edgecolor = self.colors[m], marker = self.markerarr[m], label = antname[m])
+                ax.scatter(drreal, drimag, s = 180, facecolor = self.colors[m], edgecolor = self.colors[m], marker = self.markerarr[m], label = uniqant[m])
                 ax.scatter(dlreal, dlimag, s = 180, facecolor = 'None', edgecolor = self.colors[m], marker = self.markerarr[m])
                 
             if lpcal:
@@ -2062,9 +2218,9 @@ class polcal(object):
                     anname, lpcaldr, lpcaldl = read[1].to_numpy(), read[2].to_numpy(), read[3].to_numpy()
                     dumant, dumdrreal, dumdrimag, dumdlreal, dumdlimag = anname[::2], lpcaldr[::2] * 1e2, lpcaldr[1::2] * 1e2, lpcaldl[::2] * 1e2, lpcaldl[1::2] * 1e2
                     for m in range(len(antname)):
-                        ax.scatter(dumdrreal[dumant == antname[m]], dumdrimag[dumant == antname[m]], s = 20, facecolor = self.colors[m], edgecolor = self.colors[m], marker = self.markerarr[m], \
+                        ax.scatter(dumdrreal[dumant == uniqant[m]], dumdrimag[dumant == uniqant[m]], s = 20, facecolor = self.colors[m], edgecolor = self.colors[m], marker = self.markerarr[m], \
                                    alpha = 0.2)
-                        ax.scatter(dumdlreal[dumant == antname[m]], dumdlimag[dumant == antname[m]], s = 20, facecolor = 'None', edgecolor = self.colors[m], marker = self.markerarr[m], \
+                        ax.scatter(dumdlreal[dumant == uniqant[m]], dumdlimag[dumant == uniqant[m]], s = 20, facecolor = 'None', edgecolor = self.colors[m], marker = self.markerarr[m], \
                                    alpha = 0.2)
                         
     
@@ -2110,6 +2266,7 @@ class polcal(object):
             
             plt.savefig(self.direc + 'gpcal/' + filename +'.'+self.filetype, bbox_inches = 'tight')
             plt.close('all')
+            
 
 
         # If dplot_IFsep == True, then plot the D-terms for each IF separately.
@@ -2141,22 +2298,22 @@ class polcal(object):
                     
                     if(drreal == 0.) & (drimag == 0.) & (dlreal == 0.) & (dlimag == 0.): continue
                     
-                    ax.scatter(drreal[drreal != 0.], drimag[drimag != 0.], s = 180, facecolor = self.colors[m], edgecolor = self.colors[m], marker = self.markerarr[m], label = antname[m])
+                    ax.scatter(drreal[drreal != 0.], drimag[drimag != 0.], s = 180, facecolor = self.colors[m], edgecolor = self.colors[m], marker = self.markerarr[m], label = uniqant[m])
                     ax.scatter(dlreal[drreal != 0.], dlimag[drimag != 0.], s = 180, facecolor = 'None', edgecolor = self.colors[m], marker = self.markerarr[m])
-                    
+                
                 if lpcal:
                     for l in range(len(source)):
                         read = pd.read_csv(self.direc+'gpcal/'+self.dataname+source[l]+'.an', header = None, skiprows=1, delimiter = '\t')
                         anname, lpcaldr, lpcaldl = read[1].to_numpy(), read[2].to_numpy(), read[3].to_numpy()
                         dumant, dumdrreal, dumdrimag, dumdlreal, dumdlimag = anname[::2], lpcaldr[::2] * 1e2, lpcaldr[1::2] * 1e2, lpcaldl[::2] * 1e2, lpcaldl[1::2] * 1e2
-                        for m in range(len(antname)):
-                            dumx = dumdrreal[dumant == antname[m]]
-                            dumy = dumdrimag[dumant == antname[m]]
+                        for m in range(len(uniqant)):
+                            dumx = dumdrreal[dumant == uniqant[m]]
+                            dumy = dumdrimag[dumant == uniqant[m]]
                             if(dumx[k] == 0.) & (dumy[k] == 0.): continue
                             ax.scatter(dumx[k], dumy[k], s = 20, facecolor = self.colors[m], edgecolor = self.colors[m], marker = self.markerarr[m], \
                                        alpha = 0.2)
-                            dumx = dumdlreal[dumant == antname[m]]
-                            dumy = dumdlimag[dumant == antname[m]]
+                            dumx = dumdlreal[dumant == uniqant[m]]
+                            dumy = dumdlimag[dumant == uniqant[m]]
                             ax.scatter(dumx[k], dumy[k], s = 20, facecolor = 'None', edgecolor = self.colors[m], marker = self.markerarr[m], \
                                        alpha = 0.2)
                             
@@ -2618,11 +2775,15 @@ class polcal(object):
             for j in range(len(self.antname)):
                 if(self.zblant[i][0] == self.antname[j]):
                     if(self.antmount[j] == 0): mount = 'Cassegrain'
+                    if(self.antmount[j] == 1): mount = 'Equatorial'
+                    if(self.antmount[j] == 3): mount = 'EW'
                     if(self.antmount[j] == 4): mount = 'Nasmyth-Right'
                     if(self.antmount[j] == 5): mount = 'Nasmyth-Left'
                     self.logger.info('{:s}: antenna mount = {:13s}, X = {:11.2f}m, Y = {:11.2f}m, Z = {:11.2f}m'.format(self.zblant[i][0], mount, self.antx[j], self.anty[j], self.antz[j]))
                 if(self.zblant[i][1] == self.antname[j]):
                     if(self.antmount[j] == 0): mount = 'Cassegrain'
+                    if(self.antmount[j] == 1): mount = 'Equatorial'
+                    if(self.antmount[j] == 3): mount = 'EW'
                     if(self.antmount[j] == 4): mount = 'Nasmyth-Right'
                     if(self.antmount[j] == 5): mount = 'Nasmyth-Left'
                     self.logger.info('{:s}: antenna mount = {:13s}, X = {:11.2f}m, Y = {:11.2f}m, Z = {:11.2f}m'.format(self.zblant[i][1], mount, self.antx[j], self.anty[j], self.antz[j]))
@@ -2682,10 +2843,45 @@ class polcal(object):
                 continue
             
             
+            dumtime = np.copy(time)
+            dumtime += 24. * (dayarr - np.min(dayarr))
+            
             # Draw the field-rotation angle plots if requested.
             if self.parplot: 
                 self.logger.info('Creating field-rotation-angle plots...\n')
-                self.parangplot(k, self.zbl_nant, zbl_antname, self.zblcalsour, time, ant1, ant2, sourcearr, pang1, pang2, self.direc+'gpcal/'+self.outputname+'zbl.FRA.IF'+str(k+1))
+                self.parangplot(k, self.zbl_nant, zbl_antname, self.zblcalsour, dumtime, ant1, ant2, sourcearr, pang1, pang2, self.direc+'gpcal/'+self.outputname+'zbl.FRA.IF'+str(k+1))
+            
+            
+            
+                
+        
+            dumantname = np.copy(self.antname)
+            orig_ant1 = np.copy(ant1)
+            orig_ant2 = np.copy(ant2)
+            
+            
+            orig_nant = self.nant
+            
+            
+            #If there are antennas having no data, then rearrange the antenna numbers for fitting. This change will be reverted after the fitting.
+            dum = 0
+            
+            removed_Index = []
+            
+            for m in range(orig_nant):
+                if((sum(ant1 == dum) == 0) & (sum(ant2 == dum) == 0)):
+                    ant1[ant1 > dum] -= 1
+                    ant2[ant2 > dum] -= 1
+                    self.nant -= 1
+                    removed_Index.append(m)
+                    # self.logger.info('{:s} has no data, the fitting will not solve the D-Terms for it.'.format(self.antname[m]))
+                else:
+                    dum += 1
+            
+            
+            if(len(removed_Index) != 0): dumantname = np.delete(dumantname, removed_Index)
+            
+            
             
             
             
@@ -2717,12 +2913,11 @@ class polcal(object):
             self.pang1, self.pang2, self.ant1, self.ant2, self.sourcearr, self.rramp, self.rrphas, self.llamp, self.llphas = \
                 pang1, pang2, ant1, ant2, sourcearr, rramp, rrphas, llamp, llphas
             
-            
             # Perform the least-square fitting using Scipy curve_fit.
             Iteration, pco = curve_fit(self.zbl_deq, inputx, inputy, p0=init, sigma = inputsigma, absolute_sigma = False, bounds = bounds)
             error = np.sqrt(np.diag(pco))
             
-            
+
             # Save the best-fit D-terms in the pandas dataframes.
             for m in range(self.zbl_nant-1):
                 for n in np.arange(m+1, self.zbl_nant):
@@ -2840,11 +3035,12 @@ class polcal(object):
                                                    selected_day, selected_time, selected_qamp, selected_qphas, selected_qsigma, selected_uamp, selected_uphas, selected_usigma, \
                                                    selected_mod_qamp, selected_mod_qphas, selected_mod_uamp, selected_mod_uphas, self.direc+'gpcal/'+self.outputname+'zbl.vplot.IF'+str(k+1), self.filetype, \
                                                    allplots, self.vplot_title, self.vplot_scanavg, self.vplot_avg_nat, self.tsep))
-                                else:
-                                    ph.visualplot(self.colors[l], self.zblcalsour[l], k+1, zbl_antname[dumm], zbl_antname[dumn], \
+                                else:                                    
+                                    ph.visualplot(self.zblcalsour[l], k+1, zbl_antname[dumm], zbl_antname[dumn], \
                                                    selected_day, selected_time, selected_qamp, selected_qphas, selected_qsigma, selected_uamp, selected_uphas, selected_usigma, \
                                                    selected_mod_qamp, selected_mod_qphas, selected_mod_uamp, selected_mod_uphas, self.direc+'gpcal/'+self.outputname+'zbl.vplot.IF'+str(k+1), self.filetype, \
-                                                   allplots = allplots, title = self.dataname, scanavg = self.vplot_scanavg, avg_nat = self.vplot_avg_nat, tsep = self.tsep)
+                                                   allplots = allplots, title = self.dataname, scanavg = self.vplot_scanavg, avg_nat = self.vplot_avg_nat, tsep = self.tsep, color = self.colors[l])
+                                    
 
 
                 if self.multiproc:
@@ -2871,11 +3067,32 @@ class polcal(object):
         self.zbl_sourcepol.to_csv(self.direc+'gpcal/'+self.outputname+'sourcepol.txt', sep = "\t")
         
         
-        f = open(self.direc+'GPCAL_Difmap_v1','w')
-        
-        f.write('observe %1\nmapcolor rainbow, 1, 0.5\nselect %13, %2, %3\nmapsize %4, %5\nuvweight %6, %7\nrwin %8\nshift %9,%10\ndo i=1,100\nclean 100, 0.02, imstat(rms)*%11\nend do\nselect i\nsave %12.%13\nexit')
+        if self.flagzbl:
+            f = open(self.direc+'GPCAL_Difmap_flagzbl','w')
             
-        f.close()
+            f.write('@%1\n')
+            for i in range(len(self.zblant)):
+                f.write('flag {:}-{:}\n'.format(self.zblant[i][0], self.zblant[i][1]))
+            
+            f.write('save %2\n')
+            f.write('exit')
+            
+            f.close()
+            
+            curdirec = os.getcwd()
+            
+            os.chdir(self.direc)
+            
+            # command = "echo @GPCAL_Difmap_flagzbl %s,%s | difmap > /dev/null 2>&1" %(data,bif,eif,ms,ps,uvbin,uvpower,mask,shift_x,shift_y,dynam,save,stokes)
+            for i in range(len(self.zblcalsour)):
+                command = "echo @GPCAL_Difmap_flagzbl %s,%s | difmap > /dev/null 2>&1" %(self.dataname + self.zblcalsour[i] + '.par', self.dataname + 'flagzbl.' + self.zblcalsour[i])
+                os.system(command)
+        
+            os.chdir(curdirec)
+            
+            self.outputname = self.outputname.replace(self.dataname, self.dataname + 'flagzbl.')
+            self.dataname = self.dataname + 'flagzbl.'
+            
         
     
     def dtermsolve(self):    
@@ -2886,11 +3103,13 @@ class polcal(object):
         if self.zblcal: self.zbl_dtermsolve()
         
         self.get_data()
-        
+                
         self.simil_dtermsolve()
                 
         if self.selfpol: self.pol_dtermsolve()
         
+        if self.readme:
+            self.write_readme()
         
         
     def simil_dtermsolve(self):
@@ -2912,6 +3131,8 @@ class polcal(object):
         self.logger.info('\nAntenna information:')
         for i in range(self.nant):
             if(self.antmount[i] == 0): mount = 'Cassegrain'
+            if(self.antmount[i] == 1): mount = 'Equatorial'
+            if(self.antmount[i] == 3): mount = 'EW'
             if(self.antmount[i] == 4): mount = 'Nasmyth-Right'
             if(self.antmount[i] == 5): mount = 'Nasmyth-Left'
             self.logger.info('{:s}: antenna mount = {:13s}, X = {:11.2f}m, Y = {:11.2f}m, Z = {:11.2f}m'.format(self.antname[i], mount, self.antx[i], self.anty[i], self.antz[i]))
@@ -3314,8 +3535,8 @@ class polcal(object):
         # Save the fitting results into ASCII files.
         self.chisq.to_csv(self.direc+'gpcal/'+self.outputname+'chisq.txt', sep = "\t")
         self.sourcepol.to_csv(self.direc+'gpcal/'+self.outputname+'sourcepol.txt', sep = "\t")
-        self.DRArr.to_csv(self.direc+'gpcal/'+self.outputname+'DRArr.txt', sep = "\t")
-        self.DLArr.to_csv(self.direc+'gpcal/'+self.outputname+'DLArr.txt', sep = "\t")
+        # self.DRArr.to_csv(self.direc+'gpcal/'+self.outputname+'DRArr.txt', sep = "\t")
+        # self.DLArr.to_csv(self.direc+'gpcal/'+self.outputname+'DLArr.txt', sep = "\t")
         
         
         
@@ -3484,7 +3705,10 @@ class polcal(object):
             
             os.chdir(self.direc)
             
-            os.system('rm {:}difmap.log*')
+            globarr = glob.glob(self.direc + '*difmap.log*')
+            
+            if len(globarr) > 0:
+                os.system('rm *difmap.log*')
             
             os.chdir(curdirec)
             
@@ -3514,6 +3738,8 @@ class polcal(object):
                 self.logger.info('\nAntenna information:')
                 for i in range(self.nant):
                     if(self.antmount[i] == 0): mount = 'Cassegrain'
+                    if(self.antmount[i] == 1): mount = 'Equatorial'
+                    if(self.antmount[i] == 3): mount = 'EW'
                     if(self.antmount[i] == 4): mount = 'Nasmyth-Right'
                     if(self.antmount[i] == 5): mount = 'Nasmyth-Left'
                     self.logger.info('{:s}: antenna mount = {:13s}, X = {:11.2f}m, Y = {:11.2f}m, Z = {:11.2f}m'.format(self.antname[i], mount, self.antx[i], self.anty[i], self.antz[i]))
@@ -3596,6 +3822,8 @@ class polcal(object):
                 pol_DLArr = pol_DLArr + dum_DLArr.tolist()
                 pol_IF = pol_IF + dum_IF.tolist()
                 
+                self.chisq.loc["pol_iter{:}".format(spoliter+1), "IF{:}".format(ifn+1)] = chisq[2]
+                
                     
             pol_IF, pol_ant, pol_DRArr, pol_DLArr = np.array(pol_IF), np.array(pol_ant), np.array(pol_DRArr), np.array(pol_DLArr)
                 
@@ -3608,9 +3836,10 @@ class polcal(object):
             del df[0]
             
             df.to_csv(self.direc+'gpcal/'+self.outputname+'pol.iter'+str(spoliter+1)+'.dterm.csv', sep = "\t")
+            
     
             # Create D-term plots.
-            self.dplot_new(spoliter+1, self.outputname+'pol.iter{:02d}'.format(spoliter+1)+'.D_Terms', pol_ant, pol_IF, pol_DRArr, pol_DLArr, self.polcalsour, lpcal=False)
+            self.dplot_new(spoliter+1, self.outputname+'pol.iter{:02d}'.format(spoliter+1)+'.D_Terms', pol_ant, pol_IF, pol_DRArr, pol_DLArr, self.polcalsour, lpcal=False, IFsep = self.dplot_IFsep)
             
             # Apply the best-fit D-terms and produce the D-term corrected UVFITS files.
             self.pol_applydterm(self.source, self.direc+'gpcal/'+self.outputname+'pol.iter'+str(spoliter+1)+'.dterm.csv', self.direc+self.outputname+'pol.iter'+str(spoliter+1)+'.')

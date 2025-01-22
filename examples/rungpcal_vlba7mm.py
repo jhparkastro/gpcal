@@ -1,6 +1,6 @@
 
 
-import gpcal as gp
+import gpcaltest as gp
 
 from multiprocessing import cpu_count
 import timeit
@@ -11,7 +11,7 @@ aips_userno = 99
 
 
 # The working directory where the input UVFITS and image fits files are located.
-direc = '/home/jpark/gpcaltest/examples/vlba_7mm/'
+direc = '/home/jpark/gpcal_mpifr_tutorial_check/gpcal/examples/vlba_7mm/'
 
 
 # The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).
@@ -86,8 +86,8 @@ filetype = 'png'
 # Use multiple cores to speed up the code.
 multiproc = True
 
-# Use n-1 core for multiprocessing, where n is the total number of core.
-nproc = cpu_count() - 8
+# Use 40% of the cores for multiprocessing
+nproc = int(cpu_count() * 0.4)
 
 time1 = timeit.default_timer()
 
