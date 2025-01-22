@@ -23,12 +23,9 @@ Note that ParselTongue is based on Python 2. One of the easiest ways to avoid an
     conda activate myenv
     conda install -c kettenis parseltongue
 
-Try to run ParselTongue in the environment and import gpcal. If users encounter an error message of "...no module named _bsddb." in astroplan, then install bsddb via Anaconda in the environment.
+Try to run ParselTongue in the environment and import gpcal.
 
-.. code-block:: bash
-
-    conda install -c free bsddb
-
+Note: Python 2 is not supported on Macs with M1 or later chips running macOS versions higher than 12.3. Consequently, using GPCAL on the latest Mac systems can be challenging. Although we attempted to transition to Python 3, a critical bug in some key functions of ParselTongue3 has not been resolved by the developer. For Mac users who still wish to install GPCAL, a workaround method is available `here <https://docs.google.com/document/d/1gVV6uuZXVAMGbBygtg7JBudkeF1HOBFeUQMYipeDzrE/edit?usp=sharing>`_, which has been tested successfully on M1/OS 14.2.1 and M3/OS 14.6.1.
 
 Tutorial
 -------------
