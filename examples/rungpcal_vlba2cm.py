@@ -93,7 +93,7 @@ time1 = timeit.default_timer()
 obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, polcalsour = polcalsour, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, dplot_IFsep = dplot_IFsep, selfcal=selfcal, soltype = soltype, solmode = solmode, solint = solint, weightit = weightit, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
     
 # Run GPCAL.
-# obs.dtermsolve()
+obs.dtermsolve()
 
 time2 = timeit.default_timer()
 
@@ -102,27 +102,27 @@ print('Time elapsed for AIPS-related processes = {:d} seconds.\nTime elapsed for
 
 
 
-evpacal = True
-evpacal = False
+# evpacal = True
+# evpacal = False
 
-if evpacal:
+# if evpacal:
     
-    clcorprm = [-217.601, -209.211, -215.439, 138.836, -201.081, -183.227, -163.186, -157.016] # These values are derived by running "bl229ae_evpacal.py"
+#     clcorprm = [-217.601, -209.211, -215.439, 138.836, -201.081, -183.227, -163.186, -157.016] # These values are derived by running "bl229ae_evpacal.py"
     
-    for l in range(len(source)):
-        datain = direc + "{:s}pol.iter10.{:s}.dtcal.uvf".format(dataname, source[l])
-        dataout = direc + "{:s}pol.iter10.{:s}.pcal.uvf".format(dataname, source[l])
-        print(datain, dataout)
-        obs.evpacal(datain, dataout, clcorprm)
+#     for l in range(len(source)):
+#         datain = direc + "{:s}pol.iter10.{:s}.dtcal.uvf".format(dataname, source[l])
+#         dataout = direc + "{:s}pol.iter10.{:s}.pcal.uvf".format(dataname, source[l])
+#         print(datain, dataout)
+#         obs.evpacal(datain, dataout, clcorprm)
         
 
-# You can load your reconstrcted D-terms and play with them!
+# # You can load your reconstrcted D-terms and play with them!
 
-load_dterms = True
+# load_dterms = True
 
-if load_dterms:
-    dtermfile = '{:}gpcal/{:}pol.iter10.dterm.csv'.format(direc, dataname)
+# if load_dterms:
+#     dtermfile = '{:}gpcal/{:}pol.iter10.dterm.csv'.format(direc, dataname)
     
-    dtermread = pd.read_csv(dtermfile, header = 0, skiprows = 0, delimiter = '\t', index_col = 0)
+#     dtermread = pd.read_csv(dtermfile, header = 0, skiprows = 0, delimiter = '\t', index_col = 0)
     
-    print(dtermread)
+#     print(dtermread)
