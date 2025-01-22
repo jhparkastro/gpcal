@@ -1,6 +1,6 @@
 
 
-import gpcaltest as gp
+import gpcal as gp
 
 from multiprocessing import cpu_count
 import timeit
@@ -14,10 +14,10 @@ aips_userno = 99
 direc = '/home/jpark/gpcal_mpifr_tutorial_check/gpcal/examples/vlba_7mm/'
 
 
-# The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).
+# The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bm413i.q.edt.OJ287.uvf).
 dataname = 'bm413i.q.edt.'
 
-# The list of calibrators which will be used for an initial D-term estimation using the similarity assumption.
+# The list of calibrators which will be used for an initial D-term estimation using the similarity assumption.  We will assume that 3C 84 is unpolarized.
 calsour = ['OJ287', '3C84']
 
 # The list of the number of CLEAN sub-models for calsour.
@@ -25,7 +25,6 @@ cnum = [3, 0]
 
 # The list of booleans specifying whether the sub-model division will be done automatically or manually.
 autoccedt = [False, True]
-
 
 
 # Perform instrumental polarization self-calibraiton.
@@ -52,7 +51,7 @@ dynam = 1
 # The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour.
 polcalsour = ['OJ287', '3C273', '3C279', '3C345', '3C454.3', '3C84']
 
-# The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour.
+# We will assume that 3C 84 is unpolarized.
 polcal_unpol = [False, False, False, False, False, True]
 
 # The list of sources to which the best-fit D-terms will be applied.
@@ -73,10 +72,6 @@ vplot = True
 resplot = True
 parplot = True
 
-# vplot = False
-# resplot = False
-# parplot = False
-
 # Draw D-term plots for each IF separately.
 dplot_IFsep = True
 
@@ -93,7 +88,8 @@ time1 = timeit.default_timer()
 
 # Load the GPCAL class POLCAL using the above parameters.
 obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, polcalsour = polcalsour, polcal_unpol = polcal_unpol, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
-                      dplot_IFsep = dplot_IFsep, selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
+                      dplot_IFsep = dplot_IFsep, selfcal=selfcal, soltype = soltype, solmode = solmode, solint = solint, weightit = weightit, \
+                      vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
 
 # Run GPCAL.
 obs.dtermsolve()

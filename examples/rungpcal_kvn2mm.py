@@ -2,30 +2,27 @@
 
 import gpcal as gp
 
-import timeit
-
 from multiprocessing import cpu_count
+import timeit
 
 
 # AIPS user ID number for ParselTongue.
-aips_userno = 122
-
+aips_userno = 99
 
 # The working directory where the input UVFITS and image fits files are located.
-direc = '/home/jpark/gpcaltest/examples/kvn_2mm/'
+direc = '/home/jpark/gpcal_mpifr_tutorial_check/gpcal/examples/kvn_2mm/'
 
-
-# The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., bl229ae.u.edt.OJ287.uvf).
+# The data name. The input files should have the names like dataname.sourcename.uvf and dataname.sourcename.fits (e.g., 18ja.d.edt.3C84.uvf).
 dataname = '18ja.d.edt.'
 
 # The list of calibrators which will be used for an initial D-term estimation using the similarity assumption.
-calsour = ['3C120', '3C345', '3C84', 'CTA102', 'NRAO150', 'NRAO530', 'OJ287']
+calsour = ['3C84']
 
-# The list of the number of CLEAN sub-models for calsour.
-cnum = [2, 1, 4, 1, 2, 2, 1]
+# The list of the number of CLEAN sub-models for calsour. We will assume that 3C 84 is unpolarized.
+cnum = [0]
 
 # The list of booleans specifying whether the sub-model division will be done automatically or manually.
-autoccedt = [False] * len(calsour)
+autoccedt = [False]
 
 
 # Perform instrumental polarization self-calibraiton.
@@ -38,7 +35,7 @@ selfpoliter = 10
 ms = 2048
 
 # Pixelsize for CLEAN in Difmap.
-ps = 0.02
+ps = 0.04
 
 # Uvbin for CLEAN in Difmap.
 uvbin = 0
@@ -49,8 +46,11 @@ uvpower = -1
 # Perform CLEAN until the peak intensity within the CLEAN windows reach the map rms-noise.
 dynam = 1
 
-# The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour.
+# The list of calibrators which will be used for additional D-term estimation using instrumental polarization self-calibration. This list does not have to be the same as calsour. 
 polcalsour = ['3C273', '3C279', '3C345', '3C84', 'CTA102', 'NRAO150', 'OJ287']
+
+# We will assume that 3C 84 is unpolarized.
+polcal_unpol = [False, False, False, True, False, False, False]
 
 # The list of sources to which the best-fit D-terms will be applied.
 source = ['3C120', '3C273', '3C279', '3C345', '3C454.3', '3C84', 'CTA102', 'M87', 'NRAO150', 'NRAO530', 'OJ287']
@@ -60,7 +60,7 @@ selfcal = True
 
 # CALIB parameters.
 soltype = 'L1R'
-solmode = 'P'
+solmode = 'A&P'
 solint = 10./60.
 weightit = 1
 
@@ -76,28 +76,18 @@ dplot_IFsep = True
 # Output the figures in the format of png.
 filetype = 'png'
 
-
-# The real and imaginary parts of all D-terms are assumed to be within 50%.
-Dbound = 0.5
-
-# The source-polarization terms for the D-term estimation using the similarity assumption are assumed to be less than 500%. 
-Pbound = 5.
-
-
-# The D-term plots will be shown for ranges of (-15%, 15%) for both the real and imaginary parts.
-drange = 15.
-
-
+# Use multiple cores to speed up the code.
 multiproc = True
-nproc = cpu_count() - 8
+
+# Use 40% of the cores for multiprocessing
+nproc = int(cpu_count() * 0.4)
 
 time1 = timeit.default_timer()
 
 # Load the GPCAL class POLCAL using the above parameters.
-obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, Dbound = Dbound, Pbound = Pbound, \
-               solint = solint, solmode = solmode, soltype = soltype, weightit = weightit, dplot_IFsep = dplot_IFsep, \
-               drange = drange, polcalsour = polcalsour, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
-               selfcal=selfcal, vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
+obs = gp.gpcal.polcal(aips_userno, direc, dataname, calsour, source, cnum, autoccedt, polcalsour = polcalsour, polcal_unpol = polcal_unpol, ms = ms, ps = ps, uvbin = uvbin, uvpower = uvpower, dynam = dynam, selfpoliter = selfpoliter, \
+                      dplot_IFsep = dplot_IFsep, selfcal=selfcal, soltype = soltype, solmode = solmode, solint = solint, weightit = weightit, \
+                      vplot=vplot, resplot=resplot, parplot = parplot, selfpol=selfpol, filetype = filetype, multiproc = multiproc, nproc = nproc)
 
 # Run GPCAL.
 obs.dtermsolve()
@@ -109,4 +99,5 @@ time2 = timeit.default_timer()
 # Print time elapsed for different processes.
 print('Time elapsed for AIPS-related processes = {:d} seconds.\nTime elapsed for Difmap-related processes = {:d} seconds.\nTime elapsed for GPCAL-related processes = {:d} seconds.\nTotal time elapsed = {:d}'\
       .format(int(round(obs.aipstime)), int(round(obs.difmaptime)), int(round((time2 - time1) - obs.aipstime - obs.difmaptime - obs.gpcaltime)), int(round(time2 - time1))))
+
 

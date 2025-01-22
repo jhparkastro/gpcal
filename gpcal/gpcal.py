@@ -3720,9 +3720,10 @@ class polcal(object):
             else:
                 for ifn in range(self.ifnum):
                     for l in range(len(self.polcalsour)):
-                        os.system('rm {:}{:}{:}.IF{:}.q.*'.format(self.direc, self.dataname, self.polcalsour[l], ifn+1))
-                        os.system('rm {:}{:}{:}.IF{:}.u.*'.format(self.direc, self.dataname, self.polcalsour[l], ifn+1))
-                        
+                        if not self.polcal_unpol:
+                            os.system('rm {:}{:}{:}.IF{:}.q.*'.format(self.direc, self.dataname, self.polcalsour[l], ifn+1))
+                            os.system('rm {:}{:}{:}.IF{:}.u.*'.format(self.direc, self.dataname, self.polcalsour[l], ifn+1))
+                            
             
             if(spoliter == 0):
                 self.logger.info('\n####################################################################')
