@@ -32,7 +32,7 @@ Try to run ParselTongue in the environment and import gpcal. If users encounter 
 
 Tutorial
 -------------
-There are example data and scripts in the "examples" folder. Tutorial slides using one of those data can be found `here <https://docs.google.com/presentation/d/1TXLHfwVqXNnr7cwLodQQHx2dnVA0WC9iz8e7s1CKgmk/edit?usp=sharing>`_.
+There are example data and scripts in the "examples" folder. Tutorial slides using one of those data can be found `here <https://docs.google.com/presentation/d/16Rhb2WOrtrEJIjXL83XM0uWXQ3YVmkc_F8tVfLpJuK8/edit?usp=sharing>`_.
 
 Publications that have utilized GPCAL
 ------------
@@ -45,6 +45,9 @@ Let us know if you use GPCAL in your publication and we'll list it here!
 - First M87 Event Horizon Telescope Results. VII. Polarization of the Ring `EHT Collaboration et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...910L..12E/abstract>`_ 
 - A Revised View of the Linear Polarization in the Subparsec Core of M87 at 7 mm `Park et al. 2021 <https://ui.adsabs.harvard.edu/abs/2021ApJ...922..180P/abstract>`_ 
 - Probing the Heart of Active Narrow-line Seyfert 1 Galaxies with VERA Wideband Polarimetry `Takamura et al. 2023 <https://ui.adsabs.harvard.edu/abs/2023ApJ...952...47T/abstract>`_ 
+- First GMVA observations with the upgraded NOEMA facility: VLBI imaging of BL Lacertae in a flaring state `Kim et al. 2023 <https://ui.adsabs.harvard.edu/abs/2023A%26A...680L...3K/abstract>`_ 
+- Up around the bend: A multiwavelength view of the quasar 3C 345 `Roder et al. 2024 <https://ui.adsabs.harvard.edu/abs/2024A%26A...684A.211R/abstract>`_ 
+- Spectral and magnetic properties of the jet base in NGC 315 `Ricci et al. 2025 <https://ui.adsabs.harvard.edu/abs/2025A%26A...693A.172R/abstract>`_ 
 
 License
 -------
