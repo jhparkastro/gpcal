@@ -22,6 +22,7 @@ import gc
 
 from multiprocessing import Pool
 
+from IPython import embed
     
 class channelcal(object):
     """
@@ -93,7 +94,7 @@ class channelcal(object):
                  clcorprm = None, outputname = None, drange = None, doevpacal = False, \
                  inname = None, inclass = None, inseq = None, indisk = None, snver = None, clver = None, channel_calsour_models = None, channel_source_models = None, \
                  channel_calsour_uvf = None, channel_calsour_win = None, channel_source_uvf = None, channel_source_win = None, \
-                 imodelname = None, qmodelname = None, umodelname = None, selfcal_doclean = True, calsour_doclean = True, uvfname = None, doselfcal = True, \
+                 imodelname = None, qmodelname = None, umodelname = None, selfcal_doclean = False, calsour_doclean = True, uvfname = None, doselfcal = True, \
                  solint = None, solmode = None, soltype = None, weightit = None, fixdterm = False, fixdr = None, fixdl = None, polcal_unpol = None, remove_weight_outlier_threshold = 10000, \
                  ms = None, ps = None, uvbin = None, uvpower = None, shift_x = 0, shift_y = 0, dynam = None, clean_IF_combine = False, \
                  manualweight = False, weightfactors = None, tsep = 2./60., filetype = 'pdf', aipslog = True, difmaplog = True, multiproc = True, nproc = 2):
@@ -332,7 +333,6 @@ class channelcal(object):
                 dumvis[dum,:,:,:,:] = row.visibility
                 
                 dum += 1
-            
             
             
             if not self.polcal_unpol[l]:
@@ -884,7 +884,6 @@ class channelcal(object):
                         self.qmodelname.append(dumqmodelname)
                         self.umodelname.append(dumumodelname)
 
-            
             if self.multiproc:                
                 pool = Pool(processes = self.nproc)
                 pool.map(ch.cleanqu2, parmset)
@@ -894,9 +893,9 @@ class channelcal(object):
                 self.logger.info('\nMaking CLEAN models for Stokes I maps using multiple cores...\n')
                 
                 for i in range(len(parmset)):
-                    self.logger.info('uvfits file: {:s}, CLEAN mask: {:s}, save file: {:s}.i'.format(parmset[i][1], parmset[i][2], parmset[i][3]))
+                    self.logger.info('uvfits file: {:s}, CLEAN mask: {:s}, save file: {:s}.q,u'.format(parmset[i][1], parmset[i][2], parmset[i][3]))
     
-    
+        
         self.get_channel_data(data)
         
         for k in range(self.ifnum):
