@@ -349,6 +349,7 @@ class timecal(object):
         self.data.loc[:,"year"] = yeararr
         self.data.loc[:,"month"] = montharr
         self.data.loc[:,"day"] = dayarr
+        self.data.loc[:,"time"] = timearr
                 
         self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
         self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)

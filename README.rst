@@ -29,7 +29,9 @@ Note: Python 2 is not supported on Macs with M1 or later chips running macOS ver
 
 Tutorial
 -------------
-There are example data and scripts in the "examples" folder. Tutorial slides using one of those data can be found `here <https://docs.google.com/presentation/d/16Rhb2WOrtrEJIjXL83XM0uWXQ3YVmkc_F8tVfLpJuK8/edit?usp=sharing>`_.
+There are example data and scripts in the "examples" folder. Tutorial slides using one of those data can be found `here <https://docs.google.com/presentation/d/16Rhb2WOrtrEJIjXL83XM0uWXQ3YVmkc_F8tVfLpJuK8/edit?usp=sharing>`_. Also, we have implemented new methods that can calibrate frequency and time-dependent polarimetric leakages in VLBI data (readers are referred to `Park et al. 2023a <https://ui.adsabs.harvard.edu/abs/2023ApJ...958...27P/abstract>`_ and `Park et al. 2023b <https://ui.adsabs.harvard.edu/abs/2023ApJ...958...28P/abstract>`_ for more details). The tutorial for these methods can be found here (frequency-dependent leakage calibration method) and here (time-dependent leakage calibration method)
+
+Example data and scripts are available in the "examples" folder. Tutorial slides using one of these data sets can be found `here <https://docs.google.com/presentation/d/16Rhb2WOrtrEJIjXL83XM0uWXQ3YVmkc_F8tVfLpJuK8/edit?usp=sharing>`. Additionally, we have implemented new methods to calibrate frequency and time-dependent polarimetric leakages in VLBI data. For more details, readers are referred to `Park et al. 2023a <https://ui.adsabs.harvard.edu/abs/2023ApJ...958...27P/abstract>`_ and `Park et al. 2023b <https://ui.adsabs.harvard.edu/abs/2023ApJ...958...28P/abstract>`_. The tutorials for these methods can be found here (frequency-dependent leakage calibration method) and `here <https://docs.google.com/presentation/d/1Jc4_FRA_gLOBHRGQq6sVYI7OLu647e2sCZ9MobeEQcg/edit?usp=sharing>` (time-dependent leakage calibration method).
 
 Publications that have utilized GPCAL
 ------------
