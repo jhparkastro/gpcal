@@ -1,0 +1,62 @@
+
+! Selects input uv data
+observe %1
+
+multi_model False
+
+mapcolor rainbow, 1, 0.5
+
+! Cleaning Stokes PI
+select q, %2
+
+! Map size
+mapsize %3,%4
+
+! Uniform weight
+uvweight %5,%6
+
+! Reading the cleaning windows (mask)
+rwin %7
+
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+
+save %9.IF%2.q
+
+integer of
+of = outfile(%9.IF%2.qflux)
+fprintf of, strnum(model_flux)
+close(of)
+
+clrmod tru
+
+! Cleaning Stokes PI
+select u, %2
+
+! Uniform weight
+uvweight %5,%6
+
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+clean 10000, 0.02, imstat(rms)*%8
+
+save %9.IF%2.u
+
+integer of
+of = outfile(%9.IF%2.uflux)
+fprintf of, strnum(model_flux)
+close(of)
+
+exit
+
