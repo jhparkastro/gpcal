@@ -616,7 +616,7 @@ class polcal(object):
         for i in range(10):
             dayarr[timearr>=24.] += 1 
             timearr[timearr>=24.] -= 24. 
-                
+        
         
         self.zbl_data.loc[:,"time"] = timearr
         self.zbl_data.loc[:,"year"] = yeararr
