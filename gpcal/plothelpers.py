@@ -17,14 +17,12 @@ import obshelpers as oh
 
 from multiprocessing import Pool
 
-from IPython import embed
-
 
 # Default matplotlib parameters
 plt.rc('font', size=21)
 matplotlib.rc('font', family='Dejavu Sans')
 matplotlib.rc('font', serif='Helvetica Neue')
-plt.rc('text', usetex=True)
+# plt.rc('text', usetex=True)
 plt.rc('xtick', labelsize=18)
 plt.rc('ytick', labelsize=18)
 plt.rc('axes', titlesize=25)
