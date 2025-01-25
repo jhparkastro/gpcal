@@ -22,8 +22,6 @@ import gc
 
 from multiprocessing import Pool
 
-from IPython import embed
-    
 class channelcal(object):
     """
     This is a class to calibrate instrumental polarization in VLBI data and produce D-term corrected UVFITS files.
@@ -890,7 +888,7 @@ class channelcal(object):
                 pool.close()
                 pool.join()
                 
-                self.logger.info('\nMaking CLEAN models for Stokes I maps using multiple cores...\n')
+                self.logger.info('\nMaking CLEAN models for Stokes Q and U maps using multiple cores...\n')
                 
                 for i in range(len(parmset)):
                     self.logger.info('uvfits file: {:s}, CLEAN mask: {:s}, save file: {:s}.q,u'.format(parmset[i][1], parmset[i][2], parmset[i][3]))
