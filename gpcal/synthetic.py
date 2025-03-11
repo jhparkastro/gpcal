@@ -104,7 +104,7 @@ def synthetic_deq(nant, pang1, pang2, ant1, ant2, llamp, llphas, rramp, rrphas, 
 
 
 
-def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputname, dtermfile = None, thermal = True, leakage = True, dtermread = None, \
+def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputname, unpol = False, dtermfile = None, thermal = True, leakage = True, dtermread = None, \
                      dtermamp = 5e-2, dtermstd = 2e-2, dr_manual = None, dl_manual = None, \
                      time_leakage = False, time_dtermread = None, time_dtermamp = 0.2e-2, time_dtermamp_manual = None, \
                      ms = 2048, ps = 0.1, noisefactor = 1., tsep = 2. / 60):
@@ -112,7 +112,7 @@ def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputn
     print("Creating synthetic data...\n\nuvfits file = {:}\n\nStokes I model = {:}\nStokes Q model = {:}\nStokes U model = {:}\nOutput uvfits file = {:}"\
           .format(uvfname, imodelname, qmodelname, umodelname, outputname))
         
-    print("\nAdd thermal noise = {:}\nAdd leakage = {:}\nAdd time-dependent leakage = {:}\n".format(thermal, leakage, time_leakage))
+    print("\nAdd thermal noise = {:}\nAdd leakage = {:}\nAdd time-dependent leakage = {:}\nAssuming unpolarized source = {:}".format(thermal, leakage, time_leakage, unpol))
         
     
     inname = 'SYN'
@@ -121,7 +121,7 @@ def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputn
     
     data = AIPSUVData('SYN', 'EDIT', 1, 1)
     
-    antname, antx, anty, antz, antmount, f_par, f_el, phi_off = oh.get_antcoord(data)
+    antname, antx, anty, antz, antmount, f_par, f_el, phi_off, f_eq, f_copar, f_az = oh.get_antcoord(data)
     
     nant = len(np.unique(antname))
     
@@ -194,19 +194,20 @@ def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputn
     df.to_csv(direc + '{:s}.onaxis.dterm'.format(uvfname), sep = "\t")
     
     
-
-    f = open(direc + 'GPCAL_Difmap_uvsub','w')
-    f.write('observe %1\nselect i\nmapsize %2, %3\nrmodel %4\nsave %5\nrmodel %6\nsave %7\nexit')
-    f.close()
-
-    curdirec = os.getcwd()
+    if not unpol:
     
-    os.chdir(direc)
-    command = "echo @GPCAL_Difmap_uvsub %s,%s,%s,%s,%s,%s,%s | difmap" %(uvfname, ms, ps, qmodelname, qmodelname.replace('.mod', '.uvsub'), umodelname, umodelname.replace('.mod', '.uvsub'))
-    os.system(command)
+        f = open(direc + 'GPCAL_Difmap_uvsub','w')
+        f.write('observe %1\nselect i\nmapsize %2, %3\nrmodel %4\nsave %5\nrmodel %6\nsave %7\nexit')
+        f.close()
     
-    os.chdir(curdirec)
+        curdirec = os.getcwd()
         
+        os.chdir(direc)
+        command = "echo @GPCAL_Difmap_uvsub %s,%s,%s,%s,%s,%s,%s | difmap" %(uvfname, ms, ps, qmodelname, qmodelname.replace('.mod', '.uvsub'), umodelname, umodelname.replace('.mod', '.uvsub'))
+        os.system(command)
+        
+        os.chdir(curdirec)
+            
     
     
     total_ant, total_IF, total_scantime, total_scansource, total_DRArr, total_DLArr = [], [], [], [], [], []
@@ -237,32 +238,37 @@ def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputn
     
     au.runfitld(inname, 'EDIT', direc + uvfname)
     au.runfitld(inname, 'IMAP', direc + imodelname.replace('.mod', '.fits'))
-    au.runfitld(inname, 'QMAP', direc + qmodelname.replace('.mod', '.uvsub.fits'))
-    au.runfitld(inname, 'UMAP', direc + umodelname.replace('.mod', '.uvsub.fits'))
-    
+
     uvsub_i = AIPSUVData(inname, 'UVSUB', 1, 1)
     if(uvsub_i.exists() == True):
         uvsub_i.clrstat()
         uvsub_i.zap()
         
-    uvsub_q = AIPSUVData(inname, 'UVSUB', 1, 2)
-    if(uvsub_q.exists() == True):
-        uvsub_q.clrstat()
-        uvsub_q.zap()
-    
-    uvsub_u = AIPSUVData(inname, 'UVSUB', 1, 3)
-    if(uvsub_u.exists() == True):
-        uvsub_u.clrstat()
-        uvsub_u.zap()
-    
     au.runuvsub(inname, 'EDIT', 'IMAP', 1, 1)
-    au.runuvsub(inname, 'EDIT', 'QMAP', 1, 2)
-    au.runuvsub(inname, 'EDIT', 'UMAP', 1, 3)
-    
+
     data = AIPSUVData(inname, 'EDIT', 1, 1)
     uvsub_i = WAIPSUVData(inname, 'UVSUB', 1, 1)
-    uvsub_q = WAIPSUVData(inname, 'UVSUB', 1, 2)
-    uvsub_u = WAIPSUVData(inname, 'UVSUB', 1, 3)
+
+    if not unpol:
+        au.runfitld(inname, 'QMAP', direc + qmodelname.replace('.mod', '.uvsub.fits'))
+        au.runfitld(inname, 'UMAP', direc + umodelname.replace('.mod', '.uvsub.fits'))
+            
+        uvsub_q = AIPSUVData(inname, 'UVSUB', 1, 2)
+        if(uvsub_q.exists() == True):
+            uvsub_q.clrstat()
+            uvsub_q.zap()
+        
+        uvsub_u = AIPSUVData(inname, 'UVSUB', 1, 3)
+        if(uvsub_u.exists() == True):
+            uvsub_u.clrstat()
+            uvsub_u.zap()
+        
+    
+        au.runuvsub(inname, 'EDIT', 'QMAP', 1, 2)
+        au.runuvsub(inname, 'EDIT', 'UMAP', 1, 3)
+    
+        uvsub_q = WAIPSUVData(inname, 'UVSUB', 1, 2)
+        uvsub_u = WAIPSUVData(inname, 'UVSUB', 1, 3)
     
     
     
@@ -313,15 +319,24 @@ def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputn
         for vis in uvsub_i:
             ireal.append(vis.visibility[ifn,0,0,0])
             iimag.append(vis.visibility[ifn,0,0,1])
+        
+        if not unpol:
+            for vis in uvsub_q:
+                qreal.append(vis.visibility[ifn,0,0,0])
+                qimag.append(vis.visibility[ifn,0,0,1])
             
-        for vis in uvsub_q:
-            qreal.append(vis.visibility[ifn,0,0,0])
-            qimag.append(vis.visibility[ifn,0,0,1])
-        
-        for vis in uvsub_u:
-            ureal.append(vis.visibility[ifn,0,0,0])
-            uimag.append(vis.visibility[ifn,0,0,1])
-        
+            for vis in uvsub_u:
+                ureal.append(vis.visibility[ifn,0,0,0])
+                uimag.append(vis.visibility[ifn,0,0,1])
+                
+        else:
+            for vis in uvsub_i:
+                qreal.append(1j * 0.)
+                qimag.append(1j * 0.)
+                
+                ureal.append(1j * 0.)
+                uimag.append(1j * 0.)
+            
 
         time, dumu, dumv, ifarr, time, ant1, ant2, rrreal, rrimag, rrweight, llreal, llimag, llweight, rlreal, rlimag, rlweight, lrreal, lrimag, lrweight = \
             np.array(time), np.array(dumu), np.array(dumv), np.array(ifarr), np.array(time), np.array(ant1), np.array(ant2), np.array(rrreal), np.array(rrimag), np.array(rrweight), np.array(llreal), np.array(llimag), np.array(llweight), \
@@ -347,11 +362,10 @@ def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputn
         origtime = np.copy(time)
         ant1 = ant1 - 1
         ant2 = ant2 - 1
+                
         
-        
-        
-        longarr1, latarr1, f_el1, f_par1, phi_off1 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, ant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, ant2)
+        longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, f_az, ant1)
+        longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, f_az, ant2)
         
         sourcearr = np.repeat(source, len(time))
         
@@ -369,14 +383,19 @@ def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputn
             time[time>=24.] -= 24. 
         
         
-        pang1 = oh.get_parang(yeararr, montharr, dayarr, time, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1)
-        pang2 = oh.get_parang(yeararr, montharr, dayarr, time, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2)
+        pang1 = oh.get_parang(yeararr, montharr, dayarr, time, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
+        pang2 = oh.get_parang(yeararr, montharr, dayarr, time, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
         
         rramp = np.absolute(rrreal + 1j*rrimag)
         rrphas = np.angle(rrreal + 1j*rrimag)
         llamp = np.absolute(llreal + 1j*llimag)
         llphas = np.angle(llreal + 1j*llimag)       
         
+        
+        
+        # from IPython import embed
+        
+        # embed()
         
         
         for s in range(scannum):
@@ -528,17 +547,23 @@ def create_synthetic(direc, uvfname, imodelname, qmodelname, umodelname, outputn
     
     
     imap = AIPSImage(inname, 'IMAP', 1, 1)
-    qmap = AIPSImage(inname, 'QMAP', 1, 1)
-    umap = AIPSImage(inname, 'UMAP', 1, 1)
     
+    if not unpol:
+        qmap = AIPSImage(inname, 'QMAP', 1, 1)
+        umap = AIPSImage(inname, 'UMAP', 1, 1)
+        
+        qmap.zap()
+        umap.zap()
+        
+        uvsub_q.zap()
+        uvsub_u.zap()
+
+        
+        
     data.zap()
     imap.zap()
-    qmap.zap()
-    umap.zap()
     uvsub_i.zap()
-    uvsub_q.zap()
-    uvsub_u.zap()
-
+    
 
     total_ant, total_IF, total_scantime, total_scansource, total_DRArr, total_DLArr = \
         np.array(total_ant), np.array(total_IF), np.array(total_scantime), np.array(total_scansource), np.array(total_DRArr), np.array(total_DLArr)

@@ -374,11 +374,11 @@ class polcal(object):
             f.write('\nFigures Produced:\n')
             
             if self.vplot:
-                f.write('{:}gpcal/{:}.pol.vplot*.{:} : vplots showing the fitting results for each source and baseline.\n\n'.format(self.direc, self.dataname, self.filetype))
+                f.write('{:}gpcal/{:}pol.vplot*.{:} : vplots showing the fitting results for each source and baseline.\n\n'.format(self.direc, self.dataname, self.filetype))
             if self.resplot:
-                f.write('{:}gpcal/{:}.pol.resplot*.{:} : plots showing the residuals of the fitting for each station.\n\n'.format(self.direc, self.dataname, self.filetype))
+                f.write('{:}gpcal/{:}pol.resplot*.{:} : plots showing the residuals of the fitting for each station.\n\n'.format(self.direc, self.dataname, self.filetype))
             if self.parplot:
-                f.write('{:}gpcal/{:}.pol.FRA*.{:} : plots showing the evolution of the field rotation angles for each station.\n\n'.format(self.direc, self.dataname, self.filetype))
+                f.write('{:}gpcal/{:}pol.FRA*.{:} : plots showing the evolution of the field rotation angles for each station.\n\n'.format(self.direc, self.dataname, self.filetype))
             
             f.write('{:}gpcal/{:}pol.*.D_Terms*.{:} : plots showing the distributions of the estimated polarimetric leakages on the complex plane.\n\n'.format(self.direc, self.dataname, self.filetype))
             f.write('{:}gpcal/{:}chisq.{:} : a plot showing the evolution of the reduced chi-square in each iteration of instrumental polarization self-calibration.\n\n'.format(self.direc, self.dataname, self.filetype))
