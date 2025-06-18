@@ -2,11 +2,7 @@ from distutils.core import setup
 setup(
   name = 'gpcal',         # How you named your package folder (MyLib)
   packages = ['gpcal'],   # Chose the same as "name"
-<<<<<<< HEAD
   version = '0.9.6.2',      # Start with a small number and increase it with every change you make
-=======
-  version = '0.9.5.9',      # Start with a small number and increase it with every change you make
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
   license='gpl-2.0',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'A generalized instrumental polarization calibration pipeline for VLBI data',   # Give a short description about your library
   author = 'Jongho Park',                   # Type in your name
