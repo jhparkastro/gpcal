@@ -30,6 +30,8 @@ import polsolver as ps
 
 from multiprocessing import Pool
 
+from IPython import embed
+
 
 # Default matplotlib parameters
 plt.rc('font', size=21)
@@ -431,7 +433,10 @@ class polcal(object):
         phi_off = info['phi_off']
         f_eq = info['f_eq']
         f_copar = info['f_copar']
+<<<<<<< HEAD
         f_az = info['f_az']
+=======
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         self.logger.info('\nGetting data for {:d} sources for {:d} IFs...\n'.format(len(self.zblcalsour), ifnum))
 
@@ -607,8 +612,13 @@ class polcal(object):
                 phi_off[j] = np.radians(self.phi_off.get(antname[j]))
         
         
+<<<<<<< HEAD
         longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, f_az, dumant1)
         longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, f_az, dumant2)
+=======
+        longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, phi_off1 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, dumant1)
+        longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, phi_off2 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, dumant2)
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
                 
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.zblcalsour, year, month, day, obsra, obsdec)
         
@@ -617,15 +627,24 @@ class polcal(object):
         for i in range(10):
             dayarr[timearr>=24.] += 1 
             timearr[timearr>=24.] -= 24. 
+<<<<<<< HEAD
         
+=======
+                
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         self.zbl_data.loc[:,"time"] = timearr
         self.zbl_data.loc[:,"year"] = yeararr
         self.zbl_data.loc[:,"month"] = montharr
         self.zbl_data.loc[:,"day"] = dayarr
         
+<<<<<<< HEAD
         self.zbl_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
         self.zbl_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
+=======
+        self.zbl_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
+        self.zbl_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2Zz, f_copar2)          
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
                 
         self.zbl_data = oh.pd_modifier(self.zbl_data)
         
@@ -681,7 +700,10 @@ class polcal(object):
         self.phi_off = info['phi_off']
         self.f_eq = info['f_eq']
         self.f_copar = info['f_copar']
+<<<<<<< HEAD
         self.f_az = info['f_az']
+=======
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         self.lonarr, self.latarr, self.heightarr = oh.coord(self.antname, self.antx, self.anty, self.antz)
         
@@ -959,8 +981,13 @@ class polcal(object):
         dumant2 = self.data.loc[:,"ant2"]
         dumsource = self.data.loc[:,"source"]
         
+<<<<<<< HEAD
         longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant1)
         longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant2)
+=======
+        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant1)
+        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant2)
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.calsour, self.year, self.month, self.day, self.obsra, self.obsdec)
         
@@ -975,8 +1002,13 @@ class polcal(object):
         self.data.loc[:,"month"] = montharr
         self.data.loc[:,"day"] = dayarr
         
+<<<<<<< HEAD
         self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
         self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
+=======
+        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
+        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)          
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         self.data = oh.pd_modifier(self.data)
 
@@ -1027,7 +1059,10 @@ class polcal(object):
         self.phi_off = info['phi_off']
         self.f_eq = info['f_eq']
         self.f_copar = info['f_copar']
+<<<<<<< HEAD
         self.f_az = info['f_az']
+=======
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         self.lonarr, self.latarr, self.heightarr = oh.coord(self.antname, self.antx, self.anty, self.antz)
         
@@ -1157,8 +1192,13 @@ class polcal(object):
         dumant2 = self.pol_data.loc[:,"ant2"]
         dumsource = self.pol_data.loc[:,"source"]
                 
+<<<<<<< HEAD
         longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant1)
         longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant2)
+=======
+        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant1)
+        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant2)
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.polcalsour, self.pol_year, self.pol_month, self.pol_day, self.pol_obsra, self.pol_obsdec)
         
@@ -1173,8 +1213,13 @@ class polcal(object):
         self.pol_data.loc[:,"month"] = montharr
         self.pol_data.loc[:,"day"] = dayarr
         
+<<<<<<< HEAD
         self.pol_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
         self.pol_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
+=======
+        self.pol_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
+        self.pol_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
 
         self.pol_data = oh.pd_modifier(self.pol_data)
         
@@ -2190,7 +2235,7 @@ class polcal(object):
         Draw D-term plots on the complex plane.
         """  
         
-        uniqant = np.unique(antname)
+        # uniqant = np.unique(antname)
         
         if not IFsep:
             fig, ax = plt.subplots(figsize=(8, 8))
@@ -2199,10 +2244,15 @@ class polcal(object):
             ax.tick_params(length=4, width=1.5,which = 'minor')
             
             plt.grid()
+<<<<<<< HEAD
                 
             for m in range(len(uniqant)):
+=======
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
                 
-                select = (antname == uniqant[m])
+            for m in range(len(antname)):
+                
+                select = (antname == antname[m])
                 
                 drreal = np.real(DRArr[select]) * 1e2
                 drimag = np.imag(DRArr[select]) * 1e2
@@ -2286,9 +2336,9 @@ class polcal(object):
                 plt.grid()
         
                 
-                for m in range(len(uniqant)):
+                for m in range(len(antname)):
                     
-                    select = (antname == uniqant[m]) & (IFarr == k+1)
+                    select = (antname == antname[m]) & (IFarr == k+1)
                     
                     drreal = np.real(DRArr[select]) * 1e2
                     drimag = np.imag(DRArr[select]) * 1e2

@@ -17,6 +17,8 @@ import obshelpers as oh
 
 from multiprocessing import Pool
 
+from IPython import embed
+
 
 # Default matplotlib parameters
 plt.rc('font', size=21)

@@ -5,7 +5,12 @@ import timeit
 
 from multiprocessing import cpu_count
 
+<<<<<<< HEAD
 import pandas as pd
+=======
+multiproc = True
+nproc = cpu_count() - 6
+>>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
 
 
 # AIPS user ID number for ParselTongue.
