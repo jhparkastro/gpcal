@@ -107,11 +107,7 @@ def pol_model_uvprt(data, ifn, select):
 
 
 #    def get_parang(self, time, ant, sourcearr, source, obsra, obsdec):
-<<<<<<< HEAD
 def get_parang(yeararr, montharr, dayarr, time, raarr, decarr, lonarr, latarr, f_el_arr, f_par_arr, phi_off_arr, f_eq_arr, f_copar_arr, f_az_arr): # Version 1.1!
-=======
-def get_parang(yeararr, montharr, dayarr, time, raarr, decarr, lonarr, latarr, f_el_arr, f_par_arr, phi_off_arr, f_eq_arr, f_copar_arr): # Version 1.1!
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
     """
     Calculate antenna field-rotation angles.
     
@@ -153,12 +149,8 @@ def get_parang(yeararr, montharr, dayarr, time, raarr, decarr, lonarr, latarr, f
     parang = np.arctan2((np.sin(hangle) * np.cos(latarr)), (np.sin(latarr) * np.cos(decarr) - np.cos(latarr) * np.sin(decarr) * np.cos(hangle)))
     coparang = np.arctan2(np.cos(hangle), (np.sin(decarr) * np.sin(hangle)))
     altitude = np.arcsin(np.sin(decarr) * np.sin(latarr) + np.cos(decarr) * np.cos(latarr) * np.cos(hangle))
-<<<<<<< HEAD
     azimuth = np.arctan2(-np.sin(hangle), np.tan(decarr)*np.cos(latarr) - np.sin(latarr)*np.cos(hangle))
     pang = f_el_arr * altitude + f_par_arr * parang + phi_off_arr + f_eq_arr * 0. + f_copar_arr * coparang + f_az_arr * azimuth
-=======
-    pang = f_el_arr * altitude + f_par_arr * parang + phi_off_arr + f_eq_arr * 0. + f_copar_arr * coparang
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
     
     
     return pang
@@ -197,11 +189,7 @@ def calendar(sourcearr, calsour, year, month, day, obsra, obsdec):
     return yeararr, montharr, dayarr, raarr, decarr
 
 
-<<<<<<< HEAD
 def coordarr(longi, lati, f_el, f_par, phi_off, f_eq, f_copar, f_az, antarr):
-=======
-def coordarr(longi, lati, f_el, f_par, phi_off, f_eq, f_copar, antarr):
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
     longi = np.array(longi)
     lati = np.array(lati)
     f_el = np.array(f_el)
@@ -209,10 +197,7 @@ def coordarr(longi, lati, f_el, f_par, phi_off, f_eq, f_copar, antarr):
     phi_off = np.array(phi_off)
     f_eq = np.array(f_eq)
     f_copar = np.array(f_copar)
-<<<<<<< HEAD
     f_az = np.array(f_az)
-=======
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
             
     longarr = longi[antarr]
     latarr = lati[antarr]
@@ -221,14 +206,9 @@ def coordarr(longi, lati, f_el, f_par, phi_off, f_eq, f_copar, antarr):
     phi_off = phi_off[antarr]
     f_eq = f_eq[antarr]
     f_copar = f_copar[antarr]
-<<<<<<< HEAD
     f_az = f_az[antarr]
     
     return longarr, latarr, f_el, f_par, f_eq, f_copar, f_az, phi_off
-=======
-    
-    return longarr, latarr, f_el, f_par, phi_off, f_eq, f_copar
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
 
 
 def basic_info(source, direc, dataname):
@@ -263,22 +243,14 @@ def basic_info(source, direc, dataname):
         # Extract antenna, frequency, mount information, etc, from the header.
         if(l == 0):
             
-<<<<<<< HEAD
             antname, antx, anty, antz, antmount, f_par, f_el, phi_off, f_eq, f_copar, f_az = get_antcoord(data)
-=======
-            antname, antx, anty, antz, antmount, f_par, f_el, phi_off, f_eq, f_copar = get_antcoord(data)
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
             
             ifnum, freq = get_freqinfo(data)
         
         data.zap()
         
     info = {"obsra": obsra, "obsdec": obsdec, "year": year, "month": month, "day": day, "antname": antname, "antx": antx, "anty": anty, "antz": antz, "antmount": antmount, "ifnum": ifnum, "freq": freq, \
-<<<<<<< HEAD
 	    "f_par": f_par, "f_el": f_el, "phi_off": phi_off, "f_eq": f_eq, "f_copar": f_copar, "f_az": f_az}
-=======
-            "f_par": f_par, "f_el": f_el, "phi_off": phi_off, "f_eq": f_eq, "f_copar": f_copar}
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
     
     return info
 
@@ -331,47 +303,34 @@ def get_antcoord(data):
             f_eq.append(0.)
             f_par.append(1.)
             f_copar.append(0.)
-<<<<<<< HEAD
             f_az.append(0.)
-=======
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         if(antmount[st] == 1): # Equatorial mount
             f_el.append(0.)
             f_eq.append(1.)
             f_par.append(0.)
             f_copar.append(0.)
-<<<<<<< HEAD
             f_az.append(0.)
-=======
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         if(antmount[st] == 3): # EW mount
             f_el.append(0.)
             f_eq.append(0.)
             f_par.append(0.)
             f_copar.append(1.)
-<<<<<<< HEAD
             f_az.append(0.)
-=======
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         if(antmount[st] == 4): # Nasmyth-Right
             f_el.append(1.)
             f_eq.append(0.)
             f_par.append(1.)
             f_copar.append(0.)
-<<<<<<< HEAD
             f_az.append(0.)
-=======
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
         
         if(antmount[st] == 5): # Nasmyth-Left
             f_el.append(-1.)
             f_eq.append(0.)
             f_par.append(1.)
             f_copar.append(0.)
-<<<<<<< HEAD
             f_az.append(0.)
         
         if(antmount[st] == 6): # BW-Right
@@ -391,11 +350,6 @@ def get_antcoord(data):
         phi_off.append(0.)
     
     return antname, antx, anty, antz, antmount, f_par, f_el, phi_off, f_eq, f_copar, f_az
-=======
-        phi_off.append(0.)
-    
-    return antname, antx, anty, antz, antmount, f_par, f_el, phi_off, f_eq, f_copar
->>>>>>> 860f514dcb0d65be71fc532d13f36e9ba968400a
 
 
 def get_freqinfo(data):
