@@ -218,7 +218,7 @@ class timecal(object):
         data = WAIPSUVData(inname, 'EDIT', 1, 1)
         
         
-        self.antname, self.antx, self.anty, self.antz, self.antmount, self.f_par, self.f_el, self.phi_off, self.f_eq, self.f_copar = oh.get_antcoord(data)
+        self.antname, self.antx, self.anty, self.antz, self.antmount, self.f_par, self.f_el, self.phi_off, self.f_eq, self.f_copar, self.f_az = oh.get_antcoord(data)
         
         self.ifnum, self.freq = oh.get_freqinfo(data)
         
@@ -240,7 +240,7 @@ class timecal(object):
         self.obsra = []
         self.obsdec = []
         
-        self.year, self.month, self.day = [], [], [] # Version 1.1!
+        self.year, self.month, self.day = [], [], [] 
         
         
         # Define a pandas dataframe for the data array.
@@ -335,24 +335,24 @@ class timecal(object):
         dumant2 = self.data.loc[:,"ant2"]
         dumsource = self.data.loc[:,"source"]
         
-        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant2)
+        longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant1)
+        longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant2)
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.calsour, self.year, self.month, self.day, self.obsra, self.obsdec)
         
         timearr = np.array(self.data.loc[:,"time"])
         
         for i in range(10):
-            dayarr[timearr>=24.] += 1 # Version 1.1!
-            timearr[timearr>=24.] -= 24. # Version 1.1!
+            dayarr[timearr>=24.] += 1 
+            timearr[timearr>=24.] -= 24. 
             
         self.data.loc[:,"year"] = yeararr
         self.data.loc[:,"month"] = montharr
         self.data.loc[:,"day"] = dayarr
         self.data.loc[:,"time"] = timearr
                 
-        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
-        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)
+        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
+        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
         
         self.data = oh.pd_modifier(self.data)
         
@@ -1014,7 +1014,7 @@ class timecal(object):
         obsra = data.header.crval[4]
         obsdec = data.header.crval[5]
         
-        self.antname, self.antx, self.anty, self.antz, self.antmount, self.f_par, self.f_el, self.phi_off, self.f_eq, self.f_copar = oh.get_antcoord(data)
+        self.antname, self.antx, self.anty, self.antz, self.antmount, self.f_par, self.f_el, self.phi_off, self.f_eq, self.f_copar, self.f_az = oh.get_antcoord(data)
         
         self.ifnum, self.freq = oh.get_freqinfo(data)
         
@@ -1066,17 +1066,17 @@ class timecal(object):
             
             dumtime = np.copy(time)
                     
-            longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, ant1)
-            longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, ant2)
+            longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, ant1)
+            longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, ant2)
             
             yeararr, montharr, dayarr, raarr, decarr = oh.calendar(sourcearr, [source], [year], [month], [day], [obsra], [obsdec])
                         
             for i in range(10):
-                dayarr[dumtime>=24.] += 1 # Version 1.1!
-                dumtime[dumtime>=24.] -= 24. # Version 1.1!
+                dayarr[dumtime>=24.] += 1
+                dumtime[dumtime>=24.] -= 24. 
                 
-            pang1 = oh.get_parang(yeararr, montharr, dayarr, dumtime, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
-            pang2 = oh.get_parang(yeararr, montharr, dayarr, dumtime, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)
+            pang1 = oh.get_parang(yeararr, montharr, dayarr, dumtime, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
+            pang2 = oh.get_parang(yeararr, montharr, dayarr, dumtime, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
             
             mat_Di, mat_Dj = [], []
             Vmat = []

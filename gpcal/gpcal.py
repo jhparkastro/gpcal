@@ -431,6 +431,7 @@ class polcal(object):
         phi_off = info['phi_off']
         f_eq = info['f_eq']
         f_copar = info['f_copar']
+        f_az = info['f_az']
         
         self.logger.info('\nGetting data for {:d} sources for {:d} IFs...\n'.format(len(self.zblcalsour), ifnum))
 
@@ -606,8 +607,8 @@ class polcal(object):
                 phi_off[j] = np.radians(self.phi_off.get(antname[j]))
         
         
-        longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, phi_off1 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, dumant1)
-        longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, phi_off2 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, dumant2)
+        longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, f_az, dumant1)
+        longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(lonarr, latarr, f_el, f_par, phi_off, f_eq, f_copar, f_az, dumant2)
                 
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.zblcalsour, year, month, day, obsra, obsdec)
         
@@ -623,8 +624,8 @@ class polcal(object):
         self.zbl_data.loc[:,"month"] = montharr
         self.zbl_data.loc[:,"day"] = dayarr
         
-        self.zbl_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
-        self.zbl_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)          
+        self.zbl_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
+        self.zbl_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
                 
         self.zbl_data = oh.pd_modifier(self.zbl_data)
         
@@ -680,6 +681,7 @@ class polcal(object):
         self.phi_off = info['phi_off']
         self.f_eq = info['f_eq']
         self.f_copar = info['f_copar']
+        self.f_az = info['f_az']
         
         self.lonarr, self.latarr, self.heightarr = oh.coord(self.antname, self.antx, self.anty, self.antz)
         
@@ -957,8 +959,8 @@ class polcal(object):
         dumant2 = self.data.loc[:,"ant2"]
         dumsource = self.data.loc[:,"source"]
         
-        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant2)
+        longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant1)
+        longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant2)
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.calsour, self.year, self.month, self.day, self.obsra, self.obsdec)
         
@@ -973,8 +975,8 @@ class polcal(object):
         self.data.loc[:,"month"] = montharr
         self.data.loc[:,"day"] = dayarr
         
-        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
-        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)          
+        self.data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
+        self.data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
         
         self.data = oh.pd_modifier(self.data)
 
@@ -1025,6 +1027,7 @@ class polcal(object):
         self.phi_off = info['phi_off']
         self.f_eq = info['f_eq']
         self.f_copar = info['f_copar']
+        self.f_az = info['f_az']
         
         self.lonarr, self.latarr, self.heightarr = oh.coord(self.antname, self.antx, self.anty, self.antz)
         
@@ -1154,8 +1157,8 @@ class polcal(object):
         dumant2 = self.pol_data.loc[:,"ant2"]
         dumsource = self.pol_data.loc[:,"source"]
                 
-        longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant1)
-        longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, dumant2)
+        longarr1, latarr1, f_el1, f_par1, f_eq1, f_copar1, f_az1, phi_off1 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant1)
+        longarr2, latarr2, f_el2, f_par2, f_eq2, f_copar2, f_az2, phi_off2 = oh.coordarr(self.lonarr, self.latarr, self.f_el, self.f_par, self.phi_off, self.f_eq, self.f_copar, self.f_az, dumant2)
         
         yeararr, montharr, dayarr, raarr, decarr = oh.calendar(dumsource, self.polcalsour, self.pol_year, self.pol_month, self.pol_day, self.pol_obsra, self.pol_obsdec)
         
@@ -1170,8 +1173,8 @@ class polcal(object):
         self.pol_data.loc[:,"month"] = montharr
         self.pol_data.loc[:,"day"] = dayarr
         
-        self.pol_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1)
-        self.pol_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2)
+        self.pol_data.loc[:,"pang1"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr1, latarr1, f_el1, f_par1, phi_off1, f_eq1, f_copar1, f_az1)
+        self.pol_data.loc[:,"pang2"] = oh.get_parang(yeararr, montharr, dayarr, timearr, raarr, decarr, longarr2, latarr2, f_el2, f_par2, phi_off2, f_eq2, f_copar2, f_az2)
 
         self.pol_data = oh.pd_modifier(self.pol_data)
         
